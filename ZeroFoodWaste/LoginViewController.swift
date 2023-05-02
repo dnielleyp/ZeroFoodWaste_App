@@ -30,22 +30,23 @@ class LoginViewController: UIViewController {
             return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password) {(authResult, error) in
-            if let error = error as NSError? {
+        Auth.auth().signIn(withEmail: email, password: password, completion:{(authResult, error) in
+            if let error = error as? NSError {
                 self.displayMessage(title: "Fail", message: "no cannot go in lol")
                 print("Login Error: \(error.localizedDescription)")
                 return
-
-            } else {
+            }
+            else {
                 self.currentUser = authResult?.user
                 print("Login Successful")
-                self.displayMessage(title: "yes", message: "logged in")
-//
-//                    self.performSegue(withIdentifier: "showHomeSegue", sender: self)
 
                 return
+                
             }
-        }
+                
+            })
+        
+        
     
 
               
