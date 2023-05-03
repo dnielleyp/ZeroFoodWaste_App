@@ -13,6 +13,7 @@
 		7488E6AE29FA376700FFA47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488E6AD29FA376700FFA47A /* LoginViewController.swift */; };
 		7488E6B029FA3BA600FFA47A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7488E6AF29FA3BA600FFA47A /* GoogleService-Info.plist */; };
 		7488E6B229FA3C9D00FFA47A /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488E6B129FA3C9D00FFA47A /* CreateAccountViewController.swift */; };
+		74A47FF32A0258E6001386E1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A47FF22A0258E6001386E1 /* HomeViewController.swift */; };
 		74A6E14729F8C2B700F6CBE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6E14629F8C2B700F6CBE4 /* AppDelegate.swift */; };
 		74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */; };
 		74A6E14E29F8C2B700F6CBE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 		7488E6AD29FA376700FFA47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7488E6AF29FA3BA600FFA47A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7488E6B129FA3C9D00FFA47A /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		74A47FF22A0258E6001386E1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		74A6E14329F8C2B700F6CBE4 /* ZeroFoodWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroFoodWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A6E14629F8C2B700F6CBE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				74A6E14629F8C2B700F6CBE4 /* AppDelegate.swift */,
 				74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */,
 				74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */,
+				74A47FF22A0258E6001386E1 /* HomeViewController.swift */,
 				74A6E14F29F8C2B800F6CBE4 /* Assets.xcassets */,
 				74A6E15129F8C2B800F6CBE4 /* LaunchScreen.storyboard */,
 				74A6E15429F8C2B800F6CBE4 /* Info.plist */,
@@ -190,6 +193,7 @@
 				74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */,
 				7488E6AE29FA376700FFA47A /* LoginViewController.swift in Sources */,
 				74A6E14729F8C2B700F6CBE4 /* AppDelegate.swift in Sources */,
+				74A47FF32A0258E6001386E1 /* HomeViewController.swift in Sources */,
 				7488E6AA29FA135000FFA47A /* Listing.swift in Sources */,
 				74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */,
 				7488E6AC29FA209000FFA47A /* User.swift in Sources */,

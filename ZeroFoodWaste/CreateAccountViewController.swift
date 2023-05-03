@@ -7,10 +7,12 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestoreSwift
+import FirebaseFirestore
+
 
 class CreateAccountViewController: UIViewController{
     
-    var authController: Auth?
     var currentUser: FirebaseAuth.User?
     
     @IBOutlet weak var nameField: UITextField!
@@ -19,17 +21,64 @@ class CreateAccountViewController: UIViewController{
     @IBOutlet weak var passwordField: UITextField!
     
     
-    @IBAction func signupButton(_ sender: Any) {
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        authController = Auth.auth()
         
     }
+    
+    @IBAction func createAccButton(_ sender: Any) {
+        //Validate fields
+        guard let name = nameField.text else {return}
+        guard let username = usernameField.text else {return}
+        guard let email = emailField.text else {return}
+        guard let password = passwordField.text else {return}
+        
+        if name.isEmpty || username.isEmpty || email.isEmpty || password.isEmpty {
+            displayMessage(title: "Empty Fields", message: "Please ensure no fields are empty")
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email, password: password){ (authResult, error) in
+            //check for errors
+            if error != nil {
+                print("ERRRROOOORRR")
+                self.displayMessage(title: "error", message: "heheuhreuihiuh")
+            }
+            else {
+                //user was created successsfully, now store the properties :D
+                self.currentUser = authResult!.user
+                let database = Firestore.firestore()
+                
+                
+                
+                
+                database.collection("user").document(username).setData(["name":name,
+                                                                        "listings":[],
+                                                                        "likes":[],
+                                                                        "pfp":""]) { error in
+                    if let error = error {
+                        print("Error")
+                    } else {
+                        print("Doc succcess")
+                    }
+                }
+                
+            }
+        }
+        
+        
+        
+        
+        
+        
+        //create users
+        //transition to home screen
+        
+        
+    }
+    
+    
     
     
     /*

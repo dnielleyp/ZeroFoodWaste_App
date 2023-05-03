@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -16,10 +17,9 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
-    
-    
+
     @IBAction func loginButton(_ sender: Any) {
-        
+    
             
         guard let email = emailField.text, let password = pwField.text else{
             return
@@ -30,35 +30,26 @@ class LoginViewController: UIViewController {
             return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password, completion:{(authResult, error) in
-            if let error = error as? NSError {
+        //creating the user
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if error != nil {
                 self.displayMessage(title: "Fail", message: "no cannot go in lol")
-                print("Login Error: \(error.localizedDescription)")
-                return
-            }
-            else {
+                print("Login Error: \(error!.localizedDescription)")
+                
+            } else {
                 self.currentUser = authResult?.user
                 print("Login Successful")
-
-                return
+                
+                if let result = authResult {
+                    print("Auth Result: \(result)")
+                }
                 
             }
-                
-            })
-        
-        
-    
-
-              
-            
-            
-        
+            }
     }
     
-    @IBAction func createAccButton(_ sender: Any) {
-        //should send to signup view
-        
-    }
+    @IBAction func createAccButton(_ sender: Any){}
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
