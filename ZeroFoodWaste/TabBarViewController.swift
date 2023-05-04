@@ -36,8 +36,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
         createListingButton.frame = CLButtonFrame
 
-        createListingButton.backgroundColor = UIColor.white
-
+        createListingButton.backgroundColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha:1)
+        
         createListingButton.layer.cornerRadius = CLButtonFrame.height/2
 
         let buttonConfig = UIImage.SymbolConfiguration(pointSize: 40)

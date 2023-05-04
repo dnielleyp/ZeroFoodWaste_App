@@ -12,10 +12,16 @@ class HomeViewController: UIViewController {
     
     var user: FirebaseAuth.User?
 
+    @IBOutlet weak var helloLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let name = "Danielle"
+        helloLabel.text = "Hello, \(name)"
     }
     
 
