@@ -110,10 +110,10 @@
             </objects>
             <point key="canvasLocation" x="941.22137404580144" y="-27.464788732394368"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="0hM-6m-4LD">
             <objects>
-                <tabBarController id="eN7-9r-1S0" sceneMemberID="viewController">
+                <tabBarController id="eN7-9r-1S0" customClass="TabBarViewController" customModule="ZeroFoodWaste" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Fij-cg-GGa"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BCa-yo-HAQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -121,7 +121,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="b97-w4-NGG" kind="relationship" relationship="viewControllers" destinationCreationSelector="homeTab" id="fpE-XI-PQs"/>
+                        <segue destination="b97-w4-NGG" kind="relationship" relationship="viewControllers" id="v80-1T-KSz"/>
                         <segue destination="d3A-xP-eCz" kind="relationship" relationship="viewControllers" destinationCreationSelector="likesTab" id="cA8-Gl-VA9"/>
                         <segue destination="1qQ-QL-WSH" kind="relationship" relationship="viewControllers" destinationCreationSelector="addListingTab" id="OnQ-56-zy1"/>
                         <segue destination="bb8-WS-feV" kind="relationship" relationship="viewControllers" destinationCreationSelector="chatTab" id="ccF-hT-RpD"/>
@@ -277,35 +277,40 @@
             </objects>
             <point key="canvasLocation" x="941" y="693"/>
         </scene>
-        <!--Home-->
+        <!--HomeViewController-->
         <scene sceneID="Zi9-5A-zji">
             <objects>
-                <viewController id="b97-w4-NGG" sceneMemberID="viewController">
+                <viewController title="HomeViewController" id="b97-w4-NGG" customClass="HomeViewController" customModule="ZeroFoodWaste" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fNo-8v-pce">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kV6-xe-lJO">
-                                <rect key="frame" x="226" y="273" width="8" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQR-vc-Nr5">
+                                <rect key="frame" x="20" y="133" width="353" height="40.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Sn-P4-1z1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TQR-vc-Nr5" firstAttribute="leading" secondItem="3Sn-P4-1z1" secondAttribute="leading" constant="20" id="1fD-ab-ARx"/>
+                            <constraint firstItem="TQR-vc-Nr5" firstAttribute="top" secondItem="3Sn-P4-1z1" secondAttribute="top" constant="30" id="69p-F1-bxO"/>
+                            <constraint firstItem="3Sn-P4-1z1" firstAttribute="trailing" secondItem="TQR-vc-Nr5" secondAttribute="trailing" constant="20" id="mUx-9I-oc3"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" selectedImage="house" catalog="system" id="1rt-bf-9WE"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="1rt-bf-9WE"/>
+                    <navigationItem key="navigationItem" id="0Mg-Eq-b26"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vd2-yL-SQu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2049.6183206106871" y="910.56338028169023"/>
         </scene>
-        <!--Likes-->
+        <!--LikesViewController-->
         <scene sceneID="38r-Ex-NiO">
             <objects>
-                <viewController id="d3A-xP-eCz" sceneMemberID="viewController">
+                <viewController title="LikesViewController" id="d3A-xP-eCz" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E0H-oh-Mma">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,36 +326,29 @@
                         <viewLayoutGuide key="safeArea" id="nCw-gX-Vaf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Likes" selectedImage="heart" catalog="system" id="ci5-Wh-K1k"/>
+                    <tabBarItem key="tabBarItem" title="Likes" image="heart" catalog="system" id="ci5-Wh-K1k"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SQO-EZ-QKg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2853" y="911"/>
         </scene>
-        <!--Create Listing-->
+        <!--DummyVC-->
         <scene sceneID="RKN-Kt-BYT">
             <objects>
-                <viewController id="1qQ-QL-WSH" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DummyVC" title="DummyVC" hidesBottomBarWhenPushed="YES" id="1qQ-QL-WSH" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ibb-cH-sgI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBS-CF-NOj">
-                                <rect key="frame" x="116" y="245" width="11" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="lmR-f8-qsT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create Listing" selectedImage="plus.app" catalog="system" id="VvJ-4z-l5f"/>
+                    <tabBarItem key="tabBarItem" title="Create Listing" image="plus.app" catalog="system" id="VvJ-4z-l5f"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0O-Eq-aHg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3611" y="911"/>
+            <point key="canvasLocation" x="3609.9236641221373" y="910.56338028169023"/>
         </scene>
         <!--Chat-->
         <scene sceneID="BnG-XY-bTA">
@@ -371,7 +369,7 @@
                         <viewLayoutGuide key="safeArea" id="GHb-ue-OAD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Chat" selectedImage="message" catalog="system" id="uX5-V6-IMf"/>
+                    <tabBarItem key="tabBarItem" title="Chat" image="ellipsis.message" catalog="system" id="uX5-V6-IMf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecJ-lj-VXd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -396,20 +394,53 @@
                         <viewLayoutGuide key="safeArea" id="9uG-7q-foh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" selectedImage="person" catalog="system" id="I1h-Au-gEr"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="I1h-Au-gEr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SnR-Ep-4Gq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5142.7480916030536" y="910.56338028169023"/>
         </scene>
+        <!--Create Listing View Controller-->
+        <scene sceneID="ABa-Eu-6KY">
+            <objects>
+                <viewController storyboardIdentifier="CreateListingVC" id="F2H-0k-Aby" customClass="CreateListingViewController" customModule="ZeroFoodWaste" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dpL-Aw-MhJ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SPECIAL SPECIALALLFKSFJ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzW-UR-wCp">
+                                <rect key="frame" x="104" y="358" width="215" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsc-F4-fYQ">
+                                <rect key="frame" x="276" y="84" width="78" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="CLOSE"/>
+                                <connections>
+                                    <action selector="closeButton:" destination="F2H-0k-Aby" eventType="touchUpInside" id="rDK-nX-eMG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="D3W-vU-y7d"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WPl-si-Xos" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3610" y="1585"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gEc-PK-0FK"/>
+        <segue reference="t9r-9X-iGL"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="ellipsis.message" catalog="system" width="128" height="116"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
-        <image name="message" catalog="system" width="128" height="116"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="plus.app" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
