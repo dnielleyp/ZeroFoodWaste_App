@@ -14,7 +14,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
         // Do any additional setup after loading the view
         
-        self.delegate = self
+        setupCreateListingButton()
         
         guard let navigationController = self.navigationController else { return }
         
@@ -25,23 +25,49 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         navigationArray.append(temp!)
         self.navigationController?.viewControllers = navigationArray
         
- 
     }
     
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-            if viewController == self.viewControllers?[2] {
-                // Call your method here
-                createListingButtonAction()
-            }
-        }
-    
-    func createListingButtonAction() {
+    func setupCreateListingButton(){
         
+        let createListingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 150))
+        var CLButtonFrame = createListingButton.frame
+        CLButtonFrame.origin.y = self.view.bounds.height - CLButtonFrame.height
+        CLButtonFrame.origin.x = self.view.bounds.width/2 - CLButtonFrame.size.width/2
+
+        createListingButton.frame = CLButtonFrame
+
+        createListingButton.backgroundColor = UIColor.white
+
+        createListingButton.layer.cornerRadius = CLButtonFrame.height/2
+
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 40)
+        
+        createListingButton.setImage(UIImage(systemName: "plus.app.fill", withConfiguration: buttonConfig), for: UIControl.State.normal) // 450 x 450px
+        
+        createListingButton.contentMode = .scaleAspectFit
+
+        createListingButton.addTarget(self, action: #selector(createListingButtonAction), for: UIControl.Event.touchUpInside)
+
+
+        self.view.addSubview(createListingButton)
+    }
+    
+    
+    
+    
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//
+//            if viewController == self.viewControllers?[2] {
+//                // Call your method here
+//                createListingButtonAction()
+//            }
+//        }
+
+    @objc func createListingButtonAction() {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController {
             vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             self.present(vc, animated: true, completion: nil)
         }
-        
     }
    
     

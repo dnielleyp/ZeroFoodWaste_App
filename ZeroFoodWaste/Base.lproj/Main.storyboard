@@ -123,7 +123,7 @@
                     <connections>
                         <segue destination="b97-w4-NGG" kind="relationship" relationship="viewControllers" id="v80-1T-KSz"/>
                         <segue destination="d3A-xP-eCz" kind="relationship" relationship="viewControllers" destinationCreationSelector="likesTab" id="cA8-Gl-VA9"/>
-                        <segue destination="1qQ-QL-WSH" kind="relationship" relationship="viewControllers" destinationCreationSelector="addListingTab" id="OnQ-56-zy1"/>
+                        <segue destination="1qQ-QL-WSH" kind="relationship" relationship="viewControllers" id="7x0-x5-sqV"/>
                         <segue destination="bb8-WS-feV" kind="relationship" relationship="viewControllers" destinationCreationSelector="chatTab" id="ccF-hT-RpD"/>
                         <segue destination="qOr-PT-SBi" kind="relationship" relationship="viewControllers" destinationCreationSelector="profileTab" id="VOF-7R-15b"/>
                     </connections>
@@ -335,14 +335,14 @@
         <!--DummyVC-->
         <scene sceneID="RKN-Kt-BYT">
             <objects>
-                <viewController storyboardIdentifier="DummyVC" title="DummyVC" hidesBottomBarWhenPushed="YES" id="1qQ-QL-WSH" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DummyView" title="DummyVC" hidesBottomBarWhenPushed="YES" id="1qQ-QL-WSH" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ibb-cH-sgI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="lmR-f8-qsT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create Listing" image="plus.app" catalog="system" id="VvJ-4z-l5f"/>
+                    <tabBarItem key="tabBarItem" title="" image="plus.app" catalog="system" id="VvJ-4z-l5f"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -408,30 +408,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SPECIAL SPECIALALLFKSFJ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzW-UR-wCp">
-                                <rect key="frame" x="104" y="358" width="215" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsc-F4-fYQ">
-                                <rect key="frame" x="276" y="84" width="78" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsc-F4-fYQ">
+                                <rect key="frame" x="320" y="74" width="53" height="41"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="CLOSE"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="closeButton:" destination="F2H-0k-Aby" eventType="touchUpInside" id="rDK-nX-eMG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Listing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLU-Vl-Nph">
+                                <rect key="frame" x="20" y="99" width="353" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLP-jH-iYF">
+                                <rect key="frame" x="20" y="157" width="165" height="165"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D3W-vU-y7d"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="D3W-vU-y7d" firstAttribute="trailing" secondItem="dsc-F4-fYQ" secondAttribute="trailing" constant="20" id="5cd-Rd-7Qp"/>
+                            <constraint firstItem="D3W-vU-y7d" firstAttribute="trailing" secondItem="WLP-jH-iYF" secondAttribute="trailing" constant="202" id="9EQ-nI-ZEw"/>
+                            <constraint firstItem="dsc-F4-fYQ" firstAttribute="top" secondItem="D3W-vU-y7d" secondAttribute="top" constant="15" id="CCZ-yJ-s5E"/>
+                            <constraint firstItem="D3W-vU-y7d" firstAttribute="bottom" secondItem="WLP-jH-iYF" secondAttribute="bottom" constant="490" id="DDm-Yk-YdE"/>
+                            <constraint firstItem="GLU-Vl-Nph" firstAttribute="top" secondItem="D3W-vU-y7d" secondAttribute="top" constant="40" id="JKt-3Y-waj"/>
+                            <constraint firstItem="D3W-vU-y7d" firstAttribute="trailing" secondItem="GLU-Vl-Nph" secondAttribute="trailing" constant="20" id="Mqs-S5-uye"/>
+                            <constraint firstItem="WLP-jH-iYF" firstAttribute="top" secondItem="GLU-Vl-Nph" secondAttribute="bottom" constant="28" id="X0i-Zs-Op9"/>
+                            <constraint firstItem="WLP-jH-iYF" firstAttribute="leading" secondItem="D3W-vU-y7d" secondAttribute="leading" constant="20" id="dGA-hK-juO"/>
+                            <constraint firstItem="GLU-Vl-Nph" firstAttribute="leading" secondItem="D3W-vU-y7d" secondAttribute="leading" constant="20" id="jdz-V2-ufu"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WPl-si-Xos" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3610" y="1585"/>
+            <point key="canvasLocation" x="3609.9236641221373" y="1584.5070422535211"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -443,6 +457,7 @@
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="plus.app" catalog="system" width="128" height="114"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
