@@ -52,16 +52,16 @@ class LoginViewController: UIViewController {
         //creating the user
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if error != nil {
-                self.displayMessage(title: "Fail", message: "no cannot go in lol")
                 print("Login Error: \(error!.localizedDescription)")
+                self.displayMessage(title: "Login Fail", message: "email or password invalid")
+                return
                 
             } else {
                 self.currentUser = authResult?.user
                 print("Login Successful")
                 
-                if let result = authResult {
-                    print("Auth Result: \(result)")
-                }
+                self.performSegue(withIdentifier:"showHomeSegue", sender: self)
+
                 
             }
             }
@@ -76,7 +76,7 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
         self.pwField.isSecureTextEntry = true
 
     }
