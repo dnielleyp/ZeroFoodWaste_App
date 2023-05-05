@@ -17,7 +17,26 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
-
+    var hidePassword = true
+    
+    
+    @IBOutlet weak var passwordButton: UIButton!
+    
+    
+    @IBAction func hideUnhideButton(_ sender: Any) {
+        if hidePassword{
+            self.pwField.isSecureTextEntry = false
+            passwordButton.setImage(UIImage(systemName: "eye"),for: .normal)
+        }
+        //hide the password
+        else {
+            self.pwField.isSecureTextEntry = true
+            passwordButton.setImage(UIImage(systemName: "eye.slash"),for: .normal)
+        }
+        hidePassword = !hidePassword
+    }
+    
+    
     @IBAction func loginButton(_ sender: Any) {
     
             
@@ -51,13 +70,14 @@ class LoginViewController: UIViewController {
     @IBAction func createAccButton(_ sender: Any){}
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         self.navigationController?.isNavigationBarHidden = true
-//
+        self.pwField.isSecureTextEntry = true
 
     }
 

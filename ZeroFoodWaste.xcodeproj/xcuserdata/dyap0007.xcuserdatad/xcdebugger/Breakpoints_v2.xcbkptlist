@@ -7,69 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A9A70351-5C71-4D07-A0E8-79884884E8DE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZeroFoodWaste/LoginViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "loginButton(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A9A70351-5C71-4D07-A0E8-79884884E8DE - 4ea2fe69b2ad263f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ZeroFoodWaste.LoginViewController.loginButton(Any) -&gt; ()"
-                  moduleName = "ZeroFoodWaste"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/LoginViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "92">
-               </Location>
-               <Location
-                  uuid = "A9A70351-5C71-4D07-A0E8-79884884E8DE - 4ea2fe69b2ad263f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ZeroFoodWaste.LoginViewController.loginButton(Any) -&gt; ()"
-                  moduleName = "ZeroFoodWaste"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/LoginViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "296">
-               </Location>
-               <Location
-                  uuid = "A9A70351-5C71-4D07-A0E8-79884884E8DE - 4ea2fe69b2ad263f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ZeroFoodWaste.LoginViewController.loginButton(Any) -&gt; ()"
-                  moduleName = "ZeroFoodWaste"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/LoginViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "656">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "1A1FA1DD-C9CE-40B9-A6B0-DDE16A6CCDA1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
