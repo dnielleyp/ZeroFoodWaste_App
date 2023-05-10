@@ -10,6 +10,7 @@
 		74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */; };
 		742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC22A03533D005958CF /* CreateListingViewController.swift */; };
 		742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC42A03555E005958CF /* TabBarViewController.swift */; };
+		7465BBB82A0B736C004CBBCD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */; };
 		7488E6AA29FA135000FFA47A /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488E6A929FA135000FFA47A /* Listing.swift */; };
 		7488E6AC29FA209000FFA47A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488E6AB29FA209000FFA47A /* User.swift */; };
 		7488E6AE29FA376700FFA47A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488E6AD29FA376700FFA47A /* LoginViewController.swift */; };
@@ -37,6 +38,7 @@
 		74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+displayMessage.swift"; sourceTree = "<group>"; };
 		742AFBC22A03533D005958CF /* CreateListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingViewController.swift; sourceTree = "<group>"; };
 		742AFBC42A03555E005958CF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7488E6A929FA135000FFA47A /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 		7488E6AB29FA209000FFA47A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7488E6AD29FA376700FFA47A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */,
 				742AFBC42A03555E005958CF /* TabBarViewController.swift */,
 				74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */,
+				7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */,
 				7488E6AB29FA209000FFA47A /* User.swift */,
 			);
 			path = ZeroFoodWaste;
@@ -221,6 +224,7 @@
 				749340682A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift in Sources */,
 				742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */,
 				74A6E14729F8C2B700F6CBE4 /* AppDelegate.swift in Sources */,
+				7465BBB82A0B736C004CBBCD /* ProfileViewController.swift in Sources */,
 				74A47FF32A0258E6001386E1 /* HomeViewController.swift in Sources */,
 				7488E6AA29FA135000FFA47A /* Listing.swift in Sources */,
 				74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */,

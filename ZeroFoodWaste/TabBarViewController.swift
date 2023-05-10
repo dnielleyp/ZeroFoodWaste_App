@@ -29,26 +29,25 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     func setupCreateListingButton(){
         
-        let createListingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 150))
+        let createListingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 68))
         var CLButtonFrame = createListingButton.frame
-        CLButtonFrame.origin.y = self.view.bounds.height - CLButtonFrame.height
+        CLButtonFrame.origin.y = self.view.bounds.height - CLButtonFrame.height*1.6
         CLButtonFrame.origin.x = self.view.bounds.width/2 - CLButtonFrame.size.width/2
 
         createListingButton.frame = CLButtonFrame
 
-        createListingButton.backgroundColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha:1)
+        createListingButton.layer.cornerRadius = 28
         
-        createListingButton.layer.cornerRadius = CLButtonFrame.height/2
-
-        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 40)
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 45)
         
-        createListingButton.setImage(UIImage(systemName: "plus.app.fill", withConfiguration: buttonConfig), for: UIControl.State.normal) // 450 x 450px
+        createListingButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: buttonConfig), for: UIControl.State.normal) // 450 x 450px
         
         createListingButton.contentMode = .scaleAspectFit
 
         createListingButton.addTarget(self, action: #selector(createListingButtonAction), for: UIControl.Event.touchUpInside)
-
-
+        
+        createListingButton.backgroundColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha:1)
+        
         self.view.addSubview(createListingButton)
     }
     

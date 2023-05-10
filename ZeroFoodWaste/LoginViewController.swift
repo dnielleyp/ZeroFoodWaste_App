@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
             do{
                 let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
                 currentUser = authDataResult.user
-                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
+//                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
             
         } catch {
             displayMessage(title: "Error", message: "Firebase Authentication Failed with Error:\(String(describing: error))")

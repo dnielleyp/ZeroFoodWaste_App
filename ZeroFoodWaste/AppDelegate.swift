@@ -7,11 +7,13 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var databaseController: DatabaseProtocol?
+    var persistentContainer: NSPersistentContainer?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -20,7 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITabBar.appearance().tintColor = UIColor(red: 8/255.0, green: 105/255.0, blue: 82/255.0, alpha: 1.0)
         
-        databaseController = CoreDataController()
+//        databaseController = CoreDataController()
+        persistentContainer = NSPersistentContainer(name: "ZFW-Model")
+        persistentContainer?.loadPersistentStores() { (description, error) in
+            if let error = error {
+                fatalError("Failed to load CoreData stack with error: \(error)")
+            }
+        }
 
         return true
     }

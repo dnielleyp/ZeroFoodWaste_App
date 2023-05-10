@@ -14,6 +14,7 @@ import FirebaseFirestore
 class CreateAccountViewController: UIViewController{
     
     var currentUser: FirebaseAuth.User?
+    var authHandle: AuthStateDidChangeListenerHandle?
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
@@ -25,6 +26,21 @@ class CreateAccountViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        authHandle = Auth.auth().addStateDidChangeListener(){
+            (auth, user) in
+            guard user != nil else {return}
+            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+        }
+    }
+
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let authHandle = authHandle else {return}
+        Auth.auth().removeStateDidChangeListener(authHandle)
     }
     
     @IBAction func createAccButton(_ sender: Any) {
@@ -46,29 +62,23 @@ class CreateAccountViewController: UIViewController{
         Auth.auth().createUser(withEmail: email, password: password){ (authResult, error) in
             //check for errors
             if error != nil {
-                print("ERRRROOOORRR")
-                self.displayMessage(title: "error", message: "heheuhreuihiuh")
+                self.displayMessage(title: "error", message: "\(error)")
             }
             else {
                 //user was created successsfully, now store the properties :D
                 self.currentUser = authResult!.user
                 let database = Firestore.firestore()
                 
+               guard let userID = Auth.auth().currentUser?.uid else {return}
                 
-                
-                
-                database.collection("user").document(username).setData(["name":name,
-                                                                        "listings":[],
-                                                                        "likes":[],
-                                                                        "pfp":""]) { error in
-                    if let error = error {
+ 
+                database.collection("user").document(userID).setData(["username":username, "email":email, "name":name, "listings":[], "likes":[],"pfp":""]) { error in
+                    if error != nil {
                         print("Error")
                     } else {
                         print("Doc succcess")
                     }
                 }
-                
-                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
                 
             }
         }

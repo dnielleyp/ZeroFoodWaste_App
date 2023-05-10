@@ -6,12 +6,22 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class HomeViewController: UIViewController {
     
+    //reference to the user collection
+    //get user's name :D
+    
+    var userRef = Firestore.firestore().collection("user")
+    
     var user: FirebaseAuth.User?
     var listingArray: [Listing]?
+    var name: String?
+    
+    //definitely have a user otherwise they cannot access the home page :D
+//    var userID = Auth.auth().currentUser?.uid
+    
     
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -20,6 +30,35 @@ class HomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    func readUserInfo(){
+        guard let userID = Auth.auth().currentUser?.uid else {
+            displayMessage(title: "eh", message: "errorooror")
+            return
+        }
+        
+        userRef.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error \(error!)")
+                return
+            }
+            for document in snapshot.documents {
+                let documentID = document.documentID
+                if documentID == userID {
+                    self.name = document.get("name") as! String
+                    self.nameLabel.text = self.name
+                }
+                
+            }
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        readUserInfo()
+    }
+
+    
     
     
     

@@ -9,10 +9,17 @@ import UIKit
 
 class CreateListingViewController: UIViewController {
     
+    
     weak var databaseController: DatabaseProtocol?
     
     var draft = false
-    var category: String?
+    var category: Int?
+    var saveDraft = false
+    
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var descField: UITextField!
+    @IBOutlet weak var locationField: UITextField!
+    
     
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
@@ -39,20 +46,49 @@ class CreateListingViewController: UIViewController {
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func createListing(name: String?, draft: Bool?){
-        
-    }
-    
-    
-    @IBAction func categorySelectionChanged(_ sender: Any) {
-        
-        category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex) ?? ""
-        
-    }
+
     
 //    checkmark.square
     
+    @IBAction func saveAsDraft(_ sender: Any) {
+        saveDraft = true
+        //check that at least name field is filled :D
+        guard let name = nameField.text else {return}
+        guard let desc = descField.text else {return}
+        guard let location = locationField.text else {return}
+        category = categorySegmentedControl.selectedSegmentIndex
+        
+        var category32 = Int32(category!)
+        
+        if name.isEmpty {
+            displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
+            return
+        }
+        //at least name is field
+        else {
+            databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32)
+        }
+        
+        
+        
+        
+        //calls create listing
+        
+
+        
+        
+        //then it leaves create listing view :)
+        self.dismiss(animated: true, completion: nil)
+
+    }
+    
+    @IBAction func createListing(_ sender: Any) {
+
+        //check if all fields are there yk
+        
+        
+        
+    }
     
     
     

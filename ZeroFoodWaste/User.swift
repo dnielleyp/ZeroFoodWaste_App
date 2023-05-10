@@ -15,4 +15,5 @@ class User: NSObject{
     var likes: [Listing] = []
     var pfp: String?
     var drafts: [Listing] = []
+    var username: String?
 }
