@@ -14,14 +14,15 @@ enum DatabaseChange {
 }
 
 enum ListenerType {
-    case listing
-    case users
+//    case listing
+//    case users
+    case listingDraft
     case all
 }
 
 protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
-    func onListingChange(change: DatabaseChange, listings: [Listing])
+    func onListingChange(change: DatabaseChange, listings: [ListingDraft])
     func onLikesChange(change: DatabaseChange, likes:[Listing])
 }
 
@@ -29,5 +30,9 @@ protocol DatabaseProtocol: AnyObject {
     func cleanup()
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
-    func addListing(draft: Bool, owner: User, likes: [Listing], name: String, description: String, category: String) -> Listing
+    
+    //into core data only if the listing is a draft
+    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32?, dietPref:[String]?, allergens:[String]?, photo: String? ) -> ListingDraft
+    
+    func deleteListingDraft (listing: ListingDraft)
 }

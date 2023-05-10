@@ -6,22 +6,20 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseFirestoreSwift
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
-    var userRef: CollectionReference?   //reference to your user collection
+    var authHandle: AuthStateDidChangeListenerHandle?
+    
+//    var userRef: CollectionReference?   //reference to your user collection
     var currentUser: FirebaseAuth.User?
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
     var hidePassword = true
     
-    
     @IBOutlet weak var passwordButton: UIButton!
-    
     
     @IBAction func hideUnhideButton(_ sender: Any) {
         if hidePassword{
@@ -81,6 +79,13 @@ class LoginViewController: UIViewController {
 
     }
 
+    func viewWillAppear() {
+        authHandle = Auth.auth().addStateDidChangeListener(){
+            (auth, user) in
+            guard user != nil else {return}
+            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+        }
+    }
     /*
     // MARK: - Navigation
 

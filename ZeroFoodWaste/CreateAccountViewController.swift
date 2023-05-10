@@ -39,6 +39,10 @@ class CreateAccountViewController: UIViewController{
             return
         }
         
+        if password.count < 6 {
+            displayMessage(title: "Password Too Short", message: "Please choose a longer password")
+        }
+        
         Auth.auth().createUser(withEmail: email, password: password){ (authResult, error) in
             //check for errors
             if error != nil {
@@ -63,6 +67,8 @@ class CreateAccountViewController: UIViewController{
                         print("Doc succcess")
                     }
                 }
+                
+                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
                 
             }
         }

@@ -11,18 +11,23 @@ import FirebaseAuth
 class HomeViewController: UIViewController {
     
     var user: FirebaseAuth.User?
-
-    @IBOutlet weak var helloLabel: UILabel!
+    var listingArray: [Listing]?
     
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        
         let name = "Danielle"
-        helloLabel.text = "Hello, \(name)"
+        nameLabel.text = name
     }
+    
+//    override func viewWillAppear() {
+//        <#code#>
+//    }
     
 
     /*
@@ -35,4 +40,16 @@ class HomeViewController: UIViewController {
     }
     */
 
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    
 }
