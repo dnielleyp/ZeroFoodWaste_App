@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     
 //    var userRef: CollectionReference?   //reference to your user collection
     var currentUser: FirebaseAuth.User?
+
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
@@ -47,26 +48,20 @@ class LoginViewController: UIViewController {
             return
         }
         
-        //creating the user
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if error != nil {
-                print("Login Error: \(error!.localizedDescription)")
-                self.displayMessage(title: "Login Fail", message: "email or password invalid")
-                return
-                
-            } else {
-                self.currentUser = authResult?.user
-                print("Login Successful")
-                
-                self.performSegue(withIdentifier:"showHomeSegue", sender: self)
-
-                
-            }
-            }
+        //signing in with user
+        Task{
+            do{
+                let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
+                currentUser = authDataResult.user
+                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
+            
+        } catch {
+            displayMessage(title: "Error", message: "Firebase Authentication Failed with Error:\(String(describing: error))")
+        } }
     }
     
-    @IBAction func createAccButton(_ sender: Any){}
     
+    @IBAction func createAccButton(_ sender: Any){}
     
     
     override func viewDidLoad() {
@@ -74,18 +69,26 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-//        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.pwField.isSecureTextEntry = true
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
 
-    func viewWillAppear() {
         authHandle = Auth.auth().addStateDidChangeListener(){
             (auth, user) in
             guard user != nil else {return}
             self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
         }
     }
+
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let authHandle = authHandle else {return}
+        Auth.auth().removeStateDidChangeListener(authHandle)
+    }
+    
     /*
     // MARK: - Navigation
 

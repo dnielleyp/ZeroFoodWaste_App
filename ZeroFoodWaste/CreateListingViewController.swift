@@ -40,7 +40,7 @@ class CreateListingViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func createListing(name: String?, draft){
+    func createListing(name: String?, draft: Bool?){
         
     }
     
@@ -71,13 +71,10 @@ class CreateListingViewController: UIViewController {
 extension CreateListingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //f5 categories
-        print("THIS RAN")
         return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("THIS DIDN'T RUN")
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "prefCell", for: indexPath)
         cell.textLabel?.text = dietPrefList[indexPath.row]
         return cell
