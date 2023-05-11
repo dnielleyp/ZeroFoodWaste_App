@@ -40,7 +40,7 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
     
     
     ///this is the DRAFT listng. only the draft will be added into core data :D
-    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32?) -> ListingDraft {
+    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32?, image: String?) -> ListingDraft {
         
         let listing = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: persistentContainer.viewContext) as! ListingDraft
     
@@ -51,7 +51,7 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         listing.category = category!
 //        listing.dietPref = dietPref
 //        listing.allergens = allergens
-//        listing.photo = photo
+        listing.photo = image
         
         return listing
     }

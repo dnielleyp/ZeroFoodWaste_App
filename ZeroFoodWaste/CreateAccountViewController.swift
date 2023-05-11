@@ -33,7 +33,7 @@ class CreateAccountViewController: UIViewController{
         authHandle = Auth.auth().addStateDidChangeListener(){
             (auth, user) in
             guard user != nil else {return}
-            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+            self.performSegue(withIdentifier: "showSetupSegue", sender: nil)
         }
     }
 

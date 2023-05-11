@@ -24,7 +24,9 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         navigationArray.removeAll()
         navigationArray.append(temp!)
         self.navigationController?.viewControllers = navigationArray
-        
+    
+        UITabBar.appearance().barTintColor = UIColor.black
+
     }
     
     func setupCreateListingButton(){
@@ -49,14 +51,20 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         createListingButton.backgroundColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha:1)
         
         self.view.addSubview(createListingButton)
+        
     }
     
 
     @objc func createListingButtonAction() {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController {
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            self.present(vc, animated: true, completion: nil)
-        }
+//        if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController {
+//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//            self.present(vc, animated: true, completion: nil)
+//        }
+        
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController
+
+        navigationController?.pushViewController(vc!, animated: true)
     }
    
     

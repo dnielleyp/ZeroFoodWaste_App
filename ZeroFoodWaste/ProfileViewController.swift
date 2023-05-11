@@ -50,7 +50,6 @@ class ProfileViewController: UIViewController, DatabaseListener {
         
         }
         for draft in allDrafts {
-            print(" hererHERHWKRERHWJRHUIEHHEEHHEHERHERHEHRHEHRE", "ALLDRAFTS:", allDrafts.count)
             databaseController?.deleteListingDraft(listing: draft)
         }
         

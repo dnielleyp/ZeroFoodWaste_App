@@ -30,6 +30,8 @@
 		74A6E15E29F8C51F00F6CBE4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 74A6E15D29F8C51F00F6CBE4 /* FirebaseFirestore */; };
 		74A6E16029F8C51F00F6CBE4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 74A6E15F29F8C51F00F6CBE4 /* FirebaseFirestoreSwift */; };
 		74A6E16229F8C51F00F6CBE4 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 74A6E16129F8C51F00F6CBE4 /* FirebaseMessaging */; };
+		74C130D92A0CDF1C0094DE95 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */; };
+		74C130DB2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */; };
 		74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */; };
 		74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */; };
 		74E6E32C29FB72B000DD2B6A /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */; };
@@ -58,6 +60,8 @@
 		74A6E14F29F8C2B800F6CBE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74A6E15229F8C2B800F6CBE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74A6E15429F8C2B800F6CBE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePicViewController.swift; sourceTree = "<group>"; };
 		74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftsViewController.swift; sourceTree = "<group>"; };
 		74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
@@ -92,8 +96,8 @@
 		74A6E13A29F8C2B700F6CBE4 = {
 			isa = PBXGroup;
 			children = (
-				74A6E14529F8C2B700F6CBE4 /* ZeroFoodWaste */,
 				74A6E14429F8C2B700F6CBE4 /* Products */,
+				74A6E14529F8C2B700F6CBE4 /* ZeroFoodWaste */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,7 +125,9 @@
 				7488E6A929FA135000FFA47A /* Listing.swift */,
 				7488E6AD29FA376700FFA47A /* LoginViewController.swift */,
 				74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */,
+				74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */,
 				74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */,
+				74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */,
 				74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */,
 				74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */,
 				742AFBC42A03555E005958CF /* TabBarViewController.swift */,
@@ -239,6 +245,8 @@
 				74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */,
 				74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */,
 				7488E6AC29FA209000FFA47A /* User.swift in Sources */,
+				74C130DB2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift in Sources */,
+				74C130D92A0CDF1C0094DE95 /* NotificationViewController.swift in Sources */,
 				74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */,
 				742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */,
 				749340692A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift in Sources */,

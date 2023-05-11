@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
             for document in snapshot.documents {
                 let documentID = document.documentID
                 if documentID == userID {
-                    self.name = document.get("name") as! String
+                    self.name = document.get("name") as? String
                     self.nameLabel.text = self.name
                 }
                 
@@ -57,7 +57,16 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         readUserInfo()
     }
-
+    
+    
+    @IBAction func notificationButton(_ sender: Any) {
+        
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "notificationsVC") as? NotificationViewController {
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     
     
     

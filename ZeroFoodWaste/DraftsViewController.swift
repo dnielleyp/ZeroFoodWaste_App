@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DraftsViewController: UIViewController, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
     
@@ -36,9 +37,6 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         allDrafts = listings
     }
     
-    
-    
-    
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         
@@ -47,7 +45,9 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            self.databaseController?.deleteListingDraft(listing: allDrafts[indexPath.row])
+            let listing = allDrafts[indexPath.row]
+            
+            self.databaseController?.deleteListingDraft(listing: listing)
         }
     }
         

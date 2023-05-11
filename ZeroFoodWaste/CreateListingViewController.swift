@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
-class CreateListingViewController: UIViewController {
+class CreateListingViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     
     weak var databaseController: DatabaseProtocol?
+//    var managedObjectContext: NSManagedObjectContext?
     
     var draft = false
     var category: Int?
@@ -19,12 +21,14 @@ class CreateListingViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descField: UITextField!
     @IBOutlet weak var locationField: UITextField!
-
+    @IBOutlet weak var listingImage: UIImageView!
+    
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var dietPrefCheckList: UITableView!
     
     let dietPrefList = ["Gluten Free", "Vegan", "Vegetarian", "Halal"]
+    
     
 
     override func viewDidLoad() {
@@ -43,11 +47,50 @@ class CreateListingViewController: UIViewController {
     }
 
     @IBAction func closeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        
+        navigationController?.popViewController(animated: true)
     }
 
     
 //    checkmark.square
+    
+    
+    @IBAction func selectPhotoButton(_ sender: Any) {
+        
+        let controller = UIImagePickerController()
+        controller.allowsEditing = false
+        controller.delegate = self
+        
+        let actionSheet = UIAlertController(title: nil, message: "Select Option:", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { action in
+            controller.sourceType = .camera
+            
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let libraryAction = UIAlertAction(title: "Photo Library", style: .default) {
+            action in controller.sourceType = .photoLibrary
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let albumAction = UIAlertAction(title: "Photo Album", style: .default) { action in controller.sourceType = .savedPhotosAlbum
+            
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) { actionSheet.addAction(cameraAction)
+        }
+        
+        actionSheet.addAction(libraryAction)
+        actionSheet.addAction(albumAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+        
+    }
     
 // MARK: - saving as draft
     
@@ -58,55 +101,51 @@ class CreateListingViewController: UIViewController {
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
         category = categorySegmentedControl.selectedSegmentIndex
+        guard let image = listingImage.image else {
+            return
+        }
         
         var category32 = Int32(category!)
         
+        let uuid = UUID().uuidString
+        let filename = "\(uuid).jpg"
+
+
+        guard let data = image.jpegData(compressionQuality: 0.8) else {
+            displayMessage(title: "Error", message: "Image data could not be compressed")
+            return
+        }
+
+        
+        
+        //get app's document directory to save the image file
+        let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = pathsList[0]
+        let imageFile = documentDirectory.appendingPathComponent(filename)
+
         if name.isEmpty {
             displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
             return
         }
-        //at least name is field
-        else {
-            databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32)
-            print("ADDDED")
-        }
-        
-        
-        
-        
-        //calls create listing
-        
 
-        
-        
-        //then it leaves create listing view :)
-        self.dismiss(animated: true, completion: nil)
+        else {
+            databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32, image: filename)
+        }
+
+        //then leaves create listing view
+        navigationController?.popViewController(animated: true)
+
 
     }
+    
+    
+    
     
 // MARK: Creating a listing that will be posted
     
     @IBAction func createListing(_ sender: Any) {
-
         //check if all fields are there yk
-        
-        
-        
     }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-
 }
 
 extension CreateListingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -119,6 +158,19 @@ extension CreateListingViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "prefCell", for: indexPath)
         cell.textLabel?.text = dietPrefList[indexPath.row]
         return cell
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let pickedImage = info[.originalImage] as? UIImage {
+            listingImage.image = pickedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
