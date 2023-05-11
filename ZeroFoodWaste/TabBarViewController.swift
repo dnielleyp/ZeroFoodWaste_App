@@ -51,16 +51,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         self.view.addSubview(createListingButton)
     }
     
-    
-    
-    
-//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//
-//            if viewController == self.viewControllers?[2] {
-//                // Call your method here
-//                createListingButtonAction()
-//            }
-//        }
 
     @objc func createListingButtonAction() {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController {

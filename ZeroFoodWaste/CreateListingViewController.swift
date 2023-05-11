@@ -19,8 +19,7 @@ class CreateListingViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descField: UITextField!
     @IBOutlet weak var locationField: UITextField!
-    
-    
+
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var dietPrefCheckList: UITableView!
@@ -50,6 +49,8 @@ class CreateListingViewController: UIViewController {
     
 //    checkmark.square
     
+// MARK: - saving as draft
+    
     @IBAction func saveAsDraft(_ sender: Any) {
         saveDraft = true
         //check that at least name field is filled :D
@@ -67,6 +68,7 @@ class CreateListingViewController: UIViewController {
         //at least name is field
         else {
             databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32)
+            print("ADDDED")
         }
         
         
@@ -81,6 +83,8 @@ class CreateListingViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
 
     }
+    
+// MARK: Creating a listing that will be posted
     
     @IBAction func createListing(_ sender: Any) {
 
@@ -104,6 +108,7 @@ class CreateListingViewController: UIViewController {
     
 
 }
+
 extension CreateListingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //f5 categories

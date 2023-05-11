@@ -77,7 +77,7 @@ class CoreDataController: NSObject, DatabaseProtocol {
         listeners.addDelegate(listener)
         
         if listener.listenerType == .listingDraft || listener.listenerType == .all {
-            listener.onListingChange(change: .update, listings: fetchAllListings())
+            listener.onListingDraftChange(change: .update, listings: fetchAllListings())
         }
     }
     

@@ -26,6 +26,14 @@ class ProfileViewController: UIViewController {
             self.performSegue(withIdentifier: "showLoginSegue", sender: self)
         }
     }
+
+    @IBAction func draftsButton(_ sender: Any) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "draftsVC") as? DraftsViewController {
+            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     
     /*
     // MARK: - Navigation
