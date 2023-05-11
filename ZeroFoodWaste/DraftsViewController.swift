@@ -38,7 +38,8 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     }
     
     @IBAction func backButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+
+        navigationController?.popViewController(animated: true)
         
     }
     

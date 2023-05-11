@@ -55,13 +55,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
 
-    @objc func createListingButtonAction() {
-//        if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController {
-//            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//            self.present(vc, animated: true, completion: nil)
-//        }
-        
-        
+    @objc func createListingButtonAction() {        
         let vc = storyboard?.instantiateViewController(withIdentifier: "CreateListingVC") as? CreateListingViewController
 
         navigationController?.pushViewController(vc!, animated: true)

@@ -57,10 +57,8 @@ class ProfileViewController: UIViewController, DatabaseListener {
     }
 
     @IBAction func draftsButton(_ sender: Any) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "draftsVC") as? DraftsViewController {
-            vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            self.present(vc, animated: true, completion: nil)
-        }
+        let vc = storyboard?.instantiateViewController(withIdentifier: "draftsVC") as? DraftsViewController
+        navigationController?.pushViewController(vc!, animated: true)
     }
     
     

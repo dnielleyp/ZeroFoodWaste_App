@@ -19,7 +19,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     var saveDraft = false
     
     @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var descField: UITextField!
+    @IBOutlet weak var descField: UITextView!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var listingImage: UIImageView!
     
@@ -95,34 +95,45 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
 // MARK: - saving as draft
     
     @IBAction func saveAsDraft(_ sender: Any) {
+        
+        var haveImage = true
+        var filename: String?
+
         saveDraft = true
         //check that at least name field is filled :D
         guard let name = nameField.text else {return}
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
         category = categorySegmentedControl.selectedSegmentIndex
-        guard let image = listingImage.image else {
-            return
-        }
+        
+        
+        // MARK: problem! it's returning bc there's no image :( but i don't want that, i only want it to require the listing name
+        guard let image = listingImage.image else {haveImage = false; return}
+        print("but it's not here anymore huhu")
         
         var category32 = Int32(category!)
         
-        let uuid = UUID().uuidString
-        let filename = "\(uuid).jpg"
-
-
-        guard let data = image.jpegData(compressionQuality: 0.8) else {
-            displayMessage(title: "Error", message: "Image data could not be compressed")
-            return
+        print(haveImage,"pls")
+        
+        // MARK: if image then only do all this but idk how to ;-;
+        if haveImage {
+            print("this is running and it's ruining your sanity")
+            let uuid = UUID().uuidString
+            filename = "\(uuid).jpg"
+            
+            
+            guard let data = image.jpegData(compressionQuality: 0.8) else {
+                //            displayMessage(title: "Error", message: "Image data could not be compressed")
+                return
+            }
+            
+            //get app's document directory to save the image file
+            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = pathsList[0]
+            let imageFile = documentDirectory.appendingPathComponent(filename!)
+            
         }
-
         
-        
-        //get app's document directory to save the image file
-        let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentDirectory = pathsList[0]
-        let imageFile = documentDirectory.appendingPathComponent(filename)
-
         if name.isEmpty {
             displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
             return
@@ -132,8 +143,8 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32, image: filename)
         }
 
-        //then leaves create listing view
         navigationController?.popViewController(animated: true)
+        print("HELLOOOHEUHJHJHJSAHFJDSKJDH")
 
 
     }
@@ -145,6 +156,14 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     
     @IBAction func createListing(_ sender: Any) {
         //check if all fields are there yk
+        guard let name = nameField.text else {return}
+//        guard let desc = descField.text else {return}
+        guard let location = locationField.text else {return}
+        category = categorySegmentedControl.selectedSegmentIndex
+        guard let image = listingImage.image else {
+            return
+        }
+        
     }
 }
 
