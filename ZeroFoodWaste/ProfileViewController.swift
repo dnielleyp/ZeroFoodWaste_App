@@ -8,12 +8,34 @@
 import UIKit
 import FirebaseAuth
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, DatabaseListener {
 
+    
+    var allDrafts: [ListingDraft] = []
+    
+    var listenerType = ListenerType.listingDraft
+    weak var databaseController: DatabaseProtocol?
+    
+    
+    func onListingDraftChange(change: DatabaseChange, listings: [ListingDraft]) {
+        allDrafts =  listings
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
     }
     
     @IBAction func logOutButton(_ sender: Any) {
@@ -23,8 +45,16 @@ class ProfileViewController: UIViewController {
             } catch {
                 print("Log Out Error: \(error.localizedDescription)")
             }
+
             self.performSegue(withIdentifier: "showLoginSegue", sender: self)
+        
         }
+        for draft in allDrafts {
+            print(" hererHERHWKRERHWJRHUIEHHEEHHEHERHERHEHRHEHRE", "ALLDRAFTS:", allDrafts.count)
+            databaseController?.deleteListingDraft(listing: draft)
+        }
+        
+        
     }
 
     @IBAction func draftsButton(_ sender: Any) {
@@ -33,6 +63,9 @@ class ProfileViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
+    
+    
+    
     
     
     /*

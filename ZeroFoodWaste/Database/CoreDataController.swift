@@ -9,10 +9,12 @@ import UIKit
 import CoreData
 import Foundation
 
-class CoreDataController: NSObject, DatabaseProtocol {
+class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsControllerDelegate {
+
     
     var listeners = MulticastDelegate<DatabaseListener>()
     var persistentContainer: NSPersistentContainer
+    var allDraftsFetchedResultsController: NSFetchedResultsController<ListingDraft>?
     
     override init() {
         
@@ -70,23 +72,51 @@ class CoreDataController: NSObject, DatabaseProtocol {
         }
         
         return drafts
-        
     }
-    
-    func addListener (listener: DatabaseListener) {
-        listeners.addDelegate(listener)
         
-        if listener.listenerType == .listingDraft || listener.listenerType == .all {
-            listener.onListingDraftChange(change: .update, listings: fetchAllListings())
+        //        if allDraftsFetchedResultsController == nil {
+        //            let request: NSFetchRequest<ListingDraft> = ListingDraft.fetchRequest()
+        //            let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        //            request.sortDescriptors = [nameSortDescriptor]
+        //
+        //
+        //            // Initialise Fetched Results Controller
+        //            allDraftsFetchedResultsController = NSFetchedResultsController<ListingDraft>(fetchRequest: request, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        //            // Set this class to be the results delegate
+        //            allDraftsFetchedResultsController?.delegate = self
+        //
+        //            do {
+        //                try allDraftsFetchedResultsController?.performFetch()
+        //            } catch {
+        //                print("Fetch Request Failed: \(error)")
+        //            }
+        //        }
+        //
+        //        if let drafts = allDraftsFetchedResultsController?.fetchedObjects {
+        //            return drafts
+        //        }
+        //
+        //        return [ListingDraft]()
+        //
+        //
+        //
+        //    }
+        
+        
+        func addListener (listener: DatabaseListener) {
+            listeners.addDelegate(listener)
+            
+            if listener.listenerType == .listingDraft || listener.listenerType == .all {
+                listener.onListingDraftChange(change: .update, listings: fetchAllListings())
+            }
         }
-    }
-    
-    func removeListener(listener: DatabaseListener) {
-        listeners.removeDelegate(listener)
-    }
-    
-    
-    
+        
+        func removeListener(listener: DatabaseListener) {
+            listeners.removeDelegate(listener)
+        }
+        
+        
+        
     
     
 }

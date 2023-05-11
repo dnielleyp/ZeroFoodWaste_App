@@ -31,6 +31,7 @@
 		74A6E16029F8C51F00F6CBE4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 74A6E15F29F8C51F00F6CBE4 /* FirebaseFirestoreSwift */; };
 		74A6E16229F8C51F00F6CBE4 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 74A6E16129F8C51F00F6CBE4 /* FirebaseMessaging */; };
 		74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */; };
+		74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */; };
 		74E6E32C29FB72B000DD2B6A /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */; };
 		74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		74A6E15229F8C2B800F6CBE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74A6E15429F8C2B800F6CBE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftsViewController.swift; sourceTree = "<group>"; };
+		74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 				74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */,
 				74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */,
 				74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */,
+				74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */,
 				742AFBC42A03555E005958CF /* TabBarViewController.swift */,
 				74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */,
 				7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */,
@@ -233,6 +236,7 @@
 				74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */,
 				7493406B2A09C7CE00D2A9AB /* CoreDataController.swift in Sources */,
 				749340602A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld in Sources */,
+				74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */,
 				74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */,
 				7488E6AC29FA209000FFA47A /* User.swift in Sources */,
 				74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */,
