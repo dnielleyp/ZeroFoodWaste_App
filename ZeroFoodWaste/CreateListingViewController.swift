@@ -106,23 +106,17 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         guard let location = locationField.text else {return}
         category = categorySegmentedControl.selectedSegmentIndex
         
-        
-        // MARK: problem! it's returning bc there's no image :( but i don't want that, i only want it to require the listing name
-        guard let image = listingImage.image else {haveImage = false; return}
-        print("but it's not here anymore huhu")
-        
         var category32 = Int32(category!)
-        
-        print(haveImage,"pls")
-        
-        // MARK: if image then only do all this but idk how to ;-;
-        if haveImage {
-            print("this is running and it's ruining your sanity")
+        var imageExists = checkImage()
+
+        if imageExists {
+            
+            let image = listingImage.image  //cannot be nil since we already checked
             let uuid = UUID().uuidString
             filename = "\(uuid).jpg"
             
             
-            guard let data = image.jpegData(compressionQuality: 0.8) else {
+            guard let data = image!.jpegData(compressionQuality: 0.8) else {
                 //            displayMessage(title: "Error", message: "Image data could not be compressed")
                 return
             }
@@ -133,6 +127,8 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let imageFile = documentDirectory.appendingPathComponent(filename!)
             
         }
+        
+        //call separate function
         
         if name.isEmpty {
             displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
@@ -150,6 +146,13 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     }
     
     
+    func checkImage() -> Bool{
+        guard let image = listingImage.image else {
+            return false
+        }
+        return true
+        
+    }
     
     
 // MARK: Creating a listing that will be posted

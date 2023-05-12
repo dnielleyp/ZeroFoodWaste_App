@@ -6,17 +6,20 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class ProfileViewController: UIViewController, DatabaseListener {
 
-    
+    var username: String?
     var allDrafts: [ListingDraft] = []
+    @IBOutlet weak var usernameLabel: UILabel!
     
+    var userRef = Firestore.firestore().collection("user")
     var listenerType = ListenerType.listingDraft
     weak var databaseController: DatabaseProtocol?
     
-    
+
+
     func onListingDraftChange(change: DatabaseChange, listings: [ListingDraft]) {
         allDrafts =  listings
     }
@@ -24,6 +27,7 @@ class ProfileViewController: UIViewController, DatabaseListener {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        getUsername()
     }
     
     override func viewDidLoad() {
@@ -59,6 +63,30 @@ class ProfileViewController: UIViewController, DatabaseListener {
     @IBAction func draftsButton(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "draftsVC") as? DraftsViewController
         navigationController?.pushViewController(vc!, animated: true)
+    }
+    
+    
+    func getUsername() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            displayMessage(title: "eh", message: "errorooror")
+            return
+        }
+        
+        userRef.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error \(error!)")
+                return
+            }
+            for document in snapshot.documents {
+                let documentID = document.documentID
+                if documentID == userID {
+                    self.username = document.get("username") as? String
+                    self.usernameLabel.text = "@" + self.username!
+                }
+                
+            }
+        }
+        
     }
     
     
