@@ -14,6 +14,9 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     var listenerType = ListenerType.listingDraft
     weak var databaseController: DatabaseProtocol?
     
+    
+    @IBOutlet weak var draftTableView: UITableView!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
@@ -43,12 +46,21 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         
     }
     
+    // MARK: TableView func
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
         if editingStyle == .delete {
-            
-            let listing = allDrafts[indexPath.row]
-            
-            self.databaseController?.deleteListingDraft(listing: listing)
+            tableView.performBatchUpdates({
+                
+                let listing = allDrafts[indexPath.row]
+                self.databaseController?.deleteListingDraft(listing: listing)
+                
+                self.allDrafts.remove(at: indexPath.row)
+                self.draftTableView.deleteRows(at: [indexPath], with: .fade)
+                self.draftTableView.reloadSections([0], with: .automatic)
+            }, completion: nil)
         }
     }
         
@@ -74,6 +86,10 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "EditDraftSegue", sender: self)
     }
 
     
