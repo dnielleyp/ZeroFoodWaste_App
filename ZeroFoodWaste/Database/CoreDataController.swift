@@ -10,7 +10,6 @@ import CoreData
 import Foundation
 
 class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsControllerDelegate {
-
     
     var listeners = MulticastDelegate<DatabaseListener>()
     var persistentContainer: NSPersistentContainer
@@ -40,7 +39,7 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
     
     
     ///this is the DRAFT listng. only the draft will be added into core data :D
-    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32?, image: String?) -> ListingDraft {
+    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?) -> ListingDraft {
         
         let listing = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: persistentContainer.viewContext) as! ListingDraft
     
@@ -48,7 +47,7 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         listing.name = name
         listing.desc = description
         listing.location = location
-        listing.category = category!
+        listing.category = category
 //        listing.dietPref = dietPref
 //        listing.allergens = allergens
         listing.photo = image

@@ -12,10 +12,10 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     
     
     weak var databaseController: DatabaseProtocol?
-//    var managedObjectContext: NSManagedObjectContext?
+    weak var firebaseController: DatabaseProtocol?
     
     var draft = false
-    var category: Int?
+    var category: Category?
     var saveDraft = false
     
     @IBOutlet weak var nameField: UITextField!
@@ -29,7 +29,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     
     let dietPrefList = ["Gluten Free", "Vegan", "Vegetarian", "Halal"]
     
-    
 
     override func viewDidLoad() {
         
@@ -37,19 +36,17 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
 
         // Do any additional setup after loading the view.
         
-        
         //hide the tab bar hehe
         self.tabBarController?.tabBar.isHidden = true
         
         //get databaseController
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
+        
+        firebaseController = appDelegate?.firebaseController
     }
 
-    @IBAction func closeButton(_ sender: Any) {
-        
-        navigationController?.popViewController(animated: true)
-    }
+    @IBAction func closeButton(_ sender: Any) { navigationController?.popViewController(animated: true) }
 
     
 //    checkmark.square
@@ -104,11 +101,11 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         guard let name = nameField.text else {return}
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
-        category = categorySegmentedControl.selectedSegmentIndex
+        var category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
         
-        var category32 = Int32(category!)
         var imageExists = checkImage()
 
+        //check if image exists
         if imageExists {
             
             let image = listingImage.image  //cannot be nil since we already checked
@@ -140,10 +137,9 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         }
 
         navigationController?.popViewController(animated: true)
-        print("HELLOOOHEUHJHJHJSAHFJDSKJDH")
-
 
     }
+    
     
     
     func checkImage() -> Bool{
@@ -151,21 +147,50 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             return false
         }
         return true
-        
     }
     
     
 // MARK: Creating a listing that will be posted
-    
+    //this one is added to firebase :)
     @IBAction func createListing(_ sender: Any) {
+        var imageExists = checkImage()
+        var haveImage = true
+        var filename: String?
+        
+        
         //check if all fields are there yk
         guard let name = nameField.text else {return}
-//        guard let desc = descField.text else {return}
+        guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
-        category = categorySegmentedControl.selectedSegmentIndex
-        guard let image = listingImage.image else {
-            return
+        category = Category(rawValue: Int(categorySegmentedControl.selectedSegmentIndex))
+        
+        guard let image = listingImage.image else {return}
+        
+        if !name.isEmpty && !desc.isEmpty && !location.isEmpty {
+            displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
         }
+        
+        if imageExists {
+            
+            let image = listingImage.image  //cannot be nil since we already checked
+            let uuid = UUID().uuidString
+            filename = "\(uuid).jpg"
+            
+            
+            guard let data = image!.jpegData(compressionQuality: 0.8) else {
+                return
+            }
+            
+            //get app's document directory to save the image file
+            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = pathsList[0]
+            let imageFile = documentDirectory.appendingPathComponent(filename!)
+            
+        } else {
+            displayMessage(title: "Cannot Create Listing", message: "Please include an image")
+        }
+        
+        firebaseController?.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
         
     }
 }

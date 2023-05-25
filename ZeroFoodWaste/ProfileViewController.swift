@@ -9,6 +9,10 @@ import UIKit
 import Firebase
 
 class ProfileViewController: UIViewController, DatabaseListener {
+    func onListingChange(change: DatabaseChange, listings: [Listing]) {
+        //nothing
+    }
+    
 
     var username: String?
     var allDrafts: [ListingDraft] = []

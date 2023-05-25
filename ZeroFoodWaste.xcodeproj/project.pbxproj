@@ -37,6 +37,8 @@
 		74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */; };
 		74E6E32C29FB72B000DD2B6A /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */; };
 		74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */; };
+		74FE0A5F2A1F1A3600F1A99F /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */; };
+		74FE0A612A1F481800F1A99F /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		74DDFF852A0CB3B7003AFC4E /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,13 +122,14 @@
 				74A6E14F29F8C2B800F6CBE4 /* Assets.xcassets */,
 				7488E6B129FA3C9D00FFA47A /* CreateAccountViewController.swift */,
 				742AFBC22A03533D005958CF /* CreateListingViewController.swift */,
+				74FE0A5D2A1F0E7100F1A99F /* Firebase */,
 				74E6E33329FB836D00DD2B6A /* Database */,
 				749340652A09C41F00D2A9AB /* DataModel */,
 				7488E6AF29FA3BA600FFA47A /* GoogleService-Info.plist */,
 				74A47FF22A0258E6001386E1 /* HomeViewController.swift */,
+				74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */,
 				74A6E15429F8C2B800F6CBE4 /* Info.plist */,
 				74A6E15129F8C2B800F6CBE4 /* LaunchScreen.storyboard */,
-				7488E6A929FA135000FFA47A /* Listing.swift */,
 				7488E6AD29FA376700FFA47A /* LoginViewController.swift */,
 				74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */,
 				74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */,
@@ -149,6 +154,15 @@
 				7493406A2A09C7CE00D2A9AB /* CoreDataController.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		74FE0A5D2A1F0E7100F1A99F /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				7488E6A929FA135000FFA47A /* Listing.swift */,
+				74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +249,7 @@
 				74E6E32C29FB72B000DD2B6A /* DatabaseProtocol.swift in Sources */,
 				7488E6B229FA3C9D00FFA47A /* CreateAccountViewController.swift in Sources */,
 				74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */,
+				74FE0A612A1F481800F1A99F /* ListingCollectionViewCell.swift in Sources */,
 				7488E6AE29FA376700FFA47A /* LoginViewController.swift in Sources */,
 				749340682A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift in Sources */,
 				742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */,
@@ -242,6 +257,7 @@
 				7465BBB82A0B736C004CBBCD /* ProfileViewController.swift in Sources */,
 				74A47FF32A0258E6001386E1 /* HomeViewController.swift in Sources */,
 				7488E6AA29FA135000FFA47A /* Listing.swift in Sources */,
+				74FE0A5F2A1F1A3600F1A99F /* FirebaseController.swift in Sources */,
 				74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */,
 				7493406B2A09C7CE00D2A9AB /* CoreDataController.swift in Sources */,
 				749340602A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld in Sources */,

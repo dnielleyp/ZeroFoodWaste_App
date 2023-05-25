@@ -399,7 +399,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="45t-d5-Iy8">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listingCell" id="45t-d5-Iy8" customClass="ListingCollectionViewCell" customModule="ZeroFoodWaste" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="165" height="201"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nBJ-ff-p9U">
@@ -428,6 +428,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="165" height="201"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="X2B-bP-ekG" id="LV8-9h-Mz6"/>
+                                            <outlet property="listingNameLabel" destination="axa-5o-ewm" id="GEP-wt-Aj7"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -747,9 +751,6 @@
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="0.96862745100000003" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="vqw-Sk-gAf" kind="show" identifier="EditDraftSegue" id="9mc-gF-CBp"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -763,15 +764,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNT-Zp-BvS">
-                                <rect key="frame" x="298" y="131" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
-                                <connections>
-                                    <segue destination="vqw-Sk-gAf" kind="show" id="Xkt-wo-sxf"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nrx-vT-T3d"/>
                         <color key="backgroundColor" red="1" green="0.96862745100000003" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -788,6 +780,7 @@
                     <navigationItem key="navigationItem" id="XHe-HB-n07"/>
                     <connections>
                         <outlet property="draftTableView" destination="aB9-yn-YJT" id="tbN-uj-ZMX"/>
+                        <segue destination="vqw-Sk-gAf" kind="show" identifier="EditDraftSegue" id="hQQ-Za-UYz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4W-0M-n61" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1068,7 +1061,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8r-se-7D5">
-                                <rect key="frame" x="0.0" y="142.33333333333337" width="393" height="1057.6666666666665"/>
+                                <rect key="frame" x="0.0" y="122.33333333333337" width="393" height="1057.6666666666665"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="eCC-YB-GBG" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="1057.6666666666667"/>
@@ -1180,6 +1173,9 @@
                                                 <rect key="frame" x="20" y="190.99999999999997" width="138" height="35"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Select Photo"/>
+                                                <connections>
+                                                    <action selector="selectPhoto:" destination="vqw-Sk-gAf" eventType="touchUpInside" id="bUv-in-bwW"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ntV-7q-8Vs">
                                                 <rect key="frame" x="20" y="501.66666666666663" width="353" height="34"/>
@@ -1198,6 +1194,9 @@
                                                 <rect key="frame" x="250.33333333333334" y="0.0" width="122.66666666666666" height="35"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="gray" title="Update Draft"/>
+                                                <connections>
+                                                    <action selector="updateDraft:" destination="vqw-Sk-gAf" eventType="touchUpInside" id="a9n-lP-Qxm"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="1" green="0.96862745100000003" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1263,7 +1262,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="closeButton:" destination="vqw-Sk-gAf" eventType="touchUpInside" id="c4B-RS-31B"/>
+                                    <action selector="backButton:" destination="vqw-Sk-gAf" eventType="touchUpInside" id="akx-bX-ZLX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1283,6 +1282,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="qdv-KV-Wmd"/>
                     <size key="freeformSize" width="393" height="1200"/>
+                    <connections>
+                        <outlet property="categorySegmentControl" destination="Gt7-fD-pX4" id="v8L-vW-6hz"/>
+                        <outlet property="dietPrefTableView" destination="htJ-gy-zDK" id="jzJ-sg-xyO"/>
+                        <outlet property="listingDesc" destination="Ri3-i2-7tA" id="5pR-bt-hIh"/>
+                        <outlet property="listingImage" destination="nJB-Gs-iOs" id="pVX-vU-dnO"/>
+                        <outlet property="listingName" destination="g45-9t-SpM" id="qrT-s7-pkD"/>
+                        <outlet property="locationField" destination="ntV-7q-8Vs" id="3Ve-rK-HNC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ElT-BN-9M8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1290,7 +1297,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9mc-gF-CBp"/>
         <segue reference="skF-SW-oGS"/>
         <segue reference="RD4-G0-ZHk"/>
     </inferredMetricsTieBreakers>

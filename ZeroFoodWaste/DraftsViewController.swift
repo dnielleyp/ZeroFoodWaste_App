@@ -8,11 +8,22 @@
 import UIKit
 import CoreData
 
+protocol editDraftDelegate: AnyObject {
+    func editDraftListing (_listing: ListingDraft)
+}
+
 class DraftsViewController: UIViewController, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
+    
+    func onListingChange(change: DatabaseChange, listings: [Listing]) {
+        //nothing
+    }
+    
     
     var allDrafts: [ListingDraft] = []
     var listenerType = ListenerType.listingDraft
     weak var databaseController: DatabaseProtocol?
+    
+    var index: Int?
     
     
     @IBOutlet weak var draftTableView: UITableView!
@@ -21,7 +32,7 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,13 +46,13 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         databaseController?.removeListener(listener: self)
     }
     
-// MARK: Listener method for draftListings
+    // MARK: Listener method for draftListings
     func onListingDraftChange(change: DatabaseChange, listings: [ListingDraft]) {
         allDrafts = listings
     }
     
     @IBAction func backButton(_ sender: Any) {
-
+        
         navigationController?.popViewController(animated: true)
         
     }
@@ -63,12 +74,12 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
             }, completion: nil)
         }
     }
-        
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     //get the array
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -76,7 +87,7 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "draftCell", for: indexPath)
         let listing = allDrafts[indexPath.row]
         cell.textLabel?.text = listing.name
@@ -89,9 +100,19 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        index = indexPath.row
         self.performSegue(withIdentifier: "EditDraftSegue", sender: self)
     }
-
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender:Any?){
+        if segue.identifier == "EditDraftSegue" {
+            let destination = segue.destination as! EditDraftViewController
+            
+            destination.listing = allDrafts[index!]
+        }
+        
+        
+    }
     
 }
-

@@ -56,7 +56,8 @@ class LoginViewController: UIViewController {
 //                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
             
         } catch {
-            displayMessage(title: "Error", message: "Firebase Authentication Failed with Error:\(String(describing: error))")
+//            displayMessage(title: "Error", message: "Firebase Authentication Failed with Error:\(String(describing: error))")
+            displayMessage(title: "Error", message: "Login Failed :( Please try again")
         } }
     }
     

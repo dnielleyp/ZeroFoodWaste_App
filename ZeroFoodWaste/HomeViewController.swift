@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestoreSwift
 
 class HomeViewController: UIViewController {
     
@@ -19,6 +20,12 @@ class HomeViewController: UIViewController {
     var listingArray: [Listing]?
     var name: String?
     
+    var firebaseController: FirebaseController?
+    
+    let CELL_LISTING = "listingCell"
+    var imageList = [UIImage]()
+    var imagePathList = [String]()
+    
     //definitely have a user otherwise they cannot access the home page :D
 //    var userID = Auth.auth().currentUser?.uid
     
@@ -29,6 +36,10 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        //only need firebase hehehe
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        firebaseController = appDelegate?.firebaseController
     }
     
     func readUserInfo(){
@@ -69,6 +80,8 @@ class HomeViewController: UIViewController {
         }
     }
     
+
+    
     
     
     
@@ -85,14 +98,16 @@ class HomeViewController: UIViewController {
 
 }
 
-//extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        <#code#>
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        <#code#>
-//    }
-//    
-//    
-//}
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    //listing collection view here! :D
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return
+    }
+    
+}
