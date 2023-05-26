@@ -6,17 +6,17 @@
 //
 
 import UIKit
+import CoreData
 
-class EditDraftViewController: UIViewController {
+class EditDraftViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     var listing: ListingDraft?
     
-    @IBOutlet weak var listingImage: UIImageView!
     @IBOutlet weak var listingName: UITextField!
     @IBOutlet weak var listingDesc: UITextView!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var categorySegmentControl: UISegmentedControl!
     @IBOutlet weak var dietPrefTableView: UITableView!
-    
+    @IBOutlet weak var draftImage: UIImageView!
     
     
     override func viewDidLoad() {
@@ -30,6 +30,10 @@ class EditDraftViewController: UIViewController {
         self.listingDesc.text = listing?.desc
         self.locationField.text = listing?.location
         self.categorySegmentControl.selectedSegmentIndex = tempCategory
+
+        guard let filename = listing?.photo else {return}
+        //filename is the path of the photo
+        self.draftImage.image = loadImage(filename: filename ) //hmm
         
     }
     
@@ -43,20 +47,88 @@ class EditDraftViewController: UIViewController {
         guard let lname = listingName.text else {return}
         guard let ldesc = listingDesc.text else {return}
         guard let llocation = locationField.text else {return}
+//        guard let limage = draftImage.image else {return}
         
         
         listing?.name = lname
         listing?.desc = ldesc
         listing?.location = llocation
-        
         listing?.category = category32
         
+        
+        
+        
+        
         navigationController?.popViewController(animated: true)
+        
+        
         
     }
     
     @IBAction func selectPhoto(_ sender: Any) {
+        let controller = UIImagePickerController()
+        controller.allowsEditing = false
+        controller.delegate = self
+        
+        let actionSheet = UIAlertController(title: nil, message: "Select Option", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) {action in
+            controller.sourceType = .camera
+            
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let libraryAction = UIAlertAction(title: "Photo Library", style: .default) {
+            action in controller.sourceType = .photoLibrary
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let albumAction = UIAlertAction(title: "Photo Album", style: .default) { action in
+            controller.sourceType = .savedPhotosAlbum
+            
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) { actionSheet.addAction(cameraAction)}
+            		
+        actionSheet.addAction(libraryAction)
+        actionSheet.addAction(albumAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+        
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            draftImage.image = pickedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func loadImage(filename: String)-> UIImage? {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        
+        
+        let imageURL = documentsDirectory.appendingPathComponent(filename)
+        let image = UIImage(contentsOfFile: imageURL.path)
+        
+        print(filename, "RAGHHGHHHGG")
+        
+        //it gets the correct filename and returns the correct image
+        return image
+
+    }
+    
+    
     
     /*
     // MARK: - Navigation
@@ -82,18 +154,3 @@ extension EditDraftViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension EditDraftViewController: UIImagePickerControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let pickedImage = info[.originalImage] as? UIImage {
-            listingImage.image = pickedImage
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-}

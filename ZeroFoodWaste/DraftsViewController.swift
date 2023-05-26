@@ -18,7 +18,6 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         //nothing
     }
     
-    
     var allDrafts: [ListingDraft] = []
     var listenerType = ListenerType.listingDraft
     weak var databaseController: DatabaseProtocol?

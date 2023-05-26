@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor(red: 8/255.0, green: 105/255.0, blue: 82/255.0, alpha: 1.0)
         
         databaseController = CoreDataController()
-        firebaseController = FirebaseController()
+//        firebaseController = FirebaseController()
         
         persistentContainer = NSPersistentContainer(name: "ZFW-Model")
         persistentContainer?.loadPersistentStores() { (description, error) in

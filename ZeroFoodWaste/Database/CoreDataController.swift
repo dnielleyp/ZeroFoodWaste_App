@@ -11,6 +11,18 @@ import Foundation
 
 class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsControllerDelegate {
     
+    func addListing(name: String?, description: String?, location: String?, category: Category?, image: String?) -> Listing? {
+        //nothing ?
+        
+        //bro idk sia
+        return nil
+    }
+    
+    func deleteListing(listing: Listing){
+        //nothing ?? whehfaiha
+    }
+    
+
     var listeners = MulticastDelegate<DatabaseListener>()
     var persistentContainer: NSPersistentContainer
     var allDraftsFetchedResultsController: NSFetchedResultsController<ListingDraft>?
@@ -39,7 +51,7 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
     
     
     ///this is the DRAFT listng. only the draft will be added into core data :D
-    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?) -> ListingDraft {
+    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?)-> ListingDraft? {
         
         let listing = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: persistentContainer.viewContext) as! ListingDraft
     
@@ -73,33 +85,33 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         return drafts
     }
         
-        //        if allDraftsFetchedResultsController == nil {
-        //            let request: NSFetchRequest<ListingDraft> = ListingDraft.fetchRequest()
-        //            let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        //            request.sortDescriptors = [nameSortDescriptor]
-        //
-        //
-        //            // Initialise Fetched Results Controller
-        //            allDraftsFetchedResultsController = NSFetchedResultsController<ListingDraft>(fetchRequest: request, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        //            // Set this class to be the results delegate
-        //            allDraftsFetchedResultsController?.delegate = self
-        //
-        //            do {
-        //                try allDraftsFetchedResultsController?.performFetch()
-        //            } catch {
-        //                print("Fetch Request Failed: \(error)")
-        //            }
-        //        }
-        //
-        //        if let drafts = allDraftsFetchedResultsController?.fetchedObjects {
-        //            return drafts
-        //        }
-        //
-        //        return [ListingDraft]()
-        //
-        //
-        //
-        //    }
+//                if allDraftsFetchedResultsController == nil {
+//                    let request: NSFetchRequest<ListingDraft> = ListingDraft.fetchRequest()
+//                    let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+//                    request.sortDescriptors = [nameSortDescriptor]
+//
+//
+//                    // Initialise Fetched Results Controller
+//                    allDraftsFetchedResultsController = NSFetchedResultsController<ListingDraft>(fetchRequest: request, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//                    // Set this class to be the results delegate
+//                    allDraftsFetchedResultsController?.delegate = self
+//
+//                    do {
+//                        try allDraftsFetchedResultsController?.performFetch()
+//                    } catch {
+//                        print("Fetch Request Failed: \(error)")
+//                    }
+//                }
+//
+//                if let drafts = allDraftsFetchedResultsController?.fetchedObjects {
+//                    return drafts
+//                }
+//
+//                return [ListingDraft]()
+//
+//
+//
+//            }
         
         
         func addListener (listener: DatabaseListener) {

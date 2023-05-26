@@ -14,7 +14,9 @@ class LoginViewController: UIViewController {
     
 //    var userRef: CollectionReference?   //reference to your user collection
     var currentUser: FirebaseAuth.User?
-
+    
+    // MARK: try try try here
+//    var currentSender: Sender? 
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!

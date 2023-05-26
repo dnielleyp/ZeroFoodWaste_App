@@ -8,19 +8,35 @@
 import UIKit
 import FirebaseFirestoreSwift
 
-//why are you being problematic????????????
+//why got error what is your pROBELLENKFJHIDHAI
 class Listing: NSObject, Codable {
     
     @DocumentID var id: String?
-    var image: String?
     var name: String?
     var owner: User?
     var likes: [User] = []
     var desc: String?
-    var category: Int?
     var location: String?
+    var category: Int?
+    var image: String?
+    var dietPref: [String] = []
+    var allergens: [String] = []
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case owner
+        case likes
+        case desc = "description"
+        case location
+        case category
+        case image = "photos"
+        case dietPref
+        case allergens
+    }
     
 }
+
 
 extension Listing {
     var listingcategory: Category {
@@ -33,18 +49,18 @@ extension Listing {
     }
 }
 
-enum CodingKeys: String, CodingKey {
-    case id
-    case name
-    case owner
-    case likes
-    case desc = "description"
-    case location
-    case category
+//enum CodingKeys: String, CodingKey {
+//    case id
+//    case name
+//    case owner
+//    case likes
+//    case desc = "description"
+//    case location
+//    case category
+//    case image = "photos"
 //    case dietPref
 //    case allergens
-    case image = "photos"
-}
+//}
 
 enum Category: Int {
     case produce = 0

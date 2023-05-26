@@ -29,6 +29,8 @@ class HomeViewController: UIViewController {
     //definitely have a user otherwise they cannot access the home page :D
 //    var userID = Auth.auth().currentUser?.uid
     
+    var currentSender: Sender?
+    
     
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -62,6 +64,8 @@ class HomeViewController: UIViewController {
                 
             }
         }
+        
+        
         
     }
     
@@ -98,16 +102,16 @@ class HomeViewController: UIViewController {
 
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    //listing collection view here! :D
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return
-    }
-    
-}
+//extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//    //listing collection view here! :D
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//
+//
+//
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//
+//    }
+//
+//}

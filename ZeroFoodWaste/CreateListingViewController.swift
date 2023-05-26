@@ -44,6 +44,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         databaseController = appDelegate?.databaseController
         
         firebaseController = appDelegate?.firebaseController
+        
     }
 
     @IBAction func closeButton(_ sender: Any) { navigationController?.popViewController(animated: true) }
@@ -112,6 +113,8 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let uuid = UUID().uuidString
             filename = "\(uuid).jpg"
             
+            print(filename,"fILENAAAMEEEEE")
+            
             
             guard let data = image!.jpegData(compressionQuality: 0.8) else {
                 //            displayMessage(title: "Error", message: "Image data could not be compressed")
@@ -122,6 +125,8 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
+            
+            print("RAN HERE")
             
         }
         
@@ -139,7 +144,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         navigationController?.popViewController(animated: true)
 
     }
-    
+
     
     
     func checkImage() -> Bool{
@@ -153,45 +158,46 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
 // MARK: Creating a listing that will be posted
     //this one is added to firebase :)
     @IBAction func createListing(_ sender: Any) {
+        
         var imageExists = checkImage()
         var haveImage = true
         var filename: String?
-        
-        
+
+
         //check if all fields are there yk
         guard let name = nameField.text else {return}
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
         category = Category(rawValue: Int(categorySegmentedControl.selectedSegmentIndex))
-        
+
         guard let image = listingImage.image else {return}
-        
+
         if !name.isEmpty && !desc.isEmpty && !location.isEmpty {
             displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
         }
-        
+
         if imageExists {
-            
+
             let image = listingImage.image  //cannot be nil since we already checked
             let uuid = UUID().uuidString
             filename = "\(uuid).jpg"
-            
-            
+
+
             guard let data = image!.jpegData(compressionQuality: 0.8) else {
                 return
             }
-            
+
             //get app's document directory to save the image file
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
-            
+
         } else {
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
-        
+
         firebaseController?.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
-        
+
     }
 }
 

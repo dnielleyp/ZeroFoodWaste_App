@@ -33,12 +33,10 @@ protocol DatabaseProtocol: AnyObject {
     func removeListener(listener: DatabaseListener)
     
     //into core data only if the listing is a draft
-    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?) -> ListingDraft
-    
+    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?) -> ListingDraft?
     func deleteListingDraft (listing: ListingDraft)
     
-    //for published listings :>
-//    func addListing (name: String, description: String, location: String,
-//                     category: Category, image: String) -> Listing
-//    func deleteListing(listing: Listing)
+//    for published listings :>
+    func addListing (name: String?, description: String?, location: String?, category: Category?, image: String?) -> Listing?
+    func deleteListing(listing: Listing)
 }
