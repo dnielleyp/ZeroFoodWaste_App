@@ -32,7 +32,13 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        databaseController?.addListener(listener: self)
+        do {
+            allDrafts = try managedObjectContext!.fetch(ListingDraft.fetchRequest()) as [ListingDraft]
+            print("Loaded", allDrafts.count)
+        }
+        catch {
+            print("ERROR")
+        }
         getUsername()
     }
     
@@ -47,25 +53,29 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        databaseController?.removeListener(listener: self)
+//        databaseController?.removeListener(listener: self)
     }
     
     @IBAction func logOutButton(_ sender: Any) {
+        
+        for draft in allDrafts {
+            do {
+                managedObjectContext!.delete(draft)
+                try managedObjectContext!.save()
+            } catch {
+                displayMessage(title: "Error", message: "Delete Failed!!!")
+            }
+            
+        }
         Task{
             do {
                 try Auth.auth().signOut()
             } catch {
                 print("Log Out Error: \(error.localizedDescription)")
             }
-
-            self.performSegue(withIdentifier: "showLoginSegue", sender: self)
-        
-        }
-        for draft in allDrafts {
-            print("deleted")
-            managedObjectContext!.delete(draft)
         }
 
+        self.performSegue(withIdentifier: "showLoginSegue", sender: self)
     }
 
     @IBAction func draftsButton(_ sender: Any) {
