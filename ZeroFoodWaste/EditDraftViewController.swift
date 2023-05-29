@@ -49,20 +49,13 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         guard let llocation = locationField.text else {return}
 //        guard let limage = draftImage.image else {return}
         
-        
         listing?.name = lname
         listing?.desc = ldesc
         listing?.location = llocation
         listing?.category = category32
         
-        
-        
-        
-        
         navigationController?.popViewController(animated: true)
-        
-        
-        
+   
     }
     
     @IBAction func selectPhoto(_ sender: Any) {

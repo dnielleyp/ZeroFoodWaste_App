@@ -41,7 +41,6 @@ class HomeViewController: UIViewController {
         
         //only need firebase hehehe
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        firebaseController = appDelegate?.firebaseController
     }
     
     func readUserInfo(){

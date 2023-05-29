@@ -7,12 +7,9 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ProfileViewController: UIViewController, DatabaseListener {
-    func onListingChange(change: DatabaseChange, listings: [Listing]) {
-        //nothing
-    }
-    
 
     var username: String?
     var allDrafts: [ListingDraft] = []
@@ -20,10 +17,15 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     var userRef = Firestore.firestore().collection("user")
     var listenerType = ListenerType.listingDraft
-    weak var databaseController: DatabaseProtocol?
     
+    weak var databaseController: DatabaseProtocol?
+    var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
 
-
+    func onListingChange(change: DatabaseChange, listings: [Listing]) {
+        //nothing
+    }
+    
     func onListingDraftChange(change: DatabaseChange, listings: [ListingDraft]) {
         allDrafts =  listings
     }
@@ -36,9 +38,11 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        databaseController = appDelegate?.databaseController
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+        
+        managedObjectContext = appDelegate.persistentContainer?.viewContext
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,10 +62,9 @@ class ProfileViewController: UIViewController, DatabaseListener {
         
         }
         for draft in allDrafts {
-            databaseController?.deleteListingDraft(listing: draft)
+            managedObjectContext!.delete(draft)
         }
-        
-        
+
     }
 
     @IBAction func draftsButton(_ sender: Any) {

@@ -42,7 +42,7 @@ class ChatsTableViewController: UITableViewController {
     }
     
     
-    let SEGUE_CHAT = "showChatSegue"
+    let SEGUE_CHAT = "showMessageSegue"
     let CELL_CHAT = "chatCell"
     
     var currentSender: Sender?
@@ -68,8 +68,8 @@ class ChatsTableViewController: UITableViewController {
             
             querySnapshot?.documents.forEach() { snapshot in
                 let id = snapshot.documentID
-                let name = snapshot["name"] as? String
-                let chat = Chat(id: id, name: name!)
+                let name = snapshot["name"] as? String ?? " "
+                let chat = Chat(id: id, name: name)
                 
                 self.chats.append(chat)
             }
@@ -133,9 +133,8 @@ class ChatsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_CHAT, for: indexPath)
-
-        // Configure the cell...
-
+        var chat = chats[indexPath.row]
+        cell.textLabel?.text = chat.name
         return cell
     }
     

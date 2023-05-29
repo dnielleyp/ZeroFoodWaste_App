@@ -6,10 +6,10 @@
 //
 
 import UIKit
-//import FirebaseFirestoreSwift
+import FirebaseFirestoreSwift
 
-class User: NSObject{
-//    @DocumentID var username: String?
+class User: NSObject, Codable {
+    @DocumentID var id: String?
     var name: String?
     var listings: [Listing] = []
     var likes: [Listing] = []

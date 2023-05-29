@@ -22,7 +22,6 @@
 		749340602A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7493405E2A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld */; };
 		749340682A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749340662A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift */; };
 		749340692A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749340672A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift */; };
-		7493406B2A09C7CE00D2A9AB /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7493406A2A09C7CE00D2A9AB /* CoreDataController.swift */; };
 		74A47FF32A0258E6001386E1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A47FF22A0258E6001386E1 /* HomeViewController.swift */; };
 		74A6E14729F8C2B700F6CBE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6E14629F8C2B700F6CBE4 /* AppDelegate.swift */; };
 		74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A6E14829F8C2B700F6CBE4 /* SceneDelegate.swift */; };
@@ -42,6 +41,7 @@
 		74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */; };
 		74EE0E4E2A205BDF00A12572 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE0E4D2A205BDF00A12572 /* Chat.swift */; };
 		74EE0E502A205C1E00A12572 /* ChatsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE0E4F2A205C1E00A12572 /* ChatsTableViewController.swift */; };
+		74EE0E542A2075B700A12572 /* ChatMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE0E532A2075B700A12572 /* ChatMessageViewController.swift */; };
 		74FE0A5F2A1F1A3600F1A99F /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */; };
 		74FE0A612A1F481800F1A99F /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -61,7 +61,6 @@
 		7493405F2A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ZFW-DataModel.xcdatamodel"; sourceTree = "<group>"; };
 		749340662A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingDraft+CoreDataClass.swift"; sourceTree = "<group>"; };
 		749340672A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListingDraft+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7493406A2A09C7CE00D2A9AB /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		74A47FF22A0258E6001386E1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		74A6E14329F8C2B700F6CBE4 /* ZeroFoodWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroFoodWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A6E14629F8C2B700F6CBE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +78,7 @@
 		74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		74EE0E4D2A205BDF00A12572 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		74EE0E4F2A205C1E00A12572 /* ChatsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewController.swift; sourceTree = "<group>"; };
+		74EE0E532A2075B700A12572 /* ChatMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageViewController.swift; sourceTree = "<group>"; };
 		74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +106,7 @@
 				745C47DC2A20571800EEB2F7 /* ChatMessage.swift */,
 				74EE0E4D2A205BDF00A12572 /* Chat.swift */,
 				74EE0E4F2A205C1E00A12572 /* ChatsTableViewController.swift */,
+				74EE0E532A2075B700A12572 /* ChatMessageViewController.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -163,7 +164,6 @@
 				742AFBC42A03555E005958CF /* TabBarViewController.swift */,
 				74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */,
 				7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */,
-				7488E6AB29FA209000FFA47A /* User.swift */,
 			);
 			path = ZeroFoodWaste;
 			sourceTree = "<group>";
@@ -173,7 +173,6 @@
 			children = (
 				74E6E33129FB834C00DD2B6A /* MulticastDelegate.swift */,
 				74E6E32B29FB72B000DD2B6A /* DatabaseProtocol.swift */,
-				7493406A2A09C7CE00D2A9AB /* CoreDataController.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -181,6 +180,7 @@
 		74FE0A5D2A1F0E7100F1A99F /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				7488E6AB29FA209000FFA47A /* User.swift */,
 				7488E6A929FA135000FFA47A /* Listing.swift */,
 				74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */,
 			);
@@ -285,7 +285,6 @@
 				7488E6AA29FA135000FFA47A /* Listing.swift in Sources */,
 				74FE0A5F2A1F1A3600F1A99F /* FirebaseController.swift in Sources */,
 				74E6E33229FB834C00DD2B6A /* MulticastDelegate.swift in Sources */,
-				7493406B2A09C7CE00D2A9AB /* CoreDataController.swift in Sources */,
 				749340602A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld in Sources */,
 				74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */,
 				745C47DD2A20571800EEB2F7 /* ChatMessage.swift in Sources */,
@@ -296,6 +295,7 @@
 				74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */,
 				742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */,
 				74C130DD2A0D043F0094DE95 /* EditDraftViewController.swift in Sources */,
+				74EE0E542A2075B700A12572 /* ChatMessageViewController.swift in Sources */,
 				749340692A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift in Sources */,
 				74EE0E502A205C1E00A12572 /* ChatsTableViewController.swift in Sources */,
 			);

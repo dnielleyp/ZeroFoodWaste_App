@@ -11,8 +11,6 @@ import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
-    
-    
     var listeners = MulticastDelegate<DatabaseListener>()
     var listingList: [Listing]
     
@@ -22,7 +20,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var currentUser: FirebaseAuth.User?
     
     override init(){
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         listingList = [Listing]()
@@ -62,6 +60,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
     // MARK: - Firebase Controller Specific Methods
     
     func addListing(name: String?, description: String?, location: String?, category: Category?, image: String?) -> Listing? {
+        
+        print("RUNNIING FIREBASE")
         let listing = Listing()
         listing.name = name
         listing.desc = description
@@ -69,14 +69,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listing.category = category?.rawValue
         listing.image = image
         
-//        //try adding to firestore
-//        do {
-//            if let listingRef = try listingRef?.addDocument(from: listing) {
-//                listing.id = listingRef.documentID
-//            }
-//        } catch  {
-//            print("Failed to add listing ")
-//        }
+        //try adding to firestore
+        do {
+            print("added!!!!!!!!!")
+            if let listingRef = try listingRef?.addDocument(from: listing) {
+                listing.id = listingRef.documentID
+            }
+        } catch  {
+            print("Failed to add listing ")
+        }
         return listing
     }
     

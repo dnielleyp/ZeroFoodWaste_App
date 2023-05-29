@@ -8,10 +8,6 @@
 import UIKit
 import CoreData
 
-protocol editDraftDelegate: AnyObject {
-    func editDraftListing (_listing: ListingDraft)
-}
-
 class DraftsViewController: UIViewController, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
     
     func onListingChange(change: DatabaseChange, listings: [Listing]) {
@@ -22,6 +18,9 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     var listenerType = ListenerType.listingDraft
     weak var databaseController: DatabaseProtocol?
     
+    var managedObjectContext: NSManagedObjectContext?
+    var persistentContainer: NSPersistentContainer?
+    
     var index: Int?
     
     
@@ -29,20 +28,30 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        databaseController?.addListener(listener: self)
+//        databaseController?.addListener(listener: self)
+        
+        do {
+            allDrafts = try managedObjectContext!.fetch(ListingDraft.fetchRequest()) as [ListingDraft]
+            print("ALLLLLLL DRAAAAAAAAAAAFTSSSSSSSSSSSS", allDrafts.count)
+        }
+        
+        catch {
+            print("FAIL FAIL WOWO")
+        }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        databaseController = appDelegate?.databaseController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        managedObjectContext = appDelegate.persistentContainer?.viewContext
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        databaseController?.removeListener(listener: self)
+//        databaseController?.removeListener(listener: self)
     }
     
     // MARK: Listener method for draftListings
@@ -65,7 +74,8 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
             tableView.performBatchUpdates({
                 
                 let listing = allDrafts[indexPath.row]
-                self.databaseController?.deleteListingDraft(listing: listing)
+                
+                managedObjectContext!.delete(listing)
                 
                 self.allDrafts.remove(at: indexPath.row)
                 self.draftTableView.deleteRows(at: [indexPath], with: .fade)

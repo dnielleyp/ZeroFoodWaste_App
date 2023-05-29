@@ -7,29 +7,29 @@
 
 import UIKit
 import CoreData
+import FirebaseFirestore
 
 class CreateListingViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    
     weak var databaseController: DatabaseProtocol?
-    weak var firebaseController: DatabaseProtocol?
     
     var draft = false
     var category: Category?
     var saveDraft = false
-    
+    var listingRef: CollectionReference?
+
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descField: UITextView!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var listingImage: UIImageView!
-    
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var dietPrefCheckList: UITableView!
     
     let dietPrefList = ["Gluten Free", "Vegan", "Vegetarian", "Halal"]
     
-
+    //for core data
+    var managedObjectContext: NSManagedObjectContext?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -40,10 +40,13 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         self.tabBarController?.tabBar.isHidden = true
         
         //get databaseController
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        databaseController = appDelegate?.databaseController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+        managedObjectContext = appDelegate.persistentContainer?.viewContext
         
-        firebaseController = appDelegate?.firebaseController
+        
+        let database = Firestore.firestore()
+        listingRef = database.collection("listings")
         
     }
 
@@ -103,6 +106,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
         var category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
+        var category = categorySegmentedControl.titleForSegment(at: Int(category32))
         
         var imageExists = checkImage()
 
@@ -138,10 +142,30 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         }
 
         else {
-            databaseController?.addListingDraft(draft: true, name: name, description: desc, location: location, category: category32, image: filename)
+            
+            do {
+                let draftEntity = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: managedObjectContext!) as! ListingDraft
+                
+                draftEntity.draft = true
+                draftEntity.name = name
+                draftEntity.desc = desc
+                draftEntity.location = location
+                draftEntity.category = category32
+                draftEntity.photo = filename
+                
+                try managedObjectContext?.save()
+                navigationController?.popViewController(animated: true)
+            }
+            
+            catch {
+                displayMessage(title: "Error", message: "\(error)")
+            }
+            
+            
+            
         }
 
-        navigationController?.popViewController(animated: true)
+        
 
     }
 
@@ -172,7 +196,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
 
         guard let image = listingImage.image else {return}
 
-        if !name.isEmpty && !desc.isEmpty && !location.isEmpty {
+        if name.isEmpty || desc.isEmpty || location.isEmpty {
             displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
         }
 
@@ -191,14 +215,22 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
+            
 
         } else {
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
+        
+        
+//        listingRef?.addDocument(data: ["name" : name, "description" : desc, "location":location, "category" : category!])
 
-        firebaseController?.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
-
+//        databaseController!.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
+        
+        print("BUTTON PRESSED")
+        
+        navigationController?.popViewController(animated: true)
     }
+    
 }
 
 extension CreateListingViewController: UITableViewDelegate, UITableViewDataSource {
