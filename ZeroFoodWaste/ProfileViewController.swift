@@ -62,6 +62,7 @@ class ProfileViewController: UIViewController, DatabaseListener {
         
         }
         for draft in allDrafts {
+            print("deleted")
             managedObjectContext!.delete(draft)
         }
 

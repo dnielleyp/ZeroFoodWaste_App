@@ -20,7 +20,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var currentUser: FirebaseAuth.User?
     
     override init(){
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         listingList = [Listing]()

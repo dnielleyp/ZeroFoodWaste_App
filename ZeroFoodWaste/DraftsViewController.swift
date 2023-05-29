@@ -32,11 +32,10 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         
         do {
             allDrafts = try managedObjectContext!.fetch(ListingDraft.fetchRequest()) as [ListingDraft]
-            print("ALLLLLLL DRAAAAAAAAAAAFTSSSSSSSSSSSS", allDrafts.count)
+            print("Loaded", allDrafts.count)
         }
-        
         catch {
-            print("FAIL FAIL WOWO")
+            print("ERROR")
         }
         
     }
@@ -75,13 +74,24 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
                 
                 let listing = allDrafts[indexPath.row]
                 
-                managedObjectContext!.delete(listing)
+                self.deleteDraft(listing: listing)
                 
                 self.allDrafts.remove(at: indexPath.row)
                 self.draftTableView.deleteRows(at: [indexPath], with: .fade)
                 self.draftTableView.reloadSections([0], with: .automatic)
             }, completion: nil)
         }
+    }
+    
+    func deleteDraft(listing: ListingDraft){
+        do{
+            managedObjectContext!.delete(listing)
+            try managedObjectContext!.save()
+        }
+        catch {
+            displayMessage(title: "Error", message: "delete failed!")
+        }
+            
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
