@@ -10,13 +10,20 @@ import CoreData
 
 class EditDraftViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     var listing: ListingDraft?
+    var dietPrefList:[String]?
     
     @IBOutlet weak var listingName: UITextField!
     @IBOutlet weak var listingDesc: UITextView!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var categorySegmentControl: UISegmentedControl!
-    @IBOutlet weak var dietPrefTableView: UITableView!
     @IBOutlet weak var draftImage: UIImageView!
+    
+    
+    @IBOutlet weak var gfSquare: UIButton!
+    @IBOutlet weak var vgSquare: UIButton!
+    @IBOutlet weak var vegeSquare: UIButton!
+    @IBOutlet weak var halalSquare: UIButton!
+    
     
     
     override func viewDidLoad() {
@@ -30,12 +37,92 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         self.listingDesc.text = listing?.desc
         self.locationField.text = listing?.location
         self.categorySegmentControl.selectedSegmentIndex = tempCategory
+        
+        self.dietPrefList = listing?.dietPref ?? ["","","",""]
+        checkList_init()
 
+        
         guard let filename = listing?.photo else {return}
         //filename is the path of the photo
         self.draftImage.image = loadImage(filename: filename ) //hmm
         
     }
+    
+    var isGF = false
+    var isVegan = false
+    var isVege = false
+    var isHalal = false
+    
+    func checkList_init(){
+        print("RUNNING HERE")
+        if dietPrefList![0] == "Gluten Free" {
+            gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isGF = true
+        }
+        if dietPrefList![1] == "Halal" {
+            halalSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isHalal = true
+        }
+        if dietPrefList![2] == "Vegan" {
+            vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVegan = true
+        }
+        if dietPrefList![3] == "Vegetarian" {
+            vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVege = true
+        }
+    }
+    
+    @IBAction func gfButton(_ sender: Any) {
+        //if gluten free is checked then:
+        if isGF {
+            dietPrefList![0] = ""
+            gfSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isGF = false
+        } else {
+            dietPrefList![0] = "Gluten Free"
+            gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isGF = true
+        }
+    }
+    
+    @IBAction func veganButton(_ sender: Any) {
+        if isVegan {
+            dietPrefList![2] = ""
+            vgSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isVegan = false
+        } else {
+            dietPrefList![0] = "Vegan"
+            vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVegan = true
+        }
+    }
+    
+    @IBAction func vegeButton(_ sender: Any) {
+        
+        if isVege {
+            dietPrefList![3] = ""
+            vegeSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isVege = false
+        } else {
+            dietPrefList![3] = "Vegetarian"
+            vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVege = true
+        }
+    }
+    
+    @IBAction func halalButton(_ sender: Any) {
+        if isHalal {
+            dietPrefList![1] = ""
+            halalSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isHalal = false
+        } else {
+            dietPrefList![1] = "Halal"
+            halalSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isHalal = true
+        }
+    }
+    
     
     @IBAction func backButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -120,6 +207,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         return image
 
     }
+    
     
     
     

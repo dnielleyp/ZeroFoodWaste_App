@@ -26,12 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        
         databaseController = FirebaseController()
         
         UITabBar.appearance().tintColor = UIColor(red: 8/255.0, green: 105/255.0, blue: 82/255.0, alpha: 1.0)
-        
-                                                  
-
         
         return true
     }

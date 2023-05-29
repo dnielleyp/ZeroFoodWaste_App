@@ -32,10 +32,9 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
         
         do {
             allDrafts = try managedObjectContext!.fetch(ListingDraft.fetchRequest()) as [ListingDraft]
-            print("Loaded", allDrafts.count)
         }
         catch {
-            print("ERROR")
+            displayMessage(title: "Error", message: "There was an error with fetching the drafts")
         }
         
     }

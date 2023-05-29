@@ -7,17 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9F499575-9444-4088-B68E-AEF85266108A"
+            uuid = "9EBBD754-F338-45A4-9B94-A96705513208"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZeroFoodWaste/AppDelegate.swift"
+            filePath = "ZeroFoodWaste/EditDraftViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "selectPhoto(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9EBBD754-F338-45A4-9B94-A96705513208 - cb9812b4ded2b84a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.EditDraftViewController.selectPhoto(Any) -&gt; ()"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/EditDraftViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "155"
+                  endingLineNumber = "155"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  uuid = "9EBBD754-F338-45A4-9B94-A96705513208 - 351acf1bf56db5a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in ZeroFoodWaste.EditDraftViewController.selectPhoto(Any) -&gt; ()"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/EditDraftViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

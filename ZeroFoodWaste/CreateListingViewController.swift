@@ -16,16 +16,20 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     var draft = false
     var category: Category?
     var saveDraft = false
-    var listingRef: CollectionReference?
+    var dietPref: [String] = ["","","",""]
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descField: UITextView!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var listingImage: UIImageView!
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
-    @IBOutlet weak var dietPrefCheckList: UITableView!
     
     let dietPrefList = ["Gluten Free", "Vegan", "Vegetarian", "Halal"]
+    @IBOutlet weak var gfSquare: UIButton!
+    @IBOutlet weak var vgSquare: UIButton!
+    @IBOutlet weak var vegeSquare: UIButton!
+    @IBOutlet weak var halalSquare: UIButton!
+    
     
     //for core data
     var managedObjectContext: NSManagedObjectContext?
@@ -44,16 +48,73 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         databaseController = appDelegate.databaseController
         managedObjectContext = appDelegate.persistentContainer?.viewContext
         
-        
-        let database = Firestore.firestore()
-        listingRef = database.collection("listings")
-        
     }
 
     @IBAction func closeButton(_ sender: Any) { navigationController?.popViewController(animated: true) }
 
     
 //    checkmark.square
+    
+    var isGF = false
+    var isVegan = false
+    var isVege = false
+    var isHalal = false
+    
+    @IBAction func gfButton(_ sender: Any) {
+        //if gluten free is checked then:
+        if isGF {
+            self.dietPref[0] = ""
+            gfSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isGF = false
+        } else {
+            dietPref[0] = "Gluten Free"
+            gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isGF = true
+        }
+        
+        print("DIETPREFFFF", dietPref)
+    }
+    
+    @IBAction func veganButton(_ sender: Any) {
+        if isVegan {
+            self.dietPref[2] = ""
+            vgSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isVegan = false
+        } else {
+            dietPref[0] = "Vegan"
+            vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVegan = true
+        }
+        
+        print("DIETPREFFFF", dietPref)
+    }
+    
+    @IBAction func vegeButton(_ sender: Any) {
+        
+        if isVege {
+            self.dietPref[3] = ""
+            vegeSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isVege = false
+        } else {
+            dietPref[3] = "Vegetarian"
+            vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isVege = true
+        }
+        
+        print("DIETPREFFFF", dietPref)
+    }
+    
+    @IBAction func halalButton(_ sender: Any) {
+        if isHalal {
+            self.dietPref[1] = ""
+            halalSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isHalal = false
+        } else {
+            dietPref[1] = "Halal"
+            halalSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isHalal = true
+        }
+    }
     
     
     @IBAction func selectPhotoButton(_ sender: Any) {
@@ -117,9 +178,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let uuid = UUID().uuidString
             filename = "\(uuid).jpg"
             
-            print(filename,"fILENAAAMEEEEE")
-            
-            
             guard let data = image!.jpegData(compressionQuality: 0.8) else {
                 //            displayMessage(title: "Error", message: "Image data could not be compressed")
                 return
@@ -129,8 +187,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
-            
-            print("RAN HERE")
+        
             
         }
         
@@ -152,6 +209,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 draftEntity.location = location
                 draftEntity.category = category32
                 draftEntity.photo = filename
+                draftEntity.dietPref = dietPref
                 
                 try managedObjectContext?.save()
                 navigationController?.popViewController(animated: true)
@@ -160,16 +218,9 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             catch {
                 displayMessage(title: "Error", message: "\(error)")
             }
-            
-            
-            
         }
-
-        
-
     }
 
-    
     
     func checkImage() -> Bool{
         guard let image = listingImage.image else {
@@ -221,10 +272,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         
-        
-//        listingRef?.addDocument(data: ["name" : name, "description" : desc, "location":location, "category" : category!])
-
-//        databaseController!.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
+        databaseController!.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
         
         print("BUTTON PRESSED")
         
@@ -233,17 +281,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     
 }
 
-extension CreateListingViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //f5 categories
-        return 4
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "prefCell", for: indexPath)
-        cell.textLabel?.text = dietPrefList[indexPath.row]
-        return cell
-    }
+extension CreateListingViewController {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
