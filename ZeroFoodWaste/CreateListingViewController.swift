@@ -17,6 +17,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     var category: Category?
     var saveDraft = false
     var dietPref: [String] = ["","","",""]
+    var allergens: [String] = ["","","","",""]
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descField: UITextView!
@@ -24,12 +25,19 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var listingImage: UIImageView!
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
-    let dietPrefList = ["Gluten Free", "Vegan", "Vegetarian", "Halal"]
+    
     @IBOutlet weak var gfSquare: UIButton!
     @IBOutlet weak var vgSquare: UIButton!
     @IBOutlet weak var vegeSquare: UIButton!
     @IBOutlet weak var halalSquare: UIButton!
     
+    
+    
+    @IBOutlet weak var peanutSquare: UIButton!
+    @IBOutlet weak var soySquare: UIButton!
+    @IBOutlet weak var treeNutSquare: UIButton!
+    @IBOutlet weak var wheatSquare: UIButton!
+    @IBOutlet weak var eggSquare: UIButton!
     
     //for core data
     var managedObjectContext: NSManagedObjectContext?
@@ -116,6 +124,72 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
+    var isPeanut = false
+    var isSoy = false
+    var isTreenut = false
+    var isWheat = false
+    var isEgg = false
+    
+    @IBAction func peanutButton(_ sender: Any) {
+            if isPeanut{
+                self.allergens[1] = ""
+                peanutSquare.setImage(UIImage(systemName: "square"), for: .normal)
+                isPeanut = false
+            } else {
+                allergens[1] = "Peanut"
+                peanutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                isPeanut = true
+            }
+    }
+    
+    @IBAction func soyButton(_ sender: Any) {
+        if isSoy{
+            self.allergens[2] = ""
+            soySquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isSoy = false
+        } else {
+            allergens[2] = "Soy"
+            soySquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isSoy = true
+        }
+    }
+    
+    @IBAction func treenutButton(_ sender: Any) {
+        if isTreenut{
+            self.allergens[3] = ""
+            treeNutSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isTreenut = false
+        } else {
+            allergens[3] = "Treenut"
+            treeNutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isTreenut = true
+        }
+    }
+    
+    @IBAction func wheatButton(_ sender: Any) {
+        if isWheat{
+            self.allergens[4] = ""
+            wheatSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isWheat = false
+        } else {
+            allergens[4] = "Wheat"
+            wheatSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isWheat = true
+        }
+    }
+    
+    @IBAction func eggButton(_ sender: Any) {
+        if isEgg {
+            self.allergens[0] = ""
+            eggSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isEgg = false
+        } else {
+            allergens[0] = "Egg"
+            eggSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isEgg = true
+        }
+
+    }
     
     @IBAction func selectPhotoButton(_ sender: Any) {
         
@@ -209,6 +283,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 draftEntity.location = location
                 draftEntity.category = category32
                 draftEntity.photo = filename
+                draftEntity.allergens = allergens
                 draftEntity.dietPref = dietPref
                 
                 try managedObjectContext?.save()
@@ -271,7 +346,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         
-        databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: dietPref, image: filename!)
+        databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: dietPref, allergens: allergens, image: filename!)
         
         print("BUTTON PRESSED")
         

@@ -59,7 +59,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     // MARK: - Firebase Controller Specific Methods
     
-    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], image: String?) -> Listing? {
+    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?) -> Listing? {
         
         print("RUNNIING FIREBASE")
         let listing = Listing()
@@ -68,11 +68,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listing.location = location
         listing.category = category?.rawValue
         listing.dietPref = dietPref
+        listing.allergens = allergens
         listing.image = image
         
         //try adding to firestore
         do {
-            print("added!!!!!!!!!")
             if let listingRef = try listingRef?.addDocument(from: listing) {
                 listing.id = listingRef.documentID
             }

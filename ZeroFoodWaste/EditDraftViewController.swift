@@ -15,6 +15,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     
     var listing: ListingDraft?
     var dietPrefList:[String]?
+    var allergens: [String]?
     var category: Category?
     
     @IBOutlet weak var listingName: UITextField!
@@ -28,6 +29,13 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     @IBOutlet weak var vgSquare: UIButton!
     @IBOutlet weak var vegeSquare: UIButton!
     @IBOutlet weak var halalSquare: UIButton!
+    
+    
+    @IBOutlet weak var peanutSquare: UIButton!
+    @IBOutlet weak var soySquare: UIButton!
+    @IBOutlet weak var treeNutSquare: UIButton!
+    @IBOutlet weak var wheatSquare: UIButton!
+    @IBOutlet weak var eggSquare: UIButton!
     
     
     override func viewDidLoad() {
@@ -47,7 +55,9 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         self.categorySegmentControl.selectedSegmentIndex = tempCategory
 
         self.dietPrefList = listing?.dietPref ?? ["","","",""]
+        self.allergens = listing?.allergens ?? ["","","","",""]
         checkList_init()
+        print("ALLERGENS", allergens)
 
 
         guard let filename = listing?.photo else {return}
@@ -63,7 +73,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     var isHalal = false
     
     func checkList_init(){
-        print("RUNNING HERE")
+        //checking dietPrefList
         if dietPrefList![0] == "Gluten Free" {
             print(dietPrefList!, "GF")
             gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
@@ -82,6 +92,30 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVege = true
         }
+        
+        //checking allergens list
+        if dietPrefList![0] == "Egg" {
+            print(dietPrefList!, "GF")
+            eggSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isEgg = true
+        }
+        if allergens![1] == "Peanut" {
+            peanutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isPeanut = true
+        }
+        if allergens![2] == "Soy" {
+            soySquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isSoy = true
+        }
+        if allergens?[3] == "Treenut" {
+            treeNutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isTreenut = true
+        }
+        if allergens![4] == "Wheat" {
+            wheatSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isWheat = true
+        }
+        
     }
     
     @IBAction func gfButton(_ sender: Any) {
@@ -139,6 +173,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         navigationController?.popViewController(animated: true)
     }
     
+    // MARK: Update Draft
     @IBAction func updateDraft(_ sender: Any) {
         var category32 = Int32(categorySegmentControl.selectedSegmentIndex)
         
@@ -151,9 +186,78 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         listing?.desc = ldesc
         listing?.location = llocation
         listing?.category = category32
+        listing?.dietPref = dietPrefList!
+        listing?.allergens = allergens!
         
         navigationController?.popViewController(animated: true)
    
+    }
+    
+    var isPeanut = false
+    var isSoy = false
+    var isTreenut = false
+    var isWheat = false
+    var isEgg = false
+    
+    @IBAction func peanutButton(_ sender: Any) {
+            if isPeanut{
+                self.allergens![1] = ""
+                peanutSquare.setImage(UIImage(systemName: "square"), for: .normal)
+                isPeanut = false
+            } else {
+                allergens![1] = "Peanut"
+                peanutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                isPeanut = true
+            }
+    }
+    
+    @IBAction func soyButton(_ sender: Any) {
+        if isSoy{
+            self.allergens![2] = ""
+            soySquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isSoy = false
+        } else {
+            allergens![2] = "Soy"
+            soySquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isSoy = true
+        }
+    }
+    
+    @IBAction func treenutButton(_ sender: Any) {
+        if isTreenut{
+            self.allergens![3] = ""
+            treeNutSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isTreenut = false
+        } else {
+            allergens![3] = "Treenut"
+            treeNutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isTreenut = true
+        }
+    }
+    
+    @IBAction func wheatButton(_ sender: Any) {
+        if isWheat{
+            self.allergens![4] = ""
+            wheatSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isWheat = false
+        } else {
+            allergens![4] = "Wheat"
+            wheatSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isWheat = true
+        }
+    }
+    
+    @IBAction func eggButton(_ sender: Any) {
+        if isEgg {
+            self.allergens![0] = ""
+            eggSquare.setImage(UIImage(systemName: "square"), for: .normal)
+            isEgg = false
+        } else {
+            allergens![0] = "Egg"
+            eggSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            isEgg = true
+        }
+
     }
     
     @IBAction func selectPhoto(_ sender: Any) {
@@ -236,7 +340,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         
-        databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: dietPrefList!, image: filename)
+        databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: dietPrefList!, allergens: allergens!, image: filename)
         
         navigationController?.popViewController(animated: true)
         
