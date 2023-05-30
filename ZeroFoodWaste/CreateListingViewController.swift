@@ -81,7 +81,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             vgSquare.setImage(UIImage(systemName: "square"), for: .normal)
             isVegan = false
         } else {
-            dietPref[0] = "Vegan"
+            dietPref[2] = "Vegan"
             vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVegan = true
         }
@@ -235,7 +235,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     @IBAction func createListing(_ sender: Any) {
         
         var imageExists = checkImage()
-        var haveImage = true
         var filename: String?
 
 
@@ -272,7 +271,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         
-        databaseController!.addListing(name: name, description: desc, location: location, category: category!, image: filename!)
+        databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: dietPref, image: filename!)
         
         print("BUTTON PRESSED")
         

@@ -7,10 +7,15 @@
 
 import UIKit
 import CoreData
+import FirebaseFirestore
 
 class EditDraftViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    weak var databaseController: DatabaseProtocol?
+    
     var listing: ListingDraft?
     var dietPrefList:[String]?
+    var category: Category?
     
     @IBOutlet weak var listingName: UITextField!
     @IBOutlet weak var listingDesc: UITextView!
@@ -25,27 +30,31 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     @IBOutlet weak var halalSquare: UIButton!
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
 
-        var tempCategory = Int(listing!.category)
+        let tempCategory = Int(listing!.category)
 
         self.listingName.text = listing?.name
         self.listingDesc.text = listing?.desc
         self.locationField.text = listing?.location
+        self.category = Category(rawValue: Int(listing!.category))
         self.categorySegmentControl.selectedSegmentIndex = tempCategory
-        
+
         self.dietPrefList = listing?.dietPref ?? ["","","",""]
         checkList_init()
 
-        
+
         guard let filename = listing?.photo else {return}
         //filename is the path of the photo
         self.draftImage.image = loadImage(filename: filename ) //hmm
-        
+
+
     }
     
     var isGF = false
@@ -56,6 +65,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     func checkList_init(){
         print("RUNNING HERE")
         if dietPrefList![0] == "Gluten Free" {
+            print(dietPrefList!, "GF")
             gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isGF = true
         }
@@ -64,6 +74,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             isHalal = true
         }
         if dietPrefList![2] == "Vegan" {
+            print(dietPrefList!)
             vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVegan = true
         }
@@ -92,7 +103,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             vgSquare.setImage(UIImage(systemName: "square"), for: .normal)
             isVegan = false
         } else {
-            dietPrefList![0] = "Vegan"
+            dietPrefList![2] = "Vegan"
             vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVegan = true
         }
@@ -181,13 +192,67 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         
     }
     
+    func checkImage() -> Bool{
+        guard let image = draftImage.image else {
+            return false
+        }
+        return true
+    }
+    
+    // MARK: Posting listing :)
+    @IBAction func createListingButton(_ sender: Any) {
+        
+        var imageExists = checkImage()
+        var filename: String?
+        
+        
+        guard let name = listingName.text else {return}
+        guard let desc = listingDesc.text else {return}
+        guard let location = locationField.text else {return}
+        guard let image = draftImage.image else {return}
+        
+        if name.isEmpty || desc.isEmpty || location.isEmpty {
+            displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
+        }
+        
+        if imageExists {
+
+            let image = draftImage.image  //cannot be nil since we already checked
+            let uuid = UUID().uuidString
+            filename = "\(uuid).jpg"
+
+
+            guard let data = image!.jpegData(compressionQuality: 0.8) else {
+                return
+            }
+
+            //get app's document directory to save the image file
+            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = pathsList[0]
+            let imageFile = documentDirectory.appendingPathComponent(filename!)
+            
+
+        } else {
+            displayMessage(title: "Cannot Create Listing", message: "Please include an image")
+        }
+        
+        databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: dietPrefList!, image: filename)
+        
+        navigationController?.popViewController(animated: true)
+        
+        
+    }
+    
+
+}
+
+extension EditDraftViewController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             draftImage.image = pickedImage
         }
         dismiss(animated: true, completion: nil)
     }
-    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -201,37 +266,9 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         let imageURL = documentsDirectory.appendingPathComponent(filename)
         let image = UIImage(contentsOfFile: imageURL.path)
         
-        print(filename, "RAGHHGHHHGG")
-        
         //it gets the correct filename and returns the correct image
         return image
 
-    }
-    
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-extension EditDraftViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "prefCell", for: indexPath)
-        cell.textLabel?.text = "hi"
-        return cell
     }
 }
 
