@@ -232,7 +232,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     
     @IBAction func saveAsDraft(_ sender: Any) {
         
-        var haveImage = true
+//        let haveImage = true
         var filename: String?
 
         saveDraft = true
@@ -240,10 +240,10 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         guard let name = nameField.text else {return}
         guard let desc = descField.text else {return}
         guard let location = locationField.text else {return}
-        var category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
+        let category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
         var category = categorySegmentedControl.titleForSegment(at: Int(category32))
         
-        var imageExists = checkImage()
+        let imageExists = checkImage()
 
         //check if image exists
         if imageExists {
@@ -253,7 +253,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             filename = "\(uuid).jpg"
             
             guard let data = image!.jpegData(compressionQuality: 0.8) else {
-                //            displayMessage(title: "Error", message: "Image data could not be compressed")
+                displayMessage(title: "Error", message: "Image data could not be compressed")
                 return
             }
             
@@ -261,12 +261,14 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
-        
             
+            do {try data.write(to: imageFile)}
+            catch {displayMessage(title: "error", message: "here")}
+
         }
         
-        //call separate function
         
+        //call separate function
         if name.isEmpty {
             displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
             return
@@ -326,23 +328,27 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         }
 
         if imageExists {
-
+            
             let image = listingImage.image  //cannot be nil since we already checked
             let uuid = UUID().uuidString
             filename = "\(uuid).jpg"
-
-
+            
+            
             guard let data = image!.jpegData(compressionQuality: 0.8) else {
                 return
             }
-
+            
             //get app's document directory to save the image file
             let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
             
-
-        } else {
+            let bbbb = FileManager.default.fileExists(atPath: imageFile.path)
+            
+            print(bbbb, "BBBBBBBBBBBBBBB", imageFile.path)
+        }
+        
+        else {
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         

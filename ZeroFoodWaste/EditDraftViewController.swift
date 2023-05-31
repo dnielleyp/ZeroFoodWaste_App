@@ -12,11 +12,14 @@ import FirebaseFirestore
 class EditDraftViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     weak var databaseController: DatabaseProtocol?
+    var managedObjectContext: NSManagedObjectContext?
     
     var listing: ListingDraft?
     var dietPrefList:[String]?
     var allergens: [String]?
     var category: Category?
+    var filename: String?
+    var imageSaved = true
     
     @IBOutlet weak var listingName: UITextField!
     @IBOutlet weak var listingDesc: UITextView!
@@ -46,8 +49,13 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
 
-        let tempCategory = Int(listing!.category)
+        managedObjectContext = appDelegate.persistentContainer?.viewContext
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let tempCategory = Int(listing!.category)
+        
         self.listingName.text = listing?.name
         self.listingDesc.text = listing?.desc
         self.locationField.text = listing?.location
@@ -56,14 +64,15 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
 
         self.dietPrefList = listing?.dietPref ?? ["","","",""]
         self.allergens = listing?.allergens ?? ["","","","",""]
-        checkList_init()
-        print("ALLERGENS", allergens)
-
+        checkPrefList_init()
+        checkAllerg_init()
 
         guard let filename = listing?.photo else {return}
         //filename is the path of the photo
         self.draftImage.image = loadImage(filename: filename ) //hmm
-
+        self.filename = filename
+        self.imageSaved = true
+        print(self.filename)
 
     }
     
@@ -72,7 +81,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     var isVege = false
     var isHalal = false
     
-    func checkList_init(){
+    func checkPrefList_init(){
         //checking dietPrefList
         if dietPrefList![0] == "Gluten Free" {
             print(dietPrefList!, "GF")
@@ -92,18 +101,20 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVege = true
         }
-        
+    }
+    
+    func checkAllerg_init(){
         //checking allergens list
-        if dietPrefList![0] == "Egg" {
+        if allergens?[0] == "Egg" {
             print(dietPrefList!, "GF")
             eggSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isEgg = true
         }
-        if allergens![1] == "Peanut" {
+        if allergens?[1] == "Peanut" {
             peanutSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isPeanut = true
         }
-        if allergens![2] == "Soy" {
+        if allergens?[2] == "Soy" {
             soySquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isSoy = true
         }
@@ -180,7 +191,30 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         guard let lname = listingName.text else {return}
         guard let ldesc = listingDesc.text else {return}
         guard let llocation = locationField.text else {return}
-//        guard let limage = draftImage.image else {return}
+        var fileName: String?
+        
+        
+        let imageExists = checkImage()
+
+        //check if image exists
+        if imageExists && !imageSaved {
+            let image = draftImage.image  //cannot be nil since we already checked
+            let uuid = UUID().uuidString
+            fileName = "\(uuid).jpg"
+            
+            guard let data = image!.jpegData(compressionQuality: 0.8) else {
+                displayMessage(title: "Error", message: "Image data could not be compressed")
+                return
+            }
+            
+            //get app's document directory to save the image file
+            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = pathsList[0]
+            let imageFile = documentDirectory.appendingPathComponent(fileName!)
+            
+            do {try data.write(to: imageFile)}
+            catch {displayMessage(title: "error", message: "here")}
+        }
         
         listing?.name = lname
         listing?.desc = ldesc
@@ -188,7 +222,12 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         listing?.category = category32
         listing?.dietPref = dietPrefList!
         listing?.allergens = allergens!
+        listing?.photo = fileName
         
+        do {
+            try managedObjectContext?.save()
+        }
+        catch{(displayMessage(title: "Error", message:"Failed to update draft"))}
         navigationController?.popViewController(animated: true)
    
     }
@@ -335,6 +374,8 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             let documentDirectory = pathsList[0]
             let imageFile = documentDirectory.appendingPathComponent(filename!)
             
+            do {try data.write(to: imageFile)}
+            catch {displayMessage(title: "error", message: "here")}
 
         } else {
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
@@ -347,13 +388,19 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         
     }
     
+    var imagePhoto: UIImage?
+    var imagePathList: String?
+    
 
 }
 
+//MARK: draftImage.image = pickedImage
 extension EditDraftViewController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             draftImage.image = pickedImage
+            self.imageSaved = false
+            print("RUNNING HERE!!!!!!!!!!!!!")
         }
         dismiss(animated: true, completion: nil)
     }
@@ -362,15 +409,16 @@ extension EditDraftViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK: LOADIMAGE
     func loadImage(filename: String)-> UIImage? {
+        
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        
         let documentsDirectory = paths[0]
-        
-        
         let imageURL = documentsDirectory.appendingPathComponent(filename)
-        let image = UIImage(contentsOfFile: imageURL.path)
+        let imagePath = imageURL.path
+        let image = UIImage(contentsOfFile:imageURL.path)
         
-        //it gets the correct filename and returns the correct image
         return image
 
     }
