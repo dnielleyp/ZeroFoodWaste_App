@@ -37,6 +37,7 @@ class DraftsViewController: UIViewController, DatabaseListener, UITableViewDeleg
             displayMessage(title: "Error", message: "There was an error with fetching the drafts")
         }
         
+        self.draftTableView.reloadSections([0], with: .automatic)
     }
     
     override func viewDidLoad() {

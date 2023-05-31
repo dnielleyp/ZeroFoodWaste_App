@@ -18,6 +18,11 @@ class SetupProfilePicViewController: UIViewController, UIImagePickerControllerDe
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        profilePictureImage.backgroundColor = UIColor(red: 255, green: 247, blue: 235, alpha: 0)
+        profilePictureImage.image = UIImage(systemName: "person.circle")
+    }
+    
     @IBAction func finishSetupButton(_ sender: Any) {
         //if it's successfully added into the firestore then we will performsegue("setup
         guard let image = profilePictureImage.image else {

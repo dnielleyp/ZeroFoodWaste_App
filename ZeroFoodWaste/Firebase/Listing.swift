@@ -13,7 +13,7 @@ class Listing: NSObject, Codable {
     
     @DocumentID var id: String?
     var name: String?
-    var owner: User?
+    var owner: String?
     var likes: [User] = []
     var desc: String?
     var location: String?
@@ -25,8 +25,8 @@ class Listing: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case owner
-        case likes
+//        case owner
+//        case likes
         case desc = "description"
         case location
         case category

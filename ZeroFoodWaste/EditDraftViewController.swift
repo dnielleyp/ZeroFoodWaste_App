@@ -228,8 +228,10 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             try managedObjectContext?.save()
         }
         catch{(displayMessage(title: "Error", message:"Failed to update draft"))}
+        
         navigationController?.popViewController(animated: true)
-   
+        
+        
     }
     
     var isPeanut = false
@@ -381,7 +383,26 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             displayMessage(title: "Cannot Create Listing", message: "Please include an image")
         }
         
-        databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: dietPrefList!, allergens: allergens!, image: filename)
+        do {
+            var tempAllerg = allergens
+            if allergens == ["","","","",""] {
+                tempAllerg = []
+            }
+            
+            var tempDietPref = dietPrefList
+            if dietPrefList == ["","","",""]{
+                tempDietPref = []
+            }
+            
+            try databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: tempDietPref!, allergens: tempAllerg!, image: filename)
+        } catch {
+            displayMessage(title: "Error", message: "Failed to upload listing! Please try again")
+        }
+        
+        //will delete draft once the listing is posted :)
+        managedObjectContext?.delete(self.listing!)
+        do { try managedObjectContext?.save()}
+        catch {print("error with deleting")}
         
         navigationController?.popViewController(animated: true)
         

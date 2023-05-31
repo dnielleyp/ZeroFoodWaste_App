@@ -10,6 +10,7 @@
 		74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */; };
 		742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC22A03533D005958CF /* CreateListingViewController.swift */; };
 		742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC42A03555E005958CF /* TabBarViewController.swift */; };
+		7439B44D2A27032D000A7FD6 /* TestingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7439B44C2A27032D000A7FD6 /* TestingCollectionViewController.swift */; };
 		745C47DB2A2055F400EEB2F7 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C47DA2A2055F400EEB2F7 /* Sender.swift */; };
 		745C47DD2A20571800EEB2F7 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C47DC2A20571800EEB2F7 /* ChatMessage.swift */; };
 		745C47E02A2057CA00EEB2F7 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 745C47DF2A2057CA00EEB2F7 /* MessageKit */; };
@@ -43,13 +44,13 @@
 		74EE0E502A205C1E00A12572 /* ChatsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE0E4F2A205C1E00A12572 /* ChatsTableViewController.swift */; };
 		74EE0E542A2075B700A12572 /* ChatMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE0E532A2075B700A12572 /* ChatMessageViewController.swift */; };
 		74FE0A5F2A1F1A3600F1A99F /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */; };
-		74FE0A612A1F481800F1A99F /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+displayMessage.swift"; sourceTree = "<group>"; };
 		742AFBC22A03533D005958CF /* CreateListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingViewController.swift; sourceTree = "<group>"; };
 		742AFBC42A03555E005958CF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		7439B44C2A27032D000A7FD6 /* TestingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingCollectionViewController.swift; sourceTree = "<group>"; };
 		745C47DA2A2055F400EEB2F7 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		745C47DC2A20571800EEB2F7 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		74EE0E4F2A205C1E00A12572 /* ChatsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableViewController.swift; sourceTree = "<group>"; };
 		74EE0E532A2075B700A12572 /* ChatMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageViewController.swift; sourceTree = "<group>"; };
 		74FE0A5E2A1F1A3600F1A99F /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
-		74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +150,7 @@
 				749340652A09C41F00D2A9AB /* DataModel */,
 				7488E6AF29FA3BA600FFA47A /* GoogleService-Info.plist */,
 				74A47FF22A0258E6001386E1 /* HomeViewController.swift */,
-				74FE0A602A1F481800F1A99F /* ListingCollectionViewCell.swift */,
+				7439B44C2A27032D000A7FD6 /* TestingCollectionViewController.swift */,
 				74A6E15429F8C2B800F6CBE4 /* Info.plist */,
 				74A6E15129F8C2B800F6CBE4 /* LaunchScreen.storyboard */,
 				7488E6AD29FA376700FFA47A /* LoginViewController.swift */,
@@ -274,7 +274,6 @@
 				74E6E32C29FB72B000DD2B6A /* DatabaseProtocol.swift in Sources */,
 				7488E6B229FA3C9D00FFA47A /* CreateAccountViewController.swift in Sources */,
 				74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */,
-				74FE0A612A1F481800F1A99F /* ListingCollectionViewCell.swift in Sources */,
 				7488E6AE29FA376700FFA47A /* LoginViewController.swift in Sources */,
 				749340682A09C45600D2A9AB /* ListingDraft+CoreDataClass.swift in Sources */,
 				742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */,
@@ -288,6 +287,7 @@
 				749340602A09C28D00D2A9AB /* ZFW-DataModel.xcdatamodeld in Sources */,
 				74DDFF862A0CB3B7003AFC4E /* TableViewController.swift in Sources */,
 				745C47DD2A20571800EEB2F7 /* ChatMessage.swift in Sources */,
+				7439B44D2A27032D000A7FD6 /* TestingCollectionViewController.swift in Sources */,
 				74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */,
 				7488E6AC29FA209000FFA47A /* User.swift in Sources */,
 				74C130DB2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift in Sources */,

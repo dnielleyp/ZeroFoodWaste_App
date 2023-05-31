@@ -8,10 +8,14 @@
 import UIKit
 import CoreData
 import FirebaseFirestore
+import FirebaseAuth
+import FirebaseFirestoreSwift
 
 class CreateListingViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     weak var databaseController: DatabaseProtocol?
+    var userRef = Firestore.firestore().collection("user")
+    var user: FirebaseAuth.User?
     
     var draft = false
     var category: Category?
@@ -57,12 +61,169 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         managedObjectContext = appDelegate.persistentContainer?.viewContext
         
     }
+    
+    // MARK: - saving as draft
+        
+        @IBAction func saveAsDraft(_ sender: Any) {
+            
+    //        let haveImage = true
+            var filename: String?
+
+            saveDraft = true
+            //check that at least name field is filled :D
+            guard let name = nameField.text else {return}
+            guard let desc = descField.text else {return}
+            guard let location = locationField.text else {return}
+            let category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
+            var category = categorySegmentedControl.titleForSegment(at: Int(category32))
+            
+            let imageExists = checkImage()
+
+            //check if image exists
+            if imageExists {
+                
+                let image = listingImage.image  //cannot be nil since we already checked
+                let uuid = UUID().uuidString
+                filename = "\(uuid).jpg"
+                
+                guard let data = image!.jpegData(compressionQuality: 0.8) else {
+                    displayMessage(title: "Error", message: "Image data could not be compressed")
+                    return
+                }
+                
+                //get app's document directory to save the image file
+                let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                let documentDirectory = pathsList[0]
+                let imageFile = documentDirectory.appendingPathComponent(filename!)
+                
+                do {try data.write(to: imageFile)}
+                catch {displayMessage(title: "error", message: "here")}
+
+            }
+            
+            
+            //call separate function
+            if name.isEmpty {
+                displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
+                return
+            }
+
+            else {
+                
+                do {
+                    let draftEntity = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: managedObjectContext!) as! ListingDraft
+                    
+                    draftEntity.draft = true
+                    draftEntity.name = name
+                    draftEntity.desc = desc
+                    draftEntity.location = location
+                    draftEntity.category = category32
+                    draftEntity.photo = filename
+                    draftEntity.allergens = allergens
+                    draftEntity.dietPref = dietPref
+                    
+                    try managedObjectContext?.save()
+                    navigationController?.popViewController(animated: true)
+                }
+                
+                catch {
+                    displayMessage(title: "Error", message: "\(error)")
+                }
+            }
+        }
+
+        
+        func checkImage() -> Bool{
+            guard let image = listingImage.image else {
+                return false
+            }
+            return true
+        }
+        
+        
+    // MARK: Creating a listing that will be posted
+        //this one is added to firebase :)
+        @IBAction func createListing(_ sender: Any) {
+            
+            var imageExists = checkImage()
+            var filename: String?
+
+
+            //check if all fields are there yk
+            guard let name = nameField.text else {return}
+            guard let desc = descField.text else {return}
+            guard let location = locationField.text else {return}
+            category = Category(rawValue: Int(categorySegmentedControl.selectedSegmentIndex))
+
+            guard let image = listingImage.image else {return}
+
+            if name.isEmpty || desc.isEmpty || location.isEmpty {
+                displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
+            }
+
+            if imageExists {
+                
+                let image = listingImage.image  //cannot be nil since we already checked
+                let uuid = UUID().uuidString
+                filename = "\(uuid).jpg"
+                
+                
+                guard let data = image!.jpegData(compressionQuality: 0.8) else {
+                    return
+                }
+
+            }
+            
+            else {
+                displayMessage(title: "Cannot Create Listing", message: "Please include an image")
+            }
+            
+            //get the user's uid and save as owner
+            //get listing id and save as listing under user
+            
+            guard let userID = Auth.auth().currentUser?.uid else {
+                return
+            }
+
+            var tempAllerg = allergens
+            if allergens == ["","","","",""] {
+                tempAllerg = []
+            }
+            
+            var tempDietPref = dietPref
+            if dietPref == ["","","",""]{
+                tempDietPref = []
+            }
+            
+            let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image: filename!)
+            
+            
+            self.userRef.getDocuments {(snapshot, error) in
+                guard let snapshot = snapshot else {
+                    print("Error \(error)")
+                    return
+                }
+                for doc in snapshot.documents {
+                    let documentID = doc.documentID
+                    if documentID == userID {
+                        var listingsArr = doc.get("listings") as? Array<String>
+                        listingsArr!.append((list?.id)!)
+                        let ref = self.userRef.document(userID)
+                        ref.updateData(["listings":listingsArr])
+                    }
+                }
+            }
+
+            let ref = userRef.document(userID)
+            
+            
+            
+            navigationController?.popViewController(animated: true)
+        }
+        
 
     @IBAction func closeButton(_ sender: Any) { navigationController?.popViewController(animated: true) }
 
-    
-//    checkmark.square
-    
     var isGF = false
     var isVegan = false
     var isVege = false
@@ -79,8 +240,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             gfSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isGF = true
         }
-        
-        print("DIETPREFFFF", dietPref)
     }
     
     @IBAction func veganButton(_ sender: Any) {
@@ -93,8 +252,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             vgSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVegan = true
         }
-        
-        print("DIETPREFFFF", dietPref)
     }
     
     @IBAction func vegeButton(_ sender: Any) {
@@ -108,8 +265,6 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             vegeSquare.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             isVege = true
         }
-        
-        print("DIETPREFFFF", dietPref)
     }
     
     @IBAction func halalButton(_ sender: Any) {
@@ -228,137 +383,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         
     }
     
-// MARK: - saving as draft
-    
-    @IBAction func saveAsDraft(_ sender: Any) {
-        
-//        let haveImage = true
-        var filename: String?
 
-        saveDraft = true
-        //check that at least name field is filled :D
-        guard let name = nameField.text else {return}
-        guard let desc = descField.text else {return}
-        guard let location = locationField.text else {return}
-        let category32 = Int32(categorySegmentedControl.selectedSegmentIndex)
-        var category = categorySegmentedControl.titleForSegment(at: Int(category32))
-        
-        let imageExists = checkImage()
-
-        //check if image exists
-        if imageExists {
-            
-            let image = listingImage.image  //cannot be nil since we already checked
-            let uuid = UUID().uuidString
-            filename = "\(uuid).jpg"
-            
-            guard let data = image!.jpegData(compressionQuality: 0.8) else {
-                displayMessage(title: "Error", message: "Image data could not be compressed")
-                return
-            }
-            
-            //get app's document directory to save the image file
-            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let documentDirectory = pathsList[0]
-            let imageFile = documentDirectory.appendingPathComponent(filename!)
-            
-            do {try data.write(to: imageFile)}
-            catch {displayMessage(title: "error", message: "here")}
-
-        }
-        
-        
-        //call separate function
-        if name.isEmpty {
-            displayMessage(title: "Can't Save Draft", message: "Please input a name for your listing")
-            return
-        }
-
-        else {
-            
-            do {
-                let draftEntity = NSEntityDescription.insertNewObject(forEntityName: "ListingDraft", into: managedObjectContext!) as! ListingDraft
-                
-                draftEntity.draft = true
-                draftEntity.name = name
-                draftEntity.desc = desc
-                draftEntity.location = location
-                draftEntity.category = category32
-                draftEntity.photo = filename
-                draftEntity.allergens = allergens
-                draftEntity.dietPref = dietPref
-                
-                try managedObjectContext?.save()
-                navigationController?.popViewController(animated: true)
-            }
-            
-            catch {
-                displayMessage(title: "Error", message: "\(error)")
-            }
-        }
-    }
-
-    
-    func checkImage() -> Bool{
-        guard let image = listingImage.image else {
-            return false
-        }
-        return true
-    }
-    
-    
-// MARK: Creating a listing that will be posted
-    //this one is added to firebase :)
-    @IBAction func createListing(_ sender: Any) {
-        
-        var imageExists = checkImage()
-        var filename: String?
-
-
-        //check if all fields are there yk
-        guard let name = nameField.text else {return}
-        guard let desc = descField.text else {return}
-        guard let location = locationField.text else {return}
-        category = Category(rawValue: Int(categorySegmentedControl.selectedSegmentIndex))
-
-        guard let image = listingImage.image else {return}
-
-        if name.isEmpty || desc.isEmpty || location.isEmpty {
-            displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
-        }
-
-        if imageExists {
-            
-            let image = listingImage.image  //cannot be nil since we already checked
-            let uuid = UUID().uuidString
-            filename = "\(uuid).jpg"
-            
-            
-            guard let data = image!.jpegData(compressionQuality: 0.8) else {
-                return
-            }
-            
-            //get app's document directory to save the image file
-            let pathsList = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let documentDirectory = pathsList[0]
-            let imageFile = documentDirectory.appendingPathComponent(filename!)
-            
-            let bbbb = FileManager.default.fileExists(atPath: imageFile.path)
-            
-            print(bbbb, "BBBBBBBBBBBBBBB", imageFile.path)
-        }
-        
-        else {
-            displayMessage(title: "Cannot Create Listing", message: "Please include an image")
-        }
-        
-        databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: dietPref, allergens: allergens, image: filename!)
-        
-        print("BUTTON PRESSED")
-        
-        navigationController?.popViewController(animated: true)
-    }
-    
 }
 
 extension CreateListingViewController {

@@ -13,6 +13,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
     var listeners = MulticastDelegate<DatabaseListener>()
     var listingList: [Listing]
+//    var userList: [User]
     
     var authController: Auth
     var database: Firestore
@@ -24,6 +25,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         authController = Auth.auth()
         database = Firestore.firestore()
         listingList = [Listing]()
+//        userList = [User]()
         currentUser = authController.currentUser
         
         super.init()
@@ -38,30 +40,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
         if listener.listenerType == .listing || listener.listenerType == .all {
             listener.onListingChange(change: .update, listings: listingList)
         }
+
     }
     
     func removeListener(listener: DatabaseListener) {
         listeners.removeDelegate(listener)
     }
-    
-    //only applies for core data so no need to touch
-    func addListingDraft(draft: Bool, name: String?, description: String?, location: String?, category: Int32, image: String?) -> ListingDraft? {
-        //do nothig
-        return nil
-    }
-    
-    func deleteListingDraft(listing: ListingDraft) {
-        //do nothing
-    }
-    
-    
-    func cleanup(){}
-    
-    // MARK: - Firebase Controller Specific Methods
+
     
     func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?) -> Listing? {
-        
-        print("RUNNIING FIREBASE")
+
         let listing = Listing()
         listing.name = name
         listing.desc = description
@@ -70,6 +58,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listing.dietPref = dietPref
         listing.allergens = allergens
         listing.image = image
+//        listing.owner = owner
         
         //try adding to firestore
         do {
@@ -88,6 +77,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    func cleanup(){}
+    
+    
+    // MARK: - Firebase Controller Specific Methods
     func getListingByID(_ id: String) -> Listing? {
         for listing in listingList {
             if listing.id == id {
@@ -97,6 +90,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+//    func getUserByID(_ id: String) -> User? {
+//        for user in userList {
+//            if user.id == id {
+//                return user
+//            }
+//        }
+//        return nil
+//    }
+    
     func setupListingListener(){
         listingRef = database.collection("listings")
         listingRef?.addSnapshotListener(){
@@ -105,42 +107,43 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 print("Failed to fetch documents with error: \(String(describing: error))")
                 return
             }
-//            self.parseListingSnapshot(snapshot: querySnapshot)
+            self.parseListingSnapshot(snapshot: querySnapshot)
             if self.listingRef == nil {
                 self.setupListingListener()
             }
         }
     }
-//    func parseListingSnapshot(snapshot: QuerySnapshot) {
-//        snapshot.documentChanges.forEach{ (change) in
-//
-//            //decode the document's data as a listing object. done with codable ya
-//            var listing: Listing
-//            do {
-//                listing = try change.document.data(as: Listing.self)
-//            } catch {
-//                fatalError("Unable to decode hero: \(error.localizedDescription)")
-//            }
-//
-//            if change.type == .added {
-//                listingList.insert(listing, at: Int(change.newIndex))
-//            }
-//            else if change.type == .modified {
-//                listingList.remove(at: Int(change.oldIndex))
-//                listingList.insert(listing, at: Int(change.newIndex))
-//            }
-//            else if change.type == .removed {
-//                listingList.remove(at: Int(change.oldIndex))
-//            }
-//
-//            listeners.invoke { (listener) in
-//                if listener.listenerType == ListenerType.listing || listener.listenerType == ListenerType.all {
-//                    listener.onListingChange(change: .update, listings: listingList)
-//                }
-//            }
-//
-//
-//        }
-//    }
+    
+    func parseListingSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach{ (change) in
+
+            //decode the document's data as a listing object. done with codable
+            var listing: Listing
+            do {
+                listing = try change.document.data(as: Listing.self)
+            } catch {
+                fatalError("Unable to decode listing: \(error.localizedDescription)")
+            }
+
+            if change.type == .added {
+                listingList.insert(listing, at: Int(change.newIndex))
+            }
+            else if change.type == .modified {
+                listingList.remove(at: Int(change.oldIndex))
+                listingList.insert(listing, at: Int(change.newIndex))
+            }
+            else if change.type == .removed {
+                listingList.remove(at: Int(change.oldIndex))
+            }
+
+            listeners.invoke { (listener) in
+                if listener.listenerType == ListenerType.listing || listener.listenerType == ListenerType.all {
+                    listener.onListingChange(change: .update, listings: listingList)
+                }
+            }
+
+
+        }
+    }
     
 }

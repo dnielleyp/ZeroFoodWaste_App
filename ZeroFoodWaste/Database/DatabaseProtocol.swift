@@ -15,8 +15,8 @@ enum DatabaseChange {
 
 enum ListenerType {
     case listing
-//    case users
     case listingDraft
+    case user
     case all
 }
 
