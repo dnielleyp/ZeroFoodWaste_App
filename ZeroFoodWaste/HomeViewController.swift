@@ -7,7 +7,7 @@
 
 import UIKit
 import Firebase
-import FirebaseFirestoreSwift
+import FirebaseStorage
 
 class HomeViewController: UIViewController, DatabaseListener {
     
@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, DatabaseListener {
     var user: FirebaseAuth.User?
     
     var listingRef = Firestore.firestore().collection("listings")
+    var storageReference = Storage.storage()
     
     var allListing: [Listing] = []
     var name: String?
@@ -100,15 +101,22 @@ class HomeViewController: UIViewController, DatabaseListener {
             self.present(vc, animated: true, completion: nil)
         }
     }
-    /*
+    
+    var index: Int?
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowListingSegue" {
+            let destination = segue.destination as! ListingViewController
+
+            destination.listing = allListing[index!]
+        }
     }
-    */
+    
 
 
 }
@@ -121,8 +129,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let documentsDirectory = paths[0]
         let imageURL = documentsDirectory.appendingPathComponent(filename)
         
-        let bb = FileManager.default.fileExists(atPath: imageURL.path)
-        print("HERERE", bb)
+//        let bb = FileManager.default.fileExists(atPath: imageURL.path)
+//        print("HERERE", bb)
         
         let image = UIImage(contentsOfFile: imageURL.path)
         return image
@@ -130,11 +138,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     //listing collection view here! :D
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return allListing.count
     }
+    
+    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("RUNNNINNGNNGNNGGGGGGGGG")
+//        print("RUNNNINNGNNGNNGGGGGGGGG")
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_LISTING, for: indexPath) as! ListingCollectionViewCell
         
@@ -142,15 +152,30 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let listing = allListing[indexPath.row]
         
+//        var filename = listing.image
+//
+//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//        let documentsDirectry = paths[0]
+//        let fileURL = documentsDirectry.appendingPathComponent(filename!)
+//
+//        let downloadTask = listingRef
+        
+        
 //        cell.imageView.image = loadImage(filename: listing.image!)
         cell.listingNameLabel.text = listing.name
-        
-        
-        print(listing.name, "HEREEEEEE LISTING NAMEE")
+    
         
         return cell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        self.index = indexPath.row
+        self.performSegue(withIdentifier: "ShowListingSegue", sender: self)
+        
+    }
+    
     
     func generateLayout() -> UICollectionViewLayout {
         let imageItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))

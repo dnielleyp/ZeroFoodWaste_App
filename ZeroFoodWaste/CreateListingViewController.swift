@@ -7,16 +7,19 @@
 
 import UIKit
 import CoreData
-import FirebaseFirestore
-import FirebaseAuth
-import FirebaseFirestoreSwift
+import Firebase
+import FirebaseStorage
 
 class CreateListingViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     weak var databaseController: DatabaseProtocol?
     var userRef = Firestore.firestore().collection("user")
+    var listingRef = Firestore.firestore().collection("listings")
     var user: FirebaseAuth.User?
     
+    var storageReference = Storage.storage().reference()
+    
+
     var draft = false
     var category: Category?
     var saveDraft = false
@@ -171,7 +174,69 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 guard let data = image!.jpegData(compressionQuality: 0.8) else {
                     return
                 }
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    return
+                }
 
+                var tempAllerg = allergens
+                if allergens == ["","","","",""] {
+                    tempAllerg = []
+                }
+                
+                var tempDietPref = dietPref
+                if dietPref == ["","","",""]{
+                    tempDietPref = []
+                }
+                
+                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:filename!)
+                
+                let listingID: String = (list?.id!)!
+
+
+                let imageRef = storageReference.child("\(list?.id)/\(uuid)")
+
+
+                //upload image to firebasestorage
+                let uploadTask = imageRef.putData(data)
+
+                uploadTask.observe(.success){
+                    snapshot in
+//                    self.listingRef.document("\(listingID)").updateData(["photos":filename!])
+                    self.listingRef.document("\(listingID)").collection("photos").document("\(uuid)").setData(["url" : "\(imageRef)"])
+                    print("SUCCESSSSSSSSSSSSSS")
+                }
+                uploadTask.observe(.failure){
+                    snapshot in
+                    self.displayMessage(title: "error", message: "\(String(describing: snapshot.error))")
+
+                    print("failllllllLLLLLLLLEDDDDDDD HAHAHAAHHAHUHHSD", "\(String(describing: snapshot.error))")
+                }
+                
+                
+                
+                
+                
+                self.userRef.getDocuments {(snapshot, error) in
+                    guard let snapshot = snapshot else {
+                        print("Error \(String(describing: error))")
+                        return
+                    }
+                    for doc in snapshot.documents {
+                        let documentID = doc.documentID
+                        if documentID == userID {
+                            var listingsArr = doc.get("listings") as? Array<String>
+                            listingsArr!.append((list?.id)!)
+                            let ref = self.userRef.document(userID)
+                            ref.updateData(["listings":listingsArr!])
+                        }
+                    }
+                }
+
+                let ref = userRef.document(userID)
+                
+                
+                
+                navigationController?.popViewController(animated: true)
             }
             
             else {
@@ -181,44 +246,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             //get the user's uid and save as owner
             //get listing id and save as listing under user
             
-            guard let userID = Auth.auth().currentUser?.uid else {
-                return
-            }
-
-            var tempAllerg = allergens
-            if allergens == ["","","","",""] {
-                tempAllerg = []
-            }
             
-            var tempDietPref = dietPref
-            if dietPref == ["","","",""]{
-                tempDietPref = []
-            }
-            
-            let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image: filename!)
-            
-            
-            self.userRef.getDocuments {(snapshot, error) in
-                guard let snapshot = snapshot else {
-                    print("Error \(error)")
-                    return
-                }
-                for doc in snapshot.documents {
-                    let documentID = doc.documentID
-                    if documentID == userID {
-                        var listingsArr = doc.get("listings") as? Array<String>
-                        listingsArr!.append((list?.id)!)
-                        let ref = self.userRef.document(userID)
-                        ref.updateData(["listings":listingsArr])
-                    }
-                }
-            }
-
-            let ref = userRef.document(userID)
-            
-            
-            
-            navigationController?.popViewController(animated: true)
         }
         
 

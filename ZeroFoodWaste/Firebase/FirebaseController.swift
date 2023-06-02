@@ -119,6 +119,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
             //decode the document's data as a listing object. done with codable
             var listing: Listing
+            
             do {
                 listing = try change.document.data(as: Listing.self)
             } catch {

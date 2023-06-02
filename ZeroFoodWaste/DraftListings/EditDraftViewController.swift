@@ -50,6 +50,9 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
         databaseController = appDelegate.databaseController
 
         managedObjectContext = appDelegate.persistentContainer?.viewContext
+        
+        listingDesc.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0).cgColor
+//        listingDesc.layer.borderWidth = 1
 
     }
     

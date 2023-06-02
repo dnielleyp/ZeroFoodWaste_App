@@ -19,8 +19,8 @@ class Listing: NSObject, Codable {
     var location: String?
     var category: Int?
     var image: String?
-    var dietPref: [String?] = []
-    var allergens: [String?] = []
+    var dietPref: [String?]? = []
+    var allergens: [String?]? = []
     
     enum CodingKeys: String, CodingKey {
         case id
