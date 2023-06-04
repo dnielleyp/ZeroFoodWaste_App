@@ -30,7 +30,7 @@ class Listing: NSObject, Codable {
         case desc = "description"
         case location
         case category
-        case image = "photos"
+        case image 
         case dietPref
         case allergens
     }

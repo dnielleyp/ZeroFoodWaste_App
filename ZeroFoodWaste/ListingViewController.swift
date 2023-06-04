@@ -38,7 +38,31 @@ class ListingViewController: UIViewController {
 //        likeButton.titleLabel.text = String(listing?.likes.count)
         adjustUITextViewHeight(arg: descField)
         descField.text = listing?.desc
-        categoryLabel.setTitle(catArray[(listing?.category)!], for: .normal)
+        
+        var category = catArray[(listing?.category)!]
+        categoryLabel.setTitle((category), for: .normal)
+        
+        switch category {
+        case "Produce":
+            categoryLabel.tintColor = UIColor(red: 137/255, green: 180/255, blue: 136/255, alpha: 1.0)
+        case "Protein":
+            categoryLabel.tintColor = UIColor(red: 219/255, green: 143/255, blue: 181/255, alpha: 1.0)
+        case "Dairy":
+            categoryLabel.tintColor = UIColor(red: 247/255, green: 225/255, blue: 111/255, alpha: 1.0)
+        case "Grains":
+            categoryLabel.tintColor = UIColor(red: 145/255, green: 129/255, blue: 106/255, alpha: 1.0)
+        default:
+            categoryLabel.tintColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1.0)
+        }
+    
+        
+        
+        if category == "Protein"{
+            
+        }
+        
+        
+        locationLabel.text = listing?.location
         
         //iterate through allergens list and only show the ones with length>0
         
@@ -51,6 +75,7 @@ class ListingViewController: UIViewController {
 //        }
         
         print(allerge)
+        
         
         
         

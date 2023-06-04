@@ -158,18 +158,19 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             guard let location = locationField.text else {return}
             category = Category(rawValue: Int(categorySegmentedControl.selectedSegmentIndex))
 
-            guard let image = listingImage.image else {return}
+            guard let image = listingImage.image else {
+                displayMessage(title: "Cannot Create Listing", message: "Please include an image")
+                return}
 
             if name.isEmpty || desc.isEmpty || location.isEmpty {
                 displayMessage(title: "Cannot create listing", message: "Please ensure all fields are filled in")
             }
-
+            
             if imageExists {
                 
                 let image = listingImage.image  //cannot be nil since we already checked
                 let uuid = UUID().uuidString
                 filename = "\(uuid).jpg"
-                
                 
                 guard let data = image!.jpegData(compressionQuality: 0.8) else {
                     return
@@ -188,34 +189,24 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                     tempDietPref = []
                 }
                 
-                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:filename!)
+                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:uuid)
                 
                 let listingID: String = (list?.id!)!
 
-
                 let imageRef = storageReference.child("\(list?.id)/\(uuid)")
-
 
                 //upload image to firebasestorage
                 let uploadTask = imageRef.putData(data)
 
                 uploadTask.observe(.success){
                     snapshot in
-//                    self.listingRef.document("\(listingID)").updateData(["photos":filename!])
                     self.listingRef.document("\(listingID)").collection("photos").document("\(uuid)").setData(["url" : "\(imageRef)"])
-                    print("SUCCESSSSSSSSSSSSSS")
                 }
                 uploadTask.observe(.failure){
                     snapshot in
                     self.displayMessage(title: "error", message: "\(String(describing: snapshot.error))")
-
-                    print("failllllllLLLLLLLLEDDDDDDD HAHAHAAHHAHUHHSD", "\(String(describing: snapshot.error))")
                 }
-                
-                
-                
-                
-                
+
                 self.userRef.getDocuments {(snapshot, error) in
                     guard let snapshot = snapshot else {
                         print("Error \(String(describing: error))")
@@ -234,14 +225,11 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
 
                 let ref = userRef.document(userID)
                 
-                
-                
                 navigationController?.popViewController(animated: true)
+                
+                
             }
-            
-            else {
-                displayMessage(title: "Cannot Create Listing", message: "Please include an image")
-            }
+ 
             
             //get the user's uid and save as owner
             //get listing id and save as listing under user
