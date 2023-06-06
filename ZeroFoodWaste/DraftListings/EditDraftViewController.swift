@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import FirebaseFirestore
+import FirebaseAuth
 
 class EditDraftViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -350,6 +351,10 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
     // MARK: Posting listing :)
     @IBAction func createListingButton(_ sender: Any) {
         
+        guard let userID = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
         var imageExists = checkImage()
         var filename: String?
         
@@ -397,7 +402,7 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
                 tempDietPref = []
             }
             
-            try databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: tempDietPref!, allergens: tempAllerg!, image: filename)
+            try databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: tempDietPref!, allergens: tempAllerg!, image: filename, owner: userID)
         } catch {
             displayMessage(title: "Error", message: "Failed to upload listing! Please try again")
         }

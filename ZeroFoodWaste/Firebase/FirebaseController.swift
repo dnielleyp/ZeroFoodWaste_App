@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
@@ -48,7 +49,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
 
     
-    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?) -> Listing? {
+    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?, owner: String?) -> Listing? {
 
         let listing = Listing()
         listing.name = name
@@ -58,7 +59,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listing.dietPref = dietPref
         listing.allergens = allergens
         listing.image = image
-//        listing.owner = owner
+        listing.owner = owner
         
         //try adding to firestore
         do {
@@ -81,6 +82,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     // MARK: - Firebase Controller Specific Methods
+    
     func getListingByID(_ id: String) -> Listing? {
         for listing in listingList {
             if listing.id == id {
@@ -90,15 +92,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
-//    func getUserByID(_ id: String) -> User? {
-//        for user in userList {
-//            if user.id == id {
-//                return user
-//            }
-//        }
-//        return nil
-//    }
-    
+
     func setupListingListener(){
         listingRef = database.collection("listings")
         listingRef?.addSnapshotListener(){

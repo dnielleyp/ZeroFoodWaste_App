@@ -13,33 +13,61 @@ class ProfileViewController: UIViewController, DatabaseListener {
 
     var username: String?
     var allDrafts: [ListingDraft] = []
+    var currUserID = Auth.auth().currentUser!.uid
+    
     @IBOutlet weak var usernameLabel: UILabel!
     
     var userRef = Firestore.firestore().collection("user")
+    var listingRef = Firestore.firestore().collection("listings")
+    
     var listenerType = ListenerType.listingDraft
     
     weak var databaseController: DatabaseProtocol?
     var managedObjectContext: NSManagedObjectContext?
     var persistentContainer: NSPersistentContainer?
+    
+    
+    var userListing: [Listing] = []
 
     func onListingChange(change: DatabaseChange, listings: [Listing]) {
-        //nothing
+        //do nothing !!
+
     }
     
     func onListingDraftChange(change: DatabaseChange, listings: [ListingDraft]) {
         allDrafts =  listings
     }
     
+    var listingIDList: [String] = []
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         do {
             allDrafts = try managedObjectContext!.fetch(ListingDraft.fetchRequest()) as [ListingDraft]
-            print("Loaded", allDrafts.count)
         }
         catch {
             print("ERROR")
         }
+        
         getUsername()
+        
+        databaseController?.addListener(listener: self)
+
+//        userRef.getDocuments { (snapshot, error) in
+//            guard let snapshot = snapshot else {
+//                print("Error fetching user listings \(error!)")
+//                return
+//            }
+//            for document in snapshot.documents {
+//                if document.documentID == self.currUserID {
+//                    self.listingIDList = document.get("listings") as! [String]
+//                    print("ran in here", self.listingIDList)
+//
+//                }
+//            }
+//
+//        }
+        
     }
     
     override func viewDidLoad() {
@@ -53,8 +81,9 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        databaseController?.removeListener(listener: self)
+        databaseController?.removeListener(listener: self)
     }
+    
     
     @IBAction func logOutButton(_ sender: Any) {
         
@@ -123,4 +152,28 @@ class ProfileViewController: UIViewController, DatabaseListener {
     
     
 
+}
+
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userListing.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userListingCell", for: indexPath) as! ProfileListingCollectionViewCell
+        
+        return cell
+    }
+
+
+}
+
+class ProfileListingCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var listingImageView: UIImageView!
+    @IBOutlet weak var listingNameLabel: UILabel!
+    
 }

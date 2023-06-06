@@ -32,7 +32,7 @@ protocol DatabaseProtocol: AnyObject {
     func removeListener(listener: DatabaseListener)
 
 //    for published listings :>
-    func addListing (name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?) -> Listing?
+    func addListing (name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?, owner: String?) -> Listing?
     func deleteListing(listing: Listing)
 }
 

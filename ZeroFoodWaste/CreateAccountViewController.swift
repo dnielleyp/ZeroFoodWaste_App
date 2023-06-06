@@ -59,7 +59,7 @@ class CreateAccountViewController: UIViewController{
             displayMessage(title: "Password Too Short", message: "Please choose a longer password")
         }
         
-        Auth.auth().createUser(withEmail: email, password: password){ (authResult, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
             //check for errors
             if error != nil {
                 self.displayMessage(title: "error", message: "\(error)")
@@ -72,16 +72,37 @@ class CreateAccountViewController: UIViewController{
                guard let userID = Auth.auth().currentUser?.uid else {return}
                 
  
-                database.collection("user").document(userID).setData(["username":username, "email":email, "name":name, "listings":[], "likes":[],"pfp":""]) { error in
+                database.collection("user").document(userID).setData(["username":username,
+                                                                      "email":email,
+                                                                      "name":name,
+                                                                      "listings":[],
+                                                                      "likes":[],
+                                                                      "pfp":""]) { error in
                     if error != nil {
                         print("Error")
                     } else {
-                        print("Doc succcess")
+                        print("Successfully created user")
                     }
                 }
                 
+                
+                let setDispName = self.currentUser!.createProfileChangeRequest()
+                setDispName.displayName = username
+                
+                setDispName.commitChanges {(error) in
+                    if let error = error {
+                        print("error setting display name hehe \(error)")
+                    } else {
+                        print("display name is set!! hurrah!")
+                    }
+
             }
         }
+    
+
+                
+        }
+        
         
         
         

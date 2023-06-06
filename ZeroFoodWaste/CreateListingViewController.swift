@@ -68,8 +68,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
     // MARK: - saving as draft
         
         @IBAction func saveAsDraft(_ sender: Any) {
-            
-    //        let haveImage = true
+
             var filename: String?
 
             saveDraft = true
@@ -101,6 +100,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 
                 do {try data.write(to: imageFile)}
                 catch {displayMessage(title: "error", message: "here")}
+                
 
             }
             
@@ -142,8 +142,9 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
             }
             return true
         }
-        
-        
+
+    var username: String?
+    
     // MARK: Creating a listing that will be posted
         //this one is added to firebase :)
         @IBAction func createListing(_ sender: Any) {
@@ -175,9 +176,13 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 guard let data = image!.jpegData(compressionQuality: 0.8) else {
                     return
                 }
+                
+                //retrieve username :)
                 guard let userID = Auth.auth().currentUser?.uid else {
                     return
                 }
+                
+                let username = Auth.auth().currentUser?.displayName
 
                 var tempAllerg = allergens
                 if allergens == ["","","","",""] {
@@ -189,7 +194,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                     tempDietPref = []
                 }
                 
-                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:uuid)
+                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:uuid, owner: username)
                 
                 let listingID: String = (list?.id!)!
 
@@ -204,9 +209,11 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 }
                 uploadTask.observe(.failure){
                     snapshot in
-                    self.displayMessage(title: "error", message: "\(String(describing: snapshot.error))")
+                    self.displayMessage(title: "error no photo uploaded", message: "\(String(describing: snapshot.error))")
                 }
-
+                
+                
+                //add a reference to listing in the user
                 self.userRef.getDocuments {(snapshot, error) in
                     guard let snapshot = snapshot else {
                         print("Error \(String(describing: error))")
@@ -215,25 +222,22 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                     for doc in snapshot.documents {
                         let documentID = doc.documentID
                         if documentID == userID {
-                            var listingsArr = doc.get("listings") as? Array<String>
-                            listingsArr!.append((list?.id)!)
-                            let ref = self.userRef.document(userID)
-                            ref.updateData(["listings":listingsArr!])
+                            var listingsArr = doc.get("listings") as? Array<DocumentReference>
+
+                            let ref = self.listingRef.document("\(listingID)")
+                            listingsArr!.append(ref)
+                            
+                            self.userRef.document(userID).updateData(["listings":listingsArr])
+                            
+                            
                         }
                     }
                 }
-
-                let ref = userRef.document(userID)
+                
+                
                 
                 navigationController?.popViewController(animated: true)
-                
-                
             }
- 
-            
-            //get the user's uid and save as owner
-            //get listing id and save as listing under user
-            
             
         }
         

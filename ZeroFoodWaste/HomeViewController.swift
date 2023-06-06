@@ -8,8 +8,9 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import FirebaseAuth
 
-class HomeViewController: UIViewController, DatabaseListener {
+class HomeViewController: UIViewController, DatabaseListener, UITabBarControllerDelegate {
     
 //    var snapshotListener: ListenerRegistration?
     
@@ -27,11 +28,13 @@ class HomeViewController: UIViewController, DatabaseListener {
     var allListing: [Listing] = []
     var name: String?
     
-//    var imagePaths = [String]()
-//    var imageList = [UIImage]()
+    var imagePathList = [String]()
+    var imageList = [UIImage]()
     
     
     @IBOutlet weak var listingCollectionView: UICollectionView!
+    
+    
     
     let CELL_LISTING = "listingCell"
 
@@ -42,6 +45,7 @@ class HomeViewController: UIViewController, DatabaseListener {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Do any additional setup after loading the view.
         
@@ -51,27 +55,31 @@ class HomeViewController: UIViewController, DatabaseListener {
         
         listingCollectionView.backgroundColor = .systemBackground
         listingCollectionView.setCollectionViewLayout(generateLayout(), animated: false)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         readUserInfo()
         
-        databaseController?.addListener(listener: self)
-        print("RUNNING HERE")
+//        self.tabBarController?.delegate = self
         
-        listingCollectionView.reloadSections([0])
+        
+        
+        databaseController?.addListener(listener: self)
+        
+//        self.listingCollectionView.reloadSections([0])
+        
+        
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
             databaseController?.removeListener(listener: self)
-//        if let snapshotListener = snapshotListener {
-//            snapshotListener.remove()
-//        }
+
     }
     
     func onListingChange(change: DatabaseChange, listings: [Listing]) {
         allListing = listings
-
     }
     
     func readUserInfo(){
@@ -134,6 +142,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let imageURL = documentsDirectory.appendingPathComponent(filename)
         
         let image = UIImage(contentsOfFile: imageURL.path)
+        
+        imagePathList.append(filename)
+        
         return image
         
     }
@@ -153,52 +164,71 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let listing = allListing[indexPath.row]
         
-        var filename = listing.image!
+        //uuid of the image
+        var imageName = listing.image!
         
-        let imageRef = storageReference.reference().child("\(listing.id)/\(filename)")
+        //get jpg file
+        let filename = "\(imageName).jpg"
         
-        let paths = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        let fileURL = documentsDirectory.appendingPathComponent(filename)
+        cell.listingNameLabel.text = "woi"
+        
+        
+        //image is not yet loaded?
+        if !self.imagePathList.contains(filename) {
 
-        let downloadTask = imageRef.write(toFile: fileURL)
+            //MARK: you want to load this image
+            if let image = self.loadImage(filename: imageName) {
+                
+                self.imageList.append(image)
+                self.imagePathList.append(imageName)
+                
+                cell.imageView.image = image
+                
+                self.listingCollectionView.reloadSections([0])
+                
+            }
+            
+            //we need to download from storage if the image not loaded
+            else {
+                
+                let paths = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask)
+                let documentsDirectory = paths[0]
+                let fileURL = documentsDirectory.appendingPathComponent(imageName)
 
-        downloadTask.observe( .success) { snapshot in
-            let image = self.loadImage(filename: filename)
-            cell.imageView.image = image
+                let imageRef = storageReference.reference().child("\(listing.id)/\(imageName)")
+
+                let downloadTask = imageRef.write(toFile: fileURL)
+
+                downloadTask.observe( .success) { snapshot in
+                    let image = self.loadImage(filename: imageName)!
+                    self.imageList.append(image)
+                    self.imagePathList.append(imageName)
+                    
+                    
+                    cell.imageView.image = image
+
+                    self.listingCollectionView.reloadSections([0])
+                }
+
+                downloadTask.observe(.failure) { snapshot in
+                    print("\(String(describing: snapshot.error))")
+                }
+                
+                
+                
+            }
+            
+
 
         }
 
-        downloadTask.observe(.failure) { snapshot in
-            print("\(String(describing: snapshot.error))")
-        }
-
-
-        
-        
-        
         
 
-
-        cell.imageView.image = loadImage(filename: listing.image!)
         cell.listingNameLabel.text = listing.name
-        
-        
-    
-        
+
         return cell
         
     }
-    
-//    func saveImageData(filename: String){
-//        let paths = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask)
-//        let documentsDirectory = paths[0]
-//        let fileURL = documentsDirectory.appendingPathComponent(filename)
-//
-//        do {
-//            try image
-//        }
-//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

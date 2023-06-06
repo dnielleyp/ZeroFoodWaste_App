@@ -23,6 +23,8 @@ class ListingViewController: UIViewController {
     @IBOutlet weak var allergensLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
+    @IBOutlet weak var descFieldHeight: NSLayoutConstraint!
+    
     
     
     let catArray = ["Produce", "Dairy", "Protein", "Grain", "Others"]
@@ -31,9 +33,8 @@ class ListingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        descField.delegate = self
         nameLabel.text = listing?.name
-        
         
 //        likeButton.titleLabel.text = String(listing?.likes.count)
         adjustUITextViewHeight(arg: descField)
@@ -54,35 +55,26 @@ class ListingViewController: UIViewController {
         default:
             categoryLabel.tintColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1.0)
         }
-    
-        
-        
-        if category == "Protein"{
-            
-        }
         
         
         locationLabel.text = listing?.location
+        ownerLabel.setTitle(listing?.owner, for: .normal)
         
         //iterate through allergens list and only show the ones with length>0
         
         var allerg = listing?.allergens ?? ["","","","",""]
         var allerge = ""
-//        for a in 0...4 {
-//            if allerg[a] != "" {
-//                allerge += allerg[a]!
-//            }
-//        }
         
-        print(allerge)
-        
-        
-        
-        
-        
-        
-        
+        for a in allerg {
+            if a!.count > 0 {
+                allerge + " " + a!
+            }
+            
+        }
+        print(allerge + "HELLO" + "wowowowowowwww")
     }
+    
+    
     
     func adjustUITextViewHeight(arg : UITextView) {
         arg.translatesAutoresizingMaskIntoConstraints = true
@@ -106,4 +98,10 @@ class ListingViewController: UIViewController {
     }
     */
 
+}
+
+extension ListingViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        descFieldHeight.constant = descField.contentSize.height
+    }
 }

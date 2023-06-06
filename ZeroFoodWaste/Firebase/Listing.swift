@@ -25,7 +25,7 @@ class Listing: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-//        case owner
+        case owner
 //        case likes
         case desc = "description"
         case location
@@ -48,19 +48,6 @@ extension Listing {
         }
     }
 }
-
-//enum CodingKeys: String, CodingKey {
-//    case id
-//    case name
-//    case owner
-//    case likes
-//    case desc = "description"
-//    case location
-//    case category
-//    case image = "photos"
-//    case dietPref
-//    case allergens
-//}
 
 enum Category: Int {
     case produce = 0
