@@ -355,6 +355,8 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
             return
         }
         
+        let username = Auth.auth().currentUser?.displayName
+        
         var imageExists = checkImage()
         var filename: String?
         
@@ -402,7 +404,9 @@ class EditDraftViewController: UIViewController, UINavigationControllerDelegate,
                 tempDietPref = []
             }
             
-            try databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: tempDietPref!, allergens: tempAllerg!, image: filename, owner: userID)
+            
+            
+            try databaseController?.addListing(name: name, description: desc, location: location, category: category, dietPref: tempDietPref!, allergens: tempAllerg!, image: filename, owner: username, ownerID: userID)
         } catch {
             displayMessage(title: "Error", message: "Failed to upload listing! Please try again")
         }

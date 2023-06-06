@@ -49,7 +49,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
 
     
-    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?, owner: String?) -> Listing? {
+    func addListing(name: String?, description: String?, location: String?, category: Category?, dietPref: [String?], allergens: [String?], image: String?, owner: String?, ownerID: String?) -> Listing? {
 
         let listing = Listing()
         listing.name = name

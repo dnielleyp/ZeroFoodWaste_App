@@ -52,21 +52,24 @@ class ProfileViewController: UIViewController, DatabaseListener {
         getUsername()
         
         databaseController?.addListener(listener: self)
+        
+//        userListing =
 
-//        userRef.getDocuments { (snapshot, error) in
-//            guard let snapshot = snapshot else {
-//                print("Error fetching user listings \(error!)")
-//                return
-//            }
-//            for document in snapshot.documents {
-//                if document.documentID == self.currUserID {
-//                    self.listingIDList = document.get("listings") as! [String]
-//                    print("ran in here", self.listingIDList)
-//
-//                }
-//            }
-//
-//        }
+        userRef.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error fetching user listings \(error!)")
+                return
+            }
+            for document in snapshot.documents {
+                if document.documentID == self.currUserID {
+                    self.userListing = document.get("listings") as! [Listing]
+                    
+                    print(self.userListing.count, "ran in here ehehehe")
+
+                }
+            }
+
+        }
         
     }
     
@@ -155,8 +158,20 @@ class ProfileViewController: UIViewController, DatabaseListener {
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-
-
+    
+    func generateLayout() -> UICollectionViewLayout {
+        let imageItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
+        
+        let imageItem = NSCollectionLayoutItem(layoutSize: imageItemSize)
+        imageItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
+        let imageGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.55))
+        
+        let imageGroup = NSCollectionLayoutGroup.horizontal(layoutSize: imageGroupSize, subitems: [imageItem])
+        let imageSection = NSCollectionLayoutSection(group: imageGroup)
+        
+        return UICollectionViewCompositionalLayout(section: imageSection)
+    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return userListing.count

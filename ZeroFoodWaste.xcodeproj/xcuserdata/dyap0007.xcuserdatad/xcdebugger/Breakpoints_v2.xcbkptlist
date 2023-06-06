@@ -78,8 +78,8 @@
             filePath = "ZeroFoodWaste/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "readUserInfo()"
             landmarkType = "7">
          </BreakpointContent>
@@ -143,6 +143,130 @@
                   startingLineNumber = "45"
                   endingLineNumber = "45"
                   offsetFromSymbolStart = "404">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "836025B6-76FE-4C14-866A-F5A7F38F7AF5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZeroFoodWaste/ListingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZeroFoodWaste/CreateListingViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "CreateListingViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - f8411c9e372916c0"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.listingRef.getter : __C.FIRCollectionReference"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - 6e8bd0a95de78ecc"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.listingRef.setter : __C.FIRCollectionReference"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - c8f0809628b1bcbd"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.listingRef.modify : __C.FIRCollectionReference"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - fc02811b175a5176"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.listingRef.modify : __C.FIRCollectionReference with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - 7de8ee6fc5fc8b28"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; ZeroFoodWaste.CreateListingViewController"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "596">
+               </Location>
+               <Location
+                  uuid = "75B2427D-D39A-48D1-9CF0-DE42F69261F4 - c567d9ca6e60f9f2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZeroFoodWaste.CreateListingViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;ZeroFoodWaste.CreateListingViewController&gt;"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/CreateListingViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "572">
                </Location>
             </Locations>
          </BreakpointContent>

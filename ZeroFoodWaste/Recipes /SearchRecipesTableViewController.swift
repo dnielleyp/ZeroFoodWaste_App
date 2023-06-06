@@ -27,7 +27,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "Search for recipes..."
         searchController.searchBar.showsCancelButton = false
         
         navigationItem.searchController = searchController
@@ -61,7 +61,10 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         
         do {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)
-            indicator.stopAnimating()
+            
+            DispatchQueue.main.async {
+                self.indicator.stopAnimating()
+            }
             
             let decoder = JSONDecoder()
             let foodData = try decoder.decode(FoodData.self, from: data)
@@ -75,7 +78,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         catch let error {
             print(error)
         }
- 
+        print("running here?")
         print(requestURL, "URLLLLLLLLLLLHFJDHKJFSDHAJK")
         
 
@@ -85,16 +88,18 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         newRecipes.removeAll()
         tableView.reloadData()
 
-        navigationItem.searchController?.dismiss(animated: true)
-        indicator.startAnimating()
 
         //guard against the search bar text being nil or empty.
         guard let searchText = searchBar.text else {
-            print("here")
             return
         }
-
+        
+        navigationItem.searchController?.dismiss(animated: true)
+        indicator.startAnimating()
+        
         Task {
+            URLSession.shared.invalidateAndCancel()
+//            currentRequestIndex = 0
             await requestRecipes("egg")
         }
     }
@@ -108,7 +113,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return newRecipes.count
     }
 
 

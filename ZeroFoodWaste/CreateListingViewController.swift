@@ -194,7 +194,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                     tempDietPref = []
                 }
                 
-                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:uuid, owner: username)
+                let list = databaseController!.addListing(name: name, description: desc, location: location, category: category!, dietPref: tempDietPref, allergens: tempAllerg, image:uuid, owner: username, ownerID: userID)
                 
                 let listingID: String = (list?.id!)!
 

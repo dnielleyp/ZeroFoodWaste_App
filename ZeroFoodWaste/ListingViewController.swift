@@ -6,25 +6,28 @@
 //
 
 import UIKit
+import Firebase
 
 class ListingViewController: UIViewController {
     
     var listing: Listing?
+    
+    var userRef = Firestore.firestore().collection("user")
+    var listingRef = Firestore.firestore().collection("listings")
 
     
     @IBOutlet weak var listingImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ownerLabel: UIButton!
     @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var descField: UITextView!
+    @IBOutlet weak var descField: UILabel!
     
     @IBOutlet weak var categoryLabel: UIButton!
     @IBOutlet weak var dietPrefLabel: UILabel!
     @IBOutlet weak var allergensLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
-    @IBOutlet weak var descFieldHeight: NSLayoutConstraint!
-    
+//    @IBOutlet weak var descFieldHeight: NSLayoutConstraint!
     
     
     let catArray = ["Produce", "Dairy", "Protein", "Grain", "Others"]
@@ -32,12 +35,10 @@ class ListingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        descField.delegate = self
+ 
+        listingImage.image = loadImage(filename: (listing?.image)!)
         nameLabel.text = listing?.name
-        
-//        likeButton.titleLabel.text = String(listing?.likes.count)
-        adjustUITextViewHeight(arg: descField)
+    
         descField.text = listing?.desc
         
         var category = catArray[(listing?.category)!]
@@ -60,26 +61,47 @@ class ListingViewController: UIViewController {
         locationLabel.text = listing?.location
         ownerLabel.setTitle(listing?.owner, for: .normal)
         
-        //iterate through allergens list and only show the ones with length>0
-        
+
         var allerg = listing?.allergens ?? ["","","","",""]
-        var allerge = ""
-        
-        for a in allerg {
-            if a!.count > 0 {
-                allerge + " " + a!
-            }
+        if allerg == ["","","","",""] {
+            let allerge = allerg.compactMap {$0}.joined(separator: ", ")
             
+            allergensLabel.text = allerge
         }
-        print(allerge + "HELLO" + "wowowowowowwww")
+        else {
+            allergensLabel.text = ""
+        }
+        
+        
     }
     
     
-    
-    func adjustUITextViewHeight(arg : UITextView) {
-        arg.translatesAutoresizingMaskIntoConstraints = true
-        arg.sizeToFit()
-        arg.isScrollEnabled = false
+    @IBAction func addLikes(_ sender: Any) {
+        
+        
+        let listingID: String = (listing?.id!)!
+        
+        let userID = listing!.ownerID
+
+        self.userRef.getDocuments { [self](snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error \(String(describing: error))")
+                return
+            }
+            for doc in snapshot.documents {
+                let documentID = doc.documentID
+                if documentID == userID {
+                    var likesList = doc.get("likes") as? Array<DocumentReference>
+
+                    let ref = self.listingRef.document("\(listingID)")
+                    likesList!.append(ref)
+
+                    self.userRef.document(userID!).updateData(["likes":likesList])
+                    self.likeButton.setTitle(String(likesList!.count), for: .normal)
+
+                }
+            }
+        }
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -87,7 +109,19 @@ class ListingViewController: UIViewController {
     }
     
     
-
+    func loadImage(filename: String) -> UIImage? {
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let imageURL = documentsDirectory.appendingPathComponent(filename)
+        
+        let image = UIImage(contentsOfFile: imageURL.path)
+        
+        return image
+        
+    }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -100,8 +134,8 @@ class ListingViewController: UIViewController {
 
 }
 
-extension ListingViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        descFieldHeight.constant = descField.contentSize.height
-    }
-}
+//extension ListingViewController: UITextViewDelegate {
+//    func textViewDidChange(_ textView: UITextView) {
+//        descFieldHeight.constant = descField.contentSize.height
+//    }
+//}

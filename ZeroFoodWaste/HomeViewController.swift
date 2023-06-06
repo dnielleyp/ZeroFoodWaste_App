@@ -14,15 +14,16 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
     
 //    var snapshotListener: ListenerRegistration?
     
+    var userRef = Firestore.firestore().collection("user")
+    var listingRef = Firestore.firestore().collection("listings")
+    
     var listenerType = ListenerType.listing
     weak var databaseController: DatabaseProtocol?
     
     
     //reference to the user collection to get user's name
-    var userRef = Firestore.firestore().collection("user")
     var user: FirebaseAuth.User?
     
-    var listingRef = Firestore.firestore().collection("listings")
     var storageReference = Storage.storage()
     
     var allListing: [Listing] = []
@@ -60,15 +61,8 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
         readUserInfo()
         
 //        self.tabBarController?.delegate = self
-        
-        
-        
         databaseController?.addListener(listener: self)
         
-//        self.listingCollectionView.reloadSections([0])
-        
-        
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -124,6 +118,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
             let destination = segue.destination as! ListingViewController
 
             destination.listing = allListing[index!]
+            
         }
     }
     
@@ -211,16 +206,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 downloadTask.observe(.failure) { snapshot in
                     print("\(String(describing: snapshot.error))")
                 }
-                
-                
-                
             }
-            
-
-
         }
-
-        
 
         cell.listingNameLabel.text = listing.name
 

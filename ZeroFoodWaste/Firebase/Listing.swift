@@ -14,7 +14,8 @@ class Listing: NSObject, Codable {
     @DocumentID var id: String?
     var name: String?
     var owner: String?
-    var likes: [User] = []
+    var ownerID: String?
+    var likes: [User]? = []
     var desc: String?
     var location: String?
     var category: Int?
@@ -26,7 +27,7 @@ class Listing: NSObject, Codable {
         case id
         case name
         case owner
-//        case likes
+        case likes
         case desc = "description"
         case location
         case category

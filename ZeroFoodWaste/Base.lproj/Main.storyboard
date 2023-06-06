@@ -426,34 +426,29 @@
                                                     <imageReference key="image" image="heart" catalog="system" symbolScale="medium"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="addLikes:" destination="Edk-6G-8I3" eventType="touchUpInside" id="UMb-tH-sy8"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gr-qJ-jJq">
                                                 <rect key="frame" x="20" y="369.66666666666669" width="100" height="35"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="username"/>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0or-sy-ROR">
+                                                <rect key="frame" x="20" y="419.66666666666669" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Recipe Idea" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ode-HH-QS4">
                                                 <rect key="frame" x="56" y="1100" width="105" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1A3-Kg-bLC">
-                                                <rect key="frame" x="20" y="419.66666666666669" width="353" height="128.00000000000006"/>
-                                                <color key="backgroundColor" red="1" green="0.96862745100000003" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="128" id="NGG-oN-cMB"/>
-                                                </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="arg.sizeToFit" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </textView>
                                             <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQy-Ry-0Tt">
-                                                <rect key="frame" x="20" y="562.66666666666663" width="110" height="35"/>
+                                                <rect key="frame" x="20" y="460.66666666666669" width="110" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="110" id="pfz-xT-4Kh"/>
@@ -462,26 +457,26 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Category" cornerStyle="medium"/>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngt-dW-fsj">
-                                                <rect key="frame" x="20.000000000000004" y="607.66666666666663" width="41.333333333333343" height="19.333333333333371"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngt-dW-fsj">
+                                                <rect key="frame" x="20" y="501" width="41.333333333333343" height="19.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T2-iX-0Cf">
-                                                <rect key="frame" x="20.000000000000004" y="637" width="41.333333333333343" height="19.333333333333371"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T2-iX-0Cf">
+                                                <rect key="frame" x="20" y="528" width="41.333333333333343" height="19.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meet-up Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjG-HV-GhH">
-                                                <rect key="frame" x="20" y="671.33333333333326" width="151" height="21"/>
+                                                <rect key="frame" x="20" y="569.33333333333326" width="151" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUf-Fg-gOb">
-                                                <rect key="frame" x="20.000000000000004" y="702.33333333333326" width="41.333333333333343" height="19.333333333333371"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUf-Fg-gOb">
+                                                <rect key="frame" x="20" y="598" width="41.333333333333343" height="19.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -490,8 +485,6 @@
                                         <color key="backgroundColor" red="1" green="0.96862745100000003" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="LjG-HV-GhH" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="0AL-a8-hRg"/>
-                                            <constraint firstItem="1A3-Kg-bLC" firstAttribute="top" secondItem="1gr-qJ-jJq" secondAttribute="bottom" constant="15" id="2aX-jx-Vx9"/>
-                                            <constraint firstAttribute="trailing" secondItem="1A3-Kg-bLC" secondAttribute="trailing" constant="20" id="2d2-WK-fy8"/>
                                             <constraint firstItem="2T2-iX-0Cf" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="3Ad-cU-fFE"/>
                                             <constraint firstItem="CQy-Ry-0Tt" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="3C8-as-93Y"/>
                                             <constraint firstAttribute="trailing" secondItem="zKQ-z7-kIc" secondAttribute="trailing" constant="38" id="6gv-sk-4eF"/>
@@ -499,12 +492,11 @@
                                             <constraint firstItem="ngt-dW-fsj" firstAttribute="top" secondItem="CQy-Ry-0Tt" secondAttribute="bottom" constant="10" id="DRf-uv-FOt"/>
                                             <constraint firstAttribute="trailing" secondItem="wHH-ap-UQy" secondAttribute="trailing" constant="20" id="Iny-xf-hjo"/>
                                             <constraint firstItem="1gr-qJ-jJq" firstAttribute="top" secondItem="xgb-Rk-XDo" secondAttribute="bottom" constant="5" id="NnR-Xv-a0n"/>
-                                            <constraint firstItem="1A3-Kg-bLC" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="Odp-Ez-pBj"/>
                                             <constraint firstItem="LjG-HV-GhH" firstAttribute="top" secondItem="2T2-iX-0Cf" secondAttribute="bottom" constant="15" id="Ozz-LG-iQA"/>
                                             <constraint firstItem="xgb-Rk-XDo" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="Rz7-Ni-Xp3"/>
                                             <constraint firstItem="bUf-Fg-gOb" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="SRs-wu-Fhf"/>
-                                            <constraint firstItem="CQy-Ry-0Tt" firstAttribute="top" secondItem="1A3-Kg-bLC" secondAttribute="bottom" constant="15" id="Tc6-dL-jvI"/>
                                             <constraint firstItem="ngt-dW-fsj" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="ZoP-d8-zwN"/>
+                                            <constraint firstItem="CQy-Ry-0Tt" firstAttribute="top" secondItem="0or-sy-ROR" secondAttribute="bottom" constant="20" id="axd-dr-jyD"/>
                                             <constraint firstItem="wHH-ap-UQy" firstAttribute="top" secondItem="zKQ-z7-kIc" secondAttribute="bottom" constant="5" id="bLJ-fC-VSN"/>
                                             <constraint firstItem="2T2-iX-0Cf" firstAttribute="top" secondItem="ngt-dW-fsj" secondAttribute="bottom" constant="10" id="bOz-Dm-6Z1"/>
                                             <constraint firstAttribute="height" constant="1100" id="dUw-20-v8v"/>
@@ -513,7 +505,9 @@
                                             <constraint firstItem="xgb-Rk-XDo" firstAttribute="centerY" secondItem="wHH-ap-UQy" secondAttribute="centerY" id="h85-Ir-TkX"/>
                                             <constraint firstItem="xgb-Rk-XDo" firstAttribute="top" secondItem="zKQ-z7-kIc" secondAttribute="bottom" constant="10" id="k4b-CK-Hyk"/>
                                             <constraint firstItem="zKQ-z7-kIc" firstAttribute="top" secondItem="0DR-RZ-Emx" secondAttribute="top" constant="5" id="ksA-tB-1uT"/>
+                                            <constraint firstItem="0or-sy-ROR" firstAttribute="top" secondItem="1gr-qJ-jJq" secondAttribute="bottom" constant="15" id="lBh-1H-vP9"/>
                                             <constraint firstAttribute="bottom" secondItem="Ode-HH-QS4" secondAttribute="bottom" constant="-24" id="pUv-Id-HDX"/>
+                                            <constraint firstItem="0or-sy-ROR" firstAttribute="leading" secondItem="0DR-RZ-Emx" secondAttribute="leading" constant="20" id="wIx-kO-Xse"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -542,8 +536,7 @@
                     <connections>
                         <outlet property="allergensLabel" destination="2T2-iX-0Cf" id="OxJ-an-m47"/>
                         <outlet property="categoryLabel" destination="CQy-Ry-0Tt" id="Fd4-hO-czK"/>
-                        <outlet property="descField" destination="1A3-Kg-bLC" id="Kn6-2t-fiu"/>
-                        <outlet property="descFieldHeight" destination="NGG-oN-cMB" id="FiS-0N-zLN"/>
+                        <outlet property="descField" destination="0or-sy-ROR" id="elr-At-xee"/>
                         <outlet property="dietPrefLabel" destination="ngt-dW-fsj" id="gEx-si-eK2"/>
                         <outlet property="likeButton" destination="wHH-ap-UQy" id="Slt-B7-0MJ"/>
                         <outlet property="listingImage" destination="zKQ-z7-kIc" id="8iI-lr-CUJ"/>
@@ -1508,7 +1501,7 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ck-Q2-SBv">
-                                <rect key="frame" x="0.0" y="99.333333333333314" width="393" height="948.66666666666674"/>
+                                <rect key="frame" x="0.0" y="99.333333333333314" width="393" height="948.66666666666652"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="aiV-xV-W3e">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="1082"/>
@@ -1610,11 +1603,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQ2-V6-xIJ">
-                                                <rect key="frame" x="20" y="693" width="131" height="35"/>
+                                                <rect key="frame" x="20" y="693" width="136.33333333333334" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Gluten Free">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1622,11 +1615,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhd-p9-6g4">
-                                                <rect key="frame" x="20" y="730" width="95" height="35"/>
+                                                <rect key="frame" x="20" y="730" width="100" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Vegan">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1634,11 +1627,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCa-dp-Foj">
-                                                <rect key="frame" x="20" y="767" width="125" height="35"/>
+                                                <rect key="frame" x="20" y="767" width="130.66666666666666" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Vegetarian">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1646,11 +1639,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fw0-Ze-x9m">
-                                                <rect key="frame" x="20" y="804" width="86" height="35"/>
+                                                <rect key="frame" x="19.999999999999993" y="804" width="91.333333333333314" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Halal">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1664,11 +1657,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6m1-wn-dA1">
-                                                <rect key="frame" x="20" y="880" width="107" height="35"/>
+                                                <rect key="frame" x="19.999999999999993" y="880" width="112.33333333333331" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Peanuts">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1676,11 +1669,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NuW-bc-HeM">
-                                                <rect key="frame" x="20" y="917" width="77" height="35"/>
+                                                <rect key="frame" x="20" y="917" width="82.666666666666671" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Soy">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1688,11 +1681,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znu-7Q-YEY">
-                                                <rect key="frame" x="20" y="953.99999999999989" width="118" height="35"/>
+                                                <rect key="frame" x="19.999999999999993" y="953.99999999999989" width="123.33333333333331" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Tree Nuts">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1700,11 +1693,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hST-DK-8hx">
-                                                <rect key="frame" x="170" y="880" width="96" height="35"/>
+                                                <rect key="frame" x="170" y="880" width="101.66666666666669" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Wheat">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1712,11 +1705,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mQU-ua-OiR">
-                                                <rect key="frame" x="170" y="917" width="78" height="35"/>
+                                                <rect key="frame" x="170" y="917" width="83.666666666666686" height="35"/>
                                                 <color key="tintColor" name="label"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="  Egg">
-                                                    <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                    <imageReference key="image" image="square" catalog="system" symbolScale="large"/>
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
