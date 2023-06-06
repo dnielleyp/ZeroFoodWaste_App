@@ -1,13 +1,13 @@
 //
-//  TableViewController.swift
+//  LikesTableViewController.swift
 //  ZeroFoodWaste
 //
-//  Created by Danielle Yap on 11/5/2023.
+//  Created by Danielle Yap on 6/6/2023.
 //
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class LikesTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,18 +17,30 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        let searchController = UISearchController(searchResultsController: nil)
+    
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.showsCancelButton = false
+        
+        navigationItem.searchController = searchController
+        
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 1
     }
 
     /*

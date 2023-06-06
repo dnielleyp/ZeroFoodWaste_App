@@ -8,11 +8,9 @@
 import UIKit
 
 class FoodData: NSObject, Decodable {
-
     var recipeList: [RecipeData]?
-
 }
 
 private enum CodingKeys: String, CodingKey {
-    case recipes = "results"
+    case recipes = "meals"
 }

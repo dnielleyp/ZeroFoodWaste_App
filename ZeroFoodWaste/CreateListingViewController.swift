@@ -56,7 +56,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
         // Do any additional setup after loading the view.
         
         //hide the tab bar hehe
-        self.tabBarController?.tabBar.isHidden = true
+//        self.tabBarController?.tabBar.isHidden = true
         
         //get databaseController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

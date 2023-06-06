@@ -33,9 +33,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
     
     
     @IBOutlet weak var listingCollectionView: UICollectionView!
-    
-    
-    
+
     let CELL_LISTING = "listingCell"
 
     var currentSender: Sender?

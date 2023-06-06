@@ -10,24 +10,31 @@ import UIKit
 class SearchRecipesTableViewController: UITableViewController, UISearchBarDelegate {
 
     let CELL_RECIPE = "recipeCell"
-    let REQUEST_STRING = "https://tasty.p.rapidapi.com/recipes/list?from="
+    let REQUEST_STRING = "www.themealdb.com/api/json/v1/1/search.php?s="
 
     var newRecipes = [RecipeData]()
 
     var indicator = UIActivityIndicatorView()
 
     
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         let searchController = UISearchController(searchResultsController: nil)
+
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search for recipes..."
-        searchController.searchBar.showsCancelButton = true
-
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.showsCancelButton = false
+        
+        navigationItem.searchController = searchController
+        
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        
 
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -35,41 +42,42 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
         NSLayoutConstraint.activate([indicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor), indicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)])
 
-
     }
+    
 
     func requestRecipes(_ recipeName: String) async {
 
         guard let queryString = recipeName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            print("Query string cannot be encoded haha sucks to be u")
+            print("Query string can't be encoded.")
             return
         }
-
+        
         guard let requestURL = URL(string: REQUEST_STRING + queryString) else {
-            print("invalid url hehe")
+            print("Invalid URL")
             return
         }
-
+        
         let urlRequest = URLRequest(url: requestURL)
-
+        
         do {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)
             indicator.stopAnimating()
-
+            
             let decoder = JSONDecoder()
-            let recipeData = try decoder.decode(FoodData.self, from: data)
-
-            if let recipe = recipeData.recipeList {
-                newRecipes.append(contentsOf: recipe)
-
+            let foodData = try decoder.decode(FoodData.self, from: data)
+            
+            if let recipes = foodData.recipeList {
+                newRecipes.append(contentsOf: recipes)
+                
                 tableView.reloadData()
             }
         }
         catch let error {
             print(error)
         }
-
-
+ 
+        print(requestURL, "URLLLLLLLLLLLHFJDHKJFSDHAJK")
+        
 
     }
 
@@ -87,7 +95,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         }
 
         Task {
-            await requestRecipes(searchText)
+            await requestRecipes("egg")
         }
     }
 
@@ -105,14 +113,15 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        print("RUNNING HERE IN THE TABLEVIEW OKOKOOOKOKKKK")
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_RECIPE, for: indexPath)
-        
-        
 
 //        let recipe = newRecipes[indexPath.row]
-        cell.textLabel?.text = "RECIPEPPEPEPE"
+        cell.textLabel?.text = "hellour"
         
         print("recipename", newRecipes)
+              
         
         return cell
     }

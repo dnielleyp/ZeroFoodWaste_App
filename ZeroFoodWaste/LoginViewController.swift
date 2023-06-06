@@ -12,7 +12,6 @@ class LoginViewController: UIViewController {
     
     var authHandle: AuthStateDidChangeListenerHandle?
     
-//    var userRef: CollectionReference?   //reference to your user collection
     var currentUser: FirebaseAuth.User?
     
     // MARK: try try try here
@@ -55,10 +54,8 @@ class LoginViewController: UIViewController {
             do{
                 let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
                 currentUser = authDataResult.user
-//                self.performSegue(withIdentifier: "showHomeSegue", sender: self)
             
         } catch {
-//            displayMessage(title: "Error", message: "Firebase Authentication Failed with Error:\(String(describing: error))")
             displayMessage(title: "Error", message: "Login Failed :( Please try again")
         } }
     }

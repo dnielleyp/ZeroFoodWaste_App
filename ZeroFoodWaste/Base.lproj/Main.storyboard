@@ -131,7 +131,7 @@
                         <outlet property="emailField" destination="bjl-5q-hua" id="sZj-1o-nS4"/>
                         <outlet property="passwordButton" destination="jWv-Yu-Ogb" id="BhP-Hx-ZRQ"/>
                         <outlet property="pwField" destination="3Tm-sP-DNa" id="WvM-NC-NVe"/>
-                        <segue destination="eN7-9r-1S0" kind="show" identifier="showHomeSegue" id="7vx-wv-Z8i"/>
+                        <segue destination="eN7-9r-1S0" kind="show" identifier="showHomeSegue" id="ZBh-IB-mA7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -152,7 +152,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="b97-w4-NGG" kind="relationship" relationship="viewControllers" id="v80-1T-KSz"/>
-                        <segue destination="UGa-f4-LxV" kind="relationship" relationship="viewControllers" id="Mvl-oJ-9fS"/>
+                        <segue destination="JfK-zx-X8B" kind="relationship" relationship="viewControllers" id="Mvl-oJ-9fS"/>
                         <segue destination="1qQ-QL-WSH" kind="relationship" relationship="viewControllers" id="7x0-x5-sqV"/>
                         <segue destination="d3A-xP-eCz" kind="relationship" relationship="viewControllers" destinationCreationSelector="likesTab" id="cA8-Gl-VA9"/>
                         <segue destination="qOr-PT-SBi" kind="relationship" relationship="viewControllers" destinationCreationSelector="profileTab" id="VOF-7R-15b"/>
@@ -784,7 +784,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SQO-EZ-QKg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4421" y="1250"/>
+            <point key="canvasLocation" x="5347.3282442748086" y="1250"/>
         </scene>
         <!--DummyVC-->
         <scene sceneID="RKN-Kt-BYT">
@@ -802,7 +802,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0O-Eq-aHg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3610" y="1251"/>
+            <point key="canvasLocation" x="4536.6412213740459" y="1250.7042253521126"/>
         </scene>
         <!--Chats-->
         <scene sceneID="UKa-gZ-yGY">
@@ -879,7 +879,7 @@
             </objects>
             <point key="canvasLocation" x="4346" y="3638"/>
         </scene>
-        <!--Recipes-->
+        <!--Search Recipes Table View Controller-->
         <scene sceneID="XiQ-MH-LVS">
             <objects>
                 <tableViewController id="UGa-f4-LxV" customClass="SearchRecipesTableViewController" customModule="ZeroFoodWaste" customModuleProvider="target" sceneMemberID="viewController">
@@ -918,11 +918,11 @@
                             <outlet property="delegate" destination="UGa-f4-LxV" id="Sbd-ot-oNB"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Recipes" image="carrot" catalog="system" id="zoo-Tw-gMW"/>
+                    <navigationItem key="navigationItem" id="TiQ-nP-nsG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDC-ea-J3b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2819" y="1251"/>
+            <point key="canvasLocation" x="3744.2748091603053" y="1250.7042253521126"/>
         </scene>
         <!--Profile-->
         <scene sceneID="dbT-KB-pgN">
@@ -1039,7 +1039,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SnR-Ep-4Gq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5142.7480916030536" y="1250"/>
+            <point key="canvasLocation" x="6069.4656488549617" y="1250"/>
         </scene>
         <!--EditDraftSegue-->
         <scene sceneID="22Q-z0-twW">
@@ -1116,7 +1116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4W-0M-n61" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5998" y="1250"/>
+            <point key="canvasLocation" x="6924.4274809160306" y="1250"/>
         </scene>
         <!--Edit Draft View Controller-->
         <scene sceneID="IG7-3s-Qi8">
@@ -1487,7 +1487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lz3-XY-Z4w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6841.9847328244268" y="1250"/>
+            <point key="canvasLocation" x="7768.7022900763359" y="1250"/>
         </scene>
         <!--Create Listing View Controller-->
         <scene sceneID="iJf-Mq-mur">
@@ -1878,9 +1878,28 @@
             </objects>
             <point key="canvasLocation" x="965.64885496183206" y="-35.211267605633807"/>
         </scene>
+        <!--Recipes-->
+        <scene sceneID="hjl-lg-toU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JfK-zx-X8B" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Recipes" image="carrot" catalog="system" id="zoo-Tw-gMW"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="neO-YU-GAW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UGa-f4-LxV" kind="relationship" relationship="rootViewController" id="0GE-kn-lw6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hoF-JS-psJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2817.5572519083967" y="1250.7042253521126"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7vx-wv-Z8i"/>
+        <segue reference="ZBh-IB-mA7"/>
         <segue reference="RD4-G0-ZHk"/>
     </inferredMetricsTieBreakers>
     <resources>

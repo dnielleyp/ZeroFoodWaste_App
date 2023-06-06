@@ -78,10 +78,73 @@
             filePath = "ZeroFoodWaste/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "readUserInfo()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85FD4B32-6F82-4CAB-8BB6-519529323204"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZeroFoodWaste/Recipes /SearchRecipesTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "requestRecipes(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "85FD4B32-6F82-4CAB-8BB6-519529323204 - 5eb2cfaecc488ef2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ZeroFoodWaste.SearchRecipesTableViewController.requestRecipes(Swift.String) async -&gt; ()"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/Recipes%20/SearchRecipesTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  uuid = "85FD4B32-6F82-4CAB-8BB6-519529323204 - a35ea582166e4af0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ZeroFoodWaste.SearchRecipesTableViewController.requestRecipes(Swift.String) async -&gt; ()"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/Recipes%20/SearchRecipesTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "1432">
+               </Location>
+               <Location
+                  uuid = "85FD4B32-6F82-4CAB-8BB6-519529323204 - 9ea876f04b72a4f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for ZeroFoodWaste.SearchRecipesTableViewController.requestRecipes(Swift.String) async -&gt; ()"
+                  moduleName = "ZeroFoodWaste"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/dyap0007/Desktop/ZeroFoodWaste/ZeroFoodWaste/Recipes%20/SearchRecipesTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "404">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
