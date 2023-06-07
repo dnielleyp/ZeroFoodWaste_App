@@ -159,19 +159,21 @@ class ListingViewController: UIViewController {
                 if doc.documentID == listingID {
                     var currListingLikes = doc.get("likes") as? Array<String> ?? []
                     
-                    
+                    let buttonConfig = UIImage.SymbolConfiguration(pointSize: 20)
+
                     if let index = currListingLikes.firstIndex(of: self.currentUser) {
                         currListingLikes.remove(at: index)
                         
                         
-                        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                        self.likeButton.setImage(UIImage(systemName: "heart", withConfiguration: buttonConfig), for: .normal)
                         
                         
                     }
                     else {
+                        
                         currListingLikes.append(self.currentUser)
                         
-                        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                        self.likeButton.setImage(UIImage(systemName: "heart.fill", withConfiguration: buttonConfig), for: .normal)
                     }
                     
                     self.listingRef.document(listingID).updateData(["likes": currListingLikes])

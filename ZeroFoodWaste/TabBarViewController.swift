@@ -5,16 +5,24 @@
 //  Created by Danielle Yap on 4/5/2023.
 //
 
+//https://www.youtube.com/watch?v=oobm2y-d17E&ab_channel=iOSAcademy for create listing button
 import UIKit
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
+    let createListingButton: UIButton = {
+        let tempButton = UIButton(frame: CGRect(x: 0, y: 0, width:60, height: 60))
+        tempButton.layer.masksToBounds = true
+        tempButton.layer.cornerRadius = 30
+        tempButton.backgroundColor = UIColor(red: 8/255, green: 105/255, blue: 82/255, alpha: 1.0)
+        return tempButton
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
         
-        setupCreateListingButton()
         
         guard let navigationController = self.navigationController else { return }
         
@@ -24,35 +32,29 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         navigationArray.removeAll()
         navigationArray.append(temp!)
         self.navigationController?.viewControllers = navigationArray
-    
-        UITabBar.appearance().barTintColor = UIColor.black
+        
+        view.addSubview(createListingButton)
+        createListingButton.addTarget(self, action: #selector(createListingButtonAction), for: .touchUpInside)
+        
 
     }
     
-    func setupCreateListingButton(){
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        var heightDiff = view.frame.size.height/8.5
+        createListingButton.frame = CGRect(x: view.frame.size.width*0.425,
+                                           y: view.frame.size.height-heightDiff,
+                                           width: 60, height: 60)
         
-        let createListingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 68))
-        var CLButtonFrame = createListingButton.frame
-        CLButtonFrame.origin.y = self.view.bounds.height - CLButtonFrame.height*1.6
-        CLButtonFrame.origin.x = self.view.bounds.width/2 - CLButtonFrame.size.width/2
-
-        createListingButton.frame = CLButtonFrame
-
-        createListingButton.layer.cornerRadius = 28
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 30)
+//        let buttonImage = UIImage(systemName: "plus")?.withRenderingMode(.alwaysTemplate)
         
-        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 45)
+        createListingButton.setImage(UIImage(systemName:"plus", withConfiguration: buttonConfig), for: .normal)
         
-        createListingButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: buttonConfig), for: UIControl.State.normal) // 450 x 450px
-        
-        createListingButton.contentMode = .scaleAspectFit
-
-        createListingButton.addTarget(self, action: #selector(createListingButtonAction), for: UIControl.Event.touchUpInside)
-        
-        createListingButton.backgroundColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha:1)
-        
-        self.view.addSubview(createListingButton)
+        createListingButton.tintColor = UIColor(red: 255/255, green: 247/255, blue: 235/255, alpha: 1.0)
         
     }
+
     
 
     @objc func createListingButtonAction() {        

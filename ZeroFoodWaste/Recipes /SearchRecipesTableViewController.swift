@@ -10,11 +10,13 @@ import UIKit
 class SearchRecipesTableViewController: UITableViewController, UISearchBarDelegate {
 
     let CELL_RECIPE = "recipeCell"
-    let REQUEST_STRING = "www.themealdb.com/api/json/v1/1/search.php?s="
+    let REQUEST_STRING = "https://www.themealdb.com/api/json/v1/1/search.php?s="
 
     var newRecipes = [RecipeData]()
 
     var indicator = UIActivityIndicatorView()
+    
+    var index: Int?
 
     
     
@@ -24,7 +26,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
         
         let searchController = UISearchController(searchResultsController: nil)
-
+        
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for recipes..."
@@ -33,15 +35,12 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         navigationItem.searchController = searchController
         
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        
 
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(indicator)
 
         NSLayoutConstraint.activate([indicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor), indicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)])
-
     }
     
 
@@ -62,25 +61,23 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         do {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)
             
-            DispatchQueue.main.async {
-                self.indicator.stopAnimating()
-            }
+            self.indicator.stopAnimating()
             
             let decoder = JSONDecoder()
             let foodData = try decoder.decode(FoodData.self, from: data)
             
-            if let recipes = foodData.recipeList {
+            
+            if let recipes = foodData.recipes {
                 newRecipes.append(contentsOf: recipes)
                 
+                
+    
                 tableView.reloadData()
             }
         }
         catch let error {
-            print(error)
+            print("ERROR: ",error)
         }
-        print("running here?")
-        print(requestURL, "URLLLLLLLLLLLHFJDHKJFSDHAJK")
-        
 
     }
 
@@ -100,7 +97,7 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         Task {
             URLSession.shared.invalidateAndCancel()
 //            currentRequestIndex = 0
-            await requestRecipes("egg")
+            await requestRecipes(searchText)
         }
     }
 
@@ -119,62 +116,36 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        print("RUNNING HERE IN THE TABLEVIEW OKOKOOOKOKKKK")
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_RECIPE, for: indexPath)
 
-//        let recipe = newRecipes[indexPath.row]
-        cell.textLabel?.text = "hellour"
-        
-        print("recipename", newRecipes)
+        let recipe = newRecipes[indexPath.row]
+        print(recipe.ingredientsList, "INGREDIENTS")
+        cell.textLabel?.text = recipe.name
               
-        
         return cell
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.index = indexPath.row
+        
+        self.performSegue(withIdentifier: "showRecipeSegue", sender: self)
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "showRecipeSegue" {
+            let destination = segue.destination as! RecipeViewController
+            
+            destination.recipe = newRecipes[index!]
+        }
     }
-    */
+    
 
 }

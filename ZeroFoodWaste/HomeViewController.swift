@@ -37,7 +37,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
 
     let CELL_LISTING = "listingCell"
 
-    var currentSender: Sender?
+    
     
     
     @IBOutlet weak var nameLabel: UILabel!

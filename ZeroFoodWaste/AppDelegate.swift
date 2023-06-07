@@ -4,13 +4,19 @@
 //
 //  Created by Danielle Yap on 26/4/2023.
 //
+// https://www.kodeco.com/11395893-push-notifications-tutorial-getting-started#toc-anchor-001
+
 
 import UIKit
 import Firebase
 import CoreData
 
+import UserNotifications
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let IDENTIFIER = "TESTING THIS APPP"
     
     var databaseController: DatabaseProtocol?
     var persistentContainer: NSPersistentContainer?
@@ -29,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         databaseController = FirebaseController()
         
-        UITabBar.appearance().tintColor = UIColor(red: 8/255.0, green: 105/255.0, blue: 82/255.0, alpha: 1.0)
+        checkForPermission()
         
         return true
     }
@@ -48,6 +54,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    func checkForPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            (granted, error) in
+            if !granted {
+                print("Permission was not granted")
+                return
+            }
+            else {
+                print("PermissionGranted: \(granted)")
+                let notificationContent = UNMutableNotificationContent()
+                
+                notificationContent.title = "This is a notification"
+                notificationContent.body = "you have a notification!! woowowooww!!!!"
+                
+                let timeInterval = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+                
+//                let request = UNNotificationRequest(identifier: self.IDENTIFIER, content: notificationContent, trigger: timeInterval)
+                
+                                
+                var dateComponents = DateComponents()
+                dateComponents.calendar = Calendar.current
+
+                dateComponents.second = 5
+
+
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                
+                let uuidString = UUID().uuidString
+                let request = UNNotificationRequest(identifier: uuidString, content: notificationContent, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request) { (error) in
+                    if error != nil {
+                        print("Errorororoorororrrrrrrrr: \(error)")
+                    }
+                }
+
+            }
+        }
+    }
+    
+//    func getNotificationSettings() {
+//        UNUserNotificationCenter.current().getNotificationSettings{ settings in print("Notification settings: \(settings)")
+//
+//        }
+//    }
 
 
 }
