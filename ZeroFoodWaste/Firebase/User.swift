@@ -14,6 +14,5 @@ class User: NSObject, Codable {
     var listings: [Listing]? = []
     var likes: [Listing]? = []
     var pfp: String?
-    var drafts: [Listing] = []
     var username: String?
 }

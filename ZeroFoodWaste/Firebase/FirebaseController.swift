@@ -60,6 +60,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listing.allergens = allergens
         listing.image = image
         listing.owner = owner
+        listing.ownerID = ownerID
+        listing.likes = []
         
         //try adding to firestore
         do {
@@ -111,7 +113,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func parseListingSnapshot(snapshot: QuerySnapshot) {
         snapshot.documentChanges.forEach{ (change) in
 
-            //decode the document's data as a listing object. done with codable
+            //decode the document's data as a listing object
             var listing: Listing
             
             do {
@@ -123,6 +125,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             if change.type == .added {
                 listingList.insert(listing, at: Int(change.newIndex))
             }
+            
             else if change.type == .modified {
                 listingList.remove(at: Int(change.oldIndex))
                 listingList.insert(listing, at: Int(change.newIndex))

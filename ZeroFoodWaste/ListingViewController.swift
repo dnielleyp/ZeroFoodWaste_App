@@ -14,6 +14,8 @@ class ListingViewController: UIViewController {
     
     var userRef = Firestore.firestore().collection("user")
     var listingRef = Firestore.firestore().collection("listings")
+    
+    var currentUser = Auth.auth().currentUser!.uid
 
     
     @IBOutlet weak var listingImage: UIImageView!
@@ -41,6 +43,10 @@ class ListingViewController: UIViewController {
     
         descField.text = listing?.desc
         
+        var likes = listing!.likes!.count ?? 0
+        
+        self.likeButton.setTitle("\(likes) ", for: .normal)
+        
         var category = catArray[(listing?.category)!]
         categoryLabel.setTitle((category), for: .normal)
         
@@ -56,8 +62,6 @@ class ListingViewController: UIViewController {
         default:
             categoryLabel.tintColor = UIColor(red: 201/255, green: 201/255, blue: 201/255, alpha: 1.0)
         }
-        
-        
         locationLabel.text = listing?.location
         ownerLabel.setTitle(listing?.owner, for: .normal)
         
@@ -72,16 +76,52 @@ class ListingViewController: UIViewController {
             allergensLabel.text = ""
         }
         
+        setLikesButton()
         
     }
     
+    func setLikesButton() {
+        let listingID = (listing?.id)!
+        let userID = currentUser
+        
+        self.listingRef.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error \(String(describing:error))")
+                return
+            }
+            
+            for doc in snapshot.documents {
+                if doc.documentID == listingID {
+                    var currListingLikes = doc.get("likes") as? Array<String> ?? []
+                    
+                    
+                    if currListingLikes.contains(userID) {
+                        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+  
+                    }
+                    else {
+                        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                    }
+                    
+                    self.likeButton.setTitle(String(currListingLikes.count), for: .normal)
+                    self.likeButton.configuration?.buttonSize = .medium
+                }
+            }
+        }
+    }
     
+    //adding the userID into the likes array of the listing
     @IBAction func addLikes(_ sender: Any) {
         
+        print("button pressed slayyyyy")
         
+        //get the listingid
         let listingID: String = (listing?.id!)!
         
+        //get the userid
         let userID = listing!.ownerID
+        
+        print("listing owner", listing!.ownerID)
 
         self.userRef.getDocuments { [self](snapshot, error) in
             guard let snapshot = snapshot else {
@@ -89,16 +129,54 @@ class ListingViewController: UIViewController {
                 return
             }
             for doc in snapshot.documents {
-                let documentID = doc.documentID
-                if documentID == userID {
-                    var likesList = doc.get("likes") as? Array<DocumentReference>
+                if doc.documentID == userID {
+                    var currUserLikesList = doc.get("likes") as? Array<DocumentReference> ?? []
 
                     let ref = self.listingRef.document("\(listingID)")
-                    likesList!.append(ref)
-
-                    self.userRef.document(userID!).updateData(["likes":likesList])
-                    self.likeButton.setTitle(String(likesList!.count), for: .normal)
-
+                    
+                    //check if user has liked this before
+                    if let index = currUserLikesList.firstIndex(of: ref) {
+                        currUserLikesList.remove(at: index)
+                    }
+                    else {
+                        currUserLikesList.append(ref)
+                    }
+                    
+                    
+                    self.userRef.document(currentUser).updateData(["likes":currUserLikesList])
+//
+                }
+            }
+        }
+        
+        self.listingRef.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error \(String(describing:error))")
+                return
+            }
+            
+            for doc in snapshot.documents {
+                if doc.documentID == listingID {
+                    var currListingLikes = doc.get("likes") as? Array<String> ?? []
+                    
+                    
+                    if let index = currListingLikes.firstIndex(of: self.currentUser) {
+                        currListingLikes.remove(at: index)
+                        
+                        
+                        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                        
+                        
+                    }
+                    else {
+                        currListingLikes.append(self.currentUser)
+                        
+                        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                    }
+                    
+                    self.listingRef.document(listingID).updateData(["likes": currListingLikes])
+                    self.likeButton.setTitle(String(currListingLikes.count), for: .normal)
+                    self.likeButton.configuration?.buttonSize = .medium
                 }
             }
         }

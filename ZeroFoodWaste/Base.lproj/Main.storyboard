@@ -693,7 +693,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Okz-U5-70Y">
                                 <rect key="frame" x="326" y="79" width="47" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system" title=""/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system" title="">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="17"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="closeButton:" destination="oCr-FJ-qWr" eventType="touchUpInside" id="2Qc-wz-GQr"/>
                                 </connections>
@@ -1486,22 +1488,12 @@
         <scene sceneID="iJf-Mq-mur">
             <objects>
                 <viewController storyboardIdentifier="CreateListingVC" id="aog-5U-y3G" customClass="CreateListingViewController" customModule="ZeroFoodWaste" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="E5X-XV-r8p">
+                    <view key="view" contentMode="scaleToFill" id="E5X-XV-r8p">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="1082"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjM-9e-ZH5">
-                                <rect key="frame" x="16.000000000000004" y="59" width="44.333333333333343" height="40.333333333333343"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system" title="">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="closeButton:" destination="aog-5U-y3G" eventType="touchUpInside" id="iZa-Kr-6Jt"/>
-                                </connections>
-                            </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ck-Q2-SBv">
-                                <rect key="frame" x="0.0" y="99.333333333333314" width="393" height="948.66666666666652"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ck-Q2-SBv">
+                                <rect key="frame" x="0.0" y="93.333333333333314" width="410.33333333333331" height="954.66666666666674"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="aiV-xV-W3e">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="1082"/>
@@ -1812,22 +1804,33 @@
                                     <constraint firstAttribute="bottom" secondItem="aiV-xV-W3e" secondAttribute="bottom" id="oQC-Pc-YTz"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjM-9e-ZH5">
+                                <rect key="frame" x="332" y="59" width="46.333333333333314" height="34.333333333333343"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system" title="">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="17"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeButton:" destination="aog-5U-y3G" eventType="touchUpInside" id="iZa-Kr-6Jt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e4D-yb-ffW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="jjM-9e-ZH5" firstAttribute="leading" secondItem="E5X-XV-r8p" secondAttribute="leading" constant="16" id="37e-jX-AI0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jjM-9e-ZH5" secondAttribute="trailing" constant="16" id="4oB-G1-uAj"/>
                             <constraint firstItem="jjM-9e-ZH5" firstAttribute="top" secondItem="e4D-yb-ffW" secondAttribute="top" id="8b7-wn-OuI"/>
                             <constraint firstItem="e4D-yb-ffW" firstAttribute="bottom" secondItem="0ck-Q2-SBv" secondAttribute="bottom" id="CnM-Ya-Dln"/>
                             <constraint firstItem="jjM-9e-ZH5" firstAttribute="top" secondItem="e4D-yb-ffW" secondAttribute="top" id="KVR-he-pnV"/>
                             <constraint firstItem="0ck-Q2-SBv" firstAttribute="top" secondItem="jjM-9e-ZH5" secondAttribute="bottom" id="PBD-wR-dRS"/>
+                            <constraint firstItem="jjM-9e-ZH5" firstAttribute="leading" secondItem="e4D-yb-ffW" secondAttribute="leading" constant="332" id="UNa-T0-JXG"/>
                             <constraint firstItem="e4D-yb-ffW" firstAttribute="trailing" secondItem="0ck-Q2-SBv" secondAttribute="trailing" id="cB6-Cf-M6v"/>
                             <constraint firstItem="aiV-xV-W3e" firstAttribute="width" secondItem="E5X-XV-r8p" secondAttribute="width" id="d8v-dK-JSI"/>
                             <constraint firstItem="0ck-Q2-SBv" firstAttribute="trailing" secondItem="e4D-yb-ffW" secondAttribute="trailing" id="dj6-Lp-vPx"/>
                             <constraint firstItem="0ck-Q2-SBv" firstAttribute="bottom" secondItem="e4D-yb-ffW" secondAttribute="bottom" id="gH2-X6-wV1"/>
                             <constraint firstItem="0ck-Q2-SBv" firstAttribute="leading" secondItem="e4D-yb-ffW" secondAttribute="leading" id="ngd-SZ-WWf"/>
                             <constraint firstItem="jjM-9e-ZH5" firstAttribute="top" secondItem="e4D-yb-ffW" secondAttribute="top" id="rJv-XJ-taV"/>
-                            <constraint firstItem="jjM-9e-ZH5" firstAttribute="leading" secondItem="e4D-yb-ffW" secondAttribute="leading" constant="16" id="zfe-co-Q03"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jjM-9e-ZH5" secondAttribute="trailing" constant="16" id="yUW-1z-1wr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="e8X-2w-GaJ"/>

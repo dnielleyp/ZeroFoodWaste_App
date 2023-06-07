@@ -15,7 +15,7 @@ class Listing: NSObject, Codable {
     var name: String?
     var owner: String?
     var ownerID: String?
-    var likes: [User]? = []
+    var likes: [String]? = []
     var desc: String?
     var location: String?
     var category: Int?
@@ -34,6 +34,7 @@ class Listing: NSObject, Codable {
         case image 
         case dietPref
         case allergens
+        case ownerID
     }
     
 }
