@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Firebase
 
 class LikesTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    var currentUser: User()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,16 +22,26 @@ class LikesTableViewController: UITableViewController, UISearchBarDelegate {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        let searchController = UISearchController(searchResultsController: nil)
+//        let searchController = UISearchController(searchResultsController: nil)
+//
+//        searchController.searchBar.delegate = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search"
+//        searchController.searchBar.showsCancelButton = false
+//
+//        navigationItem.searchController = searchController
+//
+//        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        var userID = Auth.auth().currentUser?.uid
+        
+        
+        
+    }
     
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.showsCancelButton = false
-        
-        navigationItem.searchController = searchController
-        
-        navigationItem.hidesSearchBarWhenScrolling = false
+    func setupLikesListener()
+    
+    func fetchLikes() {
         
     }
 

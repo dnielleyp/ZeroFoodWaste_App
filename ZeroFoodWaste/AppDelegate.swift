@@ -68,9 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 notificationContent.title = "This is a notification"
                 notificationContent.body = "you have a notification!! woowowooww!!!!"
                 
-                let timeInterval = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+                let timeInterval = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
                 
-//                let request = UNNotificationRequest(identifier: self.IDENTIFIER, content: notificationContent, trigger: timeInterval)
+                let request = UNNotificationRequest(identifier: self.IDENTIFIER, content: notificationContent, trigger: timeInterval)
                 
                                 
                 var dateComponents = DateComponents()
@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 
                 let uuidString = UUID().uuidString
-                let request = UNNotificationRequest(identifier: uuidString, content: notificationContent, trigger: trigger)
+//                let request = UNNotificationRequest(identifier: uuidString, content: notificationContent, trigger: trigger)
                 
                 UNUserNotificationCenter.current().add(request) { (error) in
                     if error != nil {

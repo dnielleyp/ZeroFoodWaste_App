@@ -69,9 +69,6 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
             
             if let recipes = foodData.recipes {
                 newRecipes.append(contentsOf: recipes)
-                
-                
-    
                 tableView.reloadData()
             }
         }
@@ -119,7 +116,6 @@ class SearchRecipesTableViewController: UITableViewController, UISearchBarDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_RECIPE, for: indexPath)
 
         let recipe = newRecipes[indexPath.row]
-        print(recipe.ingredientsList, "INGREDIENTS")
         cell.textLabel?.text = recipe.name
               
         return cell

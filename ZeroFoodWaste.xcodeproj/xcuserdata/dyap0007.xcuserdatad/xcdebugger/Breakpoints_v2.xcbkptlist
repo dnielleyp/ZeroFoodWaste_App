@@ -78,8 +78,8 @@
             filePath = "ZeroFoodWaste/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "readUserInfo()"
             landmarkType = "7">
          </BreakpointContent>

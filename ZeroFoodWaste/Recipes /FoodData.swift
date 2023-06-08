@@ -23,7 +23,11 @@ class RecipeData: NSObject, Decodable {
     var cuisine: String?
     var instructions: [String?]
     var source: String?
-    var image: String?
+    var imageURL: String?
+    
+    var image: UIImage?
+    var imageIsDownloading: Bool = false
+    var imageShown = true
     
     var ingredientsList: [String] = []
 
@@ -76,7 +80,7 @@ class RecipeData: NSObject, Decodable {
         case cuisine = "strArea"
         case instructions = "strInstructions"
         case source = "strSource"
-        case image = "strMealThumb"
+        case imageURL = "strMealThumb"
 
         case strIngredient1
         case strIngredient2
@@ -133,19 +137,12 @@ class RecipeData: NSObject, Decodable {
         self.instructions = strInstructions.components(separatedBy: "\r\n")
         
         source = try? recipeContainer.decode(String.self, forKey: .source)
-        image = try? recipeContainer.decode(String.self, forKey: .image)
+        imageURL = try? recipeContainer.decode(String.self, forKey: .imageURL)
         
         
         ing1 = try? recipeContainer.decode(String.self, forKey: .strIngredient1)
         ing2 = try? recipeContainer.decode(String.self, forKey: .strIngredient2)
         ing3 = try? recipeContainer.decode(String.self, forKey: .strIngredient3)
-        meas1 = try? recipeContainer.decode(String.self, forKey: .strMeasure1)
-        meas2 = try? recipeContainer.decode(String.self, forKey: .strMeasure2)
-        meas3 = try? recipeContainer.decode(String.self, forKey: .strMeasure3)
-        
-        
-        
-        
         ing4 = try? recipeContainer.decode(String.self, forKey: .strIngredient4)
         ing5 = try? recipeContainer.decode(String.self, forKey: .strIngredient5)
         ing6 = try? recipeContainer.decode(String.self, forKey: .strIngredient6)
@@ -164,7 +161,9 @@ class RecipeData: NSObject, Decodable {
         ing19 = try? recipeContainer.decode(String.self, forKey: .strIngredient19)
         ing20 = try? recipeContainer.decode(String.self, forKey: .strIngredient20)
 
-
+        meas1 = try? recipeContainer.decode(String.self, forKey: .strMeasure1)
+        meas2 = try? recipeContainer.decode(String.self, forKey: .strMeasure2)
+        meas3 = try? recipeContainer.decode(String.self, forKey: .strMeasure3)
         meas4 = try? recipeContainer.decode(String.self, forKey: .strMeasure4)
         meas5 = try? recipeContainer.decode(String.self, forKey: .strMeasure5)
         meas6 = try? recipeContainer.decode(String.self, forKey: .strMeasure6)

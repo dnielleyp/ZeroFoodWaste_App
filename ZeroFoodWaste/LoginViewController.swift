@@ -13,8 +13,7 @@ class LoginViewController: UIViewController {
     var authHandle: AuthStateDidChangeListenerHandle?
     
     var currentUser: FirebaseAuth.User?
-    
-    // MARK: try try try here
+
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
@@ -55,16 +54,39 @@ class LoginViewController: UIViewController {
                 currentUser = authDataResult.user
             
         } catch {
-            displayMessage(title: "Error", message: "Login Failed :( Please try again")
+            displayMessage(title: "Login Failed! :(", message: "Please try again")
         } }
     }
     
     
     @IBAction func createAccButton(_ sender: Any){}
     
+    var indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let indicator = UIActivityIndicatorView()
+//
+//        indicator.style = .large
+//        indicator.color = .white
+//
+//        indicator.startAnimating()
+//
+//
+//        indicator.autoresizingMask = [
+//            .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
+//
+//
+//
+//        let loadingVC = LoadingViewController()
+//        loadingVC.modalPresentationStyle = .overCurrentContext
+//        loadingVC.modalTransitionStyle = .crossDissolve
+        
+        
+        
+        
+
 
         // Do any additional setup after loading the view.
         
@@ -74,11 +96,17 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
-        authHandle = Auth.auth().addStateDidChangeListener(){
-            (auth, user) in
-            guard user != nil else {return}
-            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+        
+        
+            authHandle = Auth.auth().addStateDidChangeListener(){
+                (auth, user) in
+                guard user != nil else {return}
+                self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+                
+//                DispatchQueue.main.async {
+//                    self.indicator.stopAnimating()
+//                }
+            
         }
     }
 

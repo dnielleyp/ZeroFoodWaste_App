@@ -52,8 +52,6 @@ class ProfileViewController: UIViewController, DatabaseListener {
         getUsername()
         
         databaseController?.addListener(listener: self)
-        
-//        userListing =
 
         userRef.getDocuments { (snapshot, error) in
             guard let snapshot = snapshot else {

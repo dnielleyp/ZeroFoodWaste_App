@@ -37,7 +37,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
 
     let CELL_LISTING = "listingCell"
 
-    
+    var indicator = UIActivityIndicatorView()
     
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -52,12 +52,25 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(indicator)
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo:view.safeAreaLayoutGuide.centerYAnchor)
+        ])
+        
+        
+        
         listingCollectionView.backgroundColor = .systemBackground
         listingCollectionView.setCollectionViewLayout(generateLayout(), animated: false)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         readUserInfo()
         
 //        self.tabBarController?.delegate = self
