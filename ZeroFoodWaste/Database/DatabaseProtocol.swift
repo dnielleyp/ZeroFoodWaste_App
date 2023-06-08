@@ -22,7 +22,7 @@ enum ListenerType {
 
 protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
-//    func onLikesChange(change: DatabaseChange, likes:[Listing])
+    func onLikesChange(change: DatabaseChange, likes:[Listing])
     func onListingChange(change: DatabaseChange, listings: [Listing])
 }
 

@@ -7,10 +7,15 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestoreSwift
 
 class LikesTableViewController: UITableViewController, UISearchBarDelegate {
+
     
-    var currentUser: User()
+    
+    let database = Firestore.firestore()
+    var currentUser: User?
+    var userRef: CollectionReference?
     
 
     override func viewDidLoad() {
@@ -39,11 +44,8 @@ class LikesTableViewController: UITableViewController, UISearchBarDelegate {
         
     }
     
-    func setupLikesListener()
     
-    func fetchLikes() {
-        
-    }
+    
 
     // MARK: - Table view data source
 

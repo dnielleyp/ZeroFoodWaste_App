@@ -19,6 +19,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var authController: Auth
     var database: Firestore
     var listingRef: CollectionReference?
+    var userRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
     
     override init(){
@@ -141,6 +142,43 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
 
 
+        }
+    }
+    
+    func setupUserListener(user: User) {
+        userRef = database.collection("user")
+        userRef?.whereField("username", isEqualTo: user.id).addSnapshotListener{
+            (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot, let userSnapshot = querySnapshot.documents.first else {
+                print("error fetching user")
+                return
+            }
+            
+            self.parseUserSnapshot(snapshot: userSnapshot)
+        }
+    }
+    
+    func parseUserSnapshot (snapshot: QuerySnapshot) {
+        
+        currentUser = User()
+        currentUser.name = snapshot.data()["name"] as? String
+        currentUser.username = snapshot.data()["username"] as? String
+        currentUser.email = snapshot.data()["email"] as? String
+        currentUser.pfp = snapshot.data()["pfp"] as? String
+        currentUser.id = snapshot.documentID
+        
+        if let listingReferencees = snapshot.data()["likes"] as? [DocumentReference] {
+            for reference in listingReferencees {
+                if let list = getListingByID(reference.documentID) {
+                    currentUser.likes.append(list)
+                }
+            }
+        }
+        
+        listeners.invoke { (listener) in
+            if listener.listenerType == ListenerType.user || listener.listenerType == ListenerType.all {
+                listener.onLikesChange (change: .update, userLikes: currentUser.likes )
+            }
         }
     }
     
