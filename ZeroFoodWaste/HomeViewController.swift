@@ -12,6 +12,15 @@ import FirebaseAuth
 
 class HomeViewController: UIViewController, DatabaseListener, UITabBarControllerDelegate {
     
+    var currentUser: User?
+    
+    
+    func onUserChange(change: DatabaseChange, userLikes: [Listing], userListing: [Listing]) {
+        //do nada
+    }
+    
+    
+    
 //    var snapshotListener: ListenerRegistration?
     
     var userRef = Firestore.firestore().collection("user")
@@ -61,10 +70,8 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
             indicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo:view.safeAreaLayoutGuide.centerYAnchor)
         ])
-        
-        
-        
-        listingCollectionView.backgroundColor = .systemBackground
+
+        listingCollectionView.backgroundColor = UIColor(red: 254/255, green: 247/255, blue: 236/255, alpha: 1)
         listingCollectionView.setCollectionViewLayout(generateLayout(), animated: false)
         
     }
@@ -72,8 +79,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
     override func viewWillAppear(_ animated: Bool) {
         
         readUserInfo()
-        
-//        self.tabBarController?.delegate = self
+
         databaseController?.addListener(listener: self)
         
     }
@@ -95,7 +101,7 @@ class HomeViewController: UIViewController, DatabaseListener, UITabBarController
         
         userRef.getDocuments { (snapshot, error) in
             guard let snapshot = snapshot else {
-                print("Error \(error!)")
+                print("Error HERE \(error!)")
                 return
             }
             for document in snapshot.documents {
@@ -176,7 +182,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         //get jpg file
         let filename = "\(imageName).jpg"
         
-        cell.listingNameLabel.text = "woi"
         
         
         //image is not yet loaded?

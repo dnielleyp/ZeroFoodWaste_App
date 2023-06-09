@@ -6,11 +6,18 @@
 //
 
 import UIKit
+import FirebaseStorage
+import FirebaseAuth
+import Firebase
+
 
 class SetupProfilePicViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
 //    var managedObjectContext: NSManagedObjectContext?
     @IBOutlet weak var profilePictureImage: UIImageView!
+    
+    var storageReference = Storage.storage().reference()
+    var userRef = Firestore.firestore().collection("user")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +33,34 @@ class SetupProfilePicViewController: UIViewController, UIImagePickerControllerDe
     @IBAction func finishSetupButton(_ sender: Any) {
         //if it's successfully added into the firestore then we will performsegue("setup
         guard let image = profilePictureImage.image else {
-            displayMessage(title: "ERROr", message: "Cannot save until an image has been selected")
+            displayMessage(title: "ERROR", message: "Cannot save until an image has been selected")
             return
         }
         
+        let userID = Auth.auth().currentUser?.uid
+        
         //get a unique id for this picture slayyyy
         let uuid = UUID().uuidString
-        let filename = "\(uuid).jpg"
         
-        print("\(filename)")
+        let profImage = profilePictureImage.image
+        guard let data = profImage!.jpegData(compressionQuality: 0.8) else {
+            return
+        }
+
+        let imageRef = storageReference.child("\(userID)/\(uuid)")
+
+        //upload image to firebasestorage
+        let uploadTask = imageRef.putData(data)
+
+        uploadTask.observe(.success){
+            snapshot in
+            self.userRef.document("\(userID)").collection("photos").document("\(uuid)").setData(["url" : "\(imageRef)"])
+        }
+        uploadTask.observe(.failure){
+            snapshot in
+            self.displayMessage(title: "error no photo uploaded", message: "\(String(describing: snapshot.error))")
+        }
+        
         
         //else displayMsg and not allow segue
         self.performSegue(withIdentifier: "showHomeSegue", sender: self)

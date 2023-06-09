@@ -9,6 +9,10 @@ import UIKit
 import CoreData
 
 class DraftsViewController: UIViewController, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
+    func onUserChange(change: DatabaseChange, userLikes: [Listing], userListing: [Listing]) {
+        //nothing
+    }
+    
     
     func onListingChange(change: DatabaseChange, listings: [Listing]) {
         //nothing

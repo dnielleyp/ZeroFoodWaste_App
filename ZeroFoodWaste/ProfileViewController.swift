@@ -10,6 +10,10 @@ import Firebase
 import CoreData
 
 class ProfileViewController: UIViewController, DatabaseListener {
+    func onUserChange(change: DatabaseChange, userLikes: [Listing], userListing: [Listing]) {
+        //nothing
+    }
+    
 
     var username: String?
     var allDrafts: [ListingDraft] = []
@@ -53,21 +57,21 @@ class ProfileViewController: UIViewController, DatabaseListener {
         
         databaseController?.addListener(listener: self)
 
-        userRef.getDocuments { (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error fetching user listings \(error!)")
-                return
-            }
-            for document in snapshot.documents {
-                if document.documentID == self.currUserID {
-                    self.userListing = document.get("listings") as! [Listing]
-                    
-                    print(self.userListing.count, "ran in here ehehehe")
-
-                }
-            }
-
-        }
+//        userRef.getDocuments { (snapshot, error) in
+//            guard let snapshot = snapshot else {
+//                print("Error fetching user listings \(error!)")
+//                return
+//            }
+//            for document in snapshot.documents {
+//                if document.documentID == self.currUserID {
+//                    self.userListing = document.get("listings") as? [Listing]
+//
+//                    print(self.userListing.count, "ran in here ehehehe")
+//
+//                }
+//            }
+//
+//        }
         
     }
     

@@ -11,10 +11,21 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 
-class CreateAccountViewController: UIViewController{
+class CreateAccountViewController: UIViewController, DatabaseListener{
+    func onUserChange(change: DatabaseChange, userLikes: [Listing], userListing: [Listing]) {
+        //do nothing
+    }
+    
+    func onListingChange(change: DatabaseChange, listings: [Listing]) {
+        //do nothing
+    }
+    
     
     var currentUser: FirebaseAuth.User?
     var authHandle: AuthStateDidChangeListenerHandle?
+    var listenerType = ListenerType.user
+    
+    weak var databaseController: DatabaseProtocol?
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
@@ -26,6 +37,9 @@ class CreateAccountViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +47,7 @@ class CreateAccountViewController: UIViewController{
         authHandle = Auth.auth().addStateDidChangeListener(){
             (auth, user) in
             guard user != nil else {return}
-            self.performSegue(withIdentifier: "showSetupSegue", sender: nil)
+            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
         }
     }
 
@@ -67,25 +81,11 @@ class CreateAccountViewController: UIViewController{
             else {
                 //user was created successsfully, now store the properties :D
                 self.currentUser = authResult!.user
-                let database = Firestore.firestore()
                 
-               guard let userID = Auth.auth().currentUser?.uid else {return}
+                guard let userID = Auth.auth().currentUser?.uid else {return}
                 
- 
-                database.collection("user").document(userID).setData(["username":username,
-                                                                      "email":email,
-                                                                      "name":name,
-                                                                      "listings":[],
-                                                                      "likes":[],
-                                                                      "pfp":""]) { error in
-                    if error != nil {
-                        print("Error")
-                    } else {
-                        print("Successfully created user")
-                    }
-                }
-                
-                
+                let user = self.databaseController?.addUser(name: name, username: username, email: email, pfp: "")
+            
                 let setDispName = self.currentUser!.createProfileChangeRequest()
                 setDispName.displayName = username
                 
@@ -102,16 +102,6 @@ class CreateAccountViewController: UIViewController{
 
                 
         }
-        
-        
-        
-        
-        
-        
-        
-        //create users
-        //transition to home screen
-        
         
     }
     

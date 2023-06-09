@@ -14,6 +14,7 @@
 		74165E5D2A009495009366D9 /* UIViewController+displayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */; };
 		742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC22A03533D005958CF /* CreateListingViewController.swift */; };
 		742AFBC52A03555E005958CF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AFBC42A03555E005958CF /* TabBarViewController.swift */; };
+		742FE82F2A32C65300F9AC7A /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742FE82E2A32C65300F9AC7A /* LikesViewController.swift */; };
 		745C47E02A2057CA00EEB2F7 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 745C47DF2A2057CA00EEB2F7 /* MessageKit */; };
 		7465BBB82A0B736C004CBBCD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */; };
 		7477C3542A31E899007A3A5A /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7477C3532A31E899007A3A5A /* LoadingViewController.swift */; };
@@ -38,7 +39,6 @@
 		74C130D92A0CDF1C0094DE95 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */; };
 		74C130DB2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */; };
 		74C130DD2A0D043F0094DE95 /* EditDraftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C130DC2A0D043F0094DE95 /* EditDraftViewController.swift */; };
-		74C5D44A2A2F28800033169C /* LikesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C5D4492A2F28800033169C /* LikesTableViewController.swift */; };
 		74C871322A30376600A0750D /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C871312A30376600A0750D /* RecipeViewController.swift */; };
 		74C871342A308B6D00A0750D /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C871332A308B6D00A0750D /* DummyViewController.swift */; };
 		74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DDFF832A0CA650003AFC4E /* DraftsViewController.swift */; };
@@ -54,6 +54,7 @@
 		74165E5C2A009495009366D9 /* UIViewController+displayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+displayMessage.swift"; sourceTree = "<group>"; };
 		742AFBC22A03533D005958CF /* CreateListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingViewController.swift; sourceTree = "<group>"; };
 		742AFBC42A03555E005958CF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		742FE82E2A32C65300F9AC7A /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
 		7465BBB72A0B736C004CBBCD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7477C3532A31E899007A3A5A /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		7488E6A929FA135000FFA47A /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePicViewController.swift; sourceTree = "<group>"; };
 		74C130DC2A0D043F0094DE95 /* EditDraftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDraftViewController.swift; sourceTree = "<group>"; };
-		74C5D4492A2F28800033169C /* LikesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesTableViewController.swift; sourceTree = "<group>"; };
 		74C871312A30376600A0750D /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		74C871332A308B6D00A0750D /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		74C871392A30AABC00A0750D /* ZeroFoodWaste.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZeroFoodWaste.entitlements; sourceTree = "<group>"; };
@@ -173,9 +173,9 @@
 				74A6E15129F8C2B800F6CBE4 /* LaunchScreen.storyboard */,
 				7488E6AD29FA376700FFA47A /* LoginViewController.swift */,
 				74A6E14C29F8C2B700F6CBE4 /* Main.storyboard */,
+				742FE82E2A32C65300F9AC7A /* LikesViewController.swift */,
 				7477C3532A31E899007A3A5A /* LoadingViewController.swift */,
 				74C871332A308B6D00A0750D /* DummyViewController.swift */,
-				74C5D4492A2F28800033169C /* LikesTableViewController.swift */,
 				74C130DA2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift */,
 				740EABD62A29F46200EC2DC0 /* ListingViewController.swift */,
 				74C130D82A0CDF1C0094DE95 /* NotificationViewController.swift */,
@@ -310,12 +310,12 @@
 				74DDFF842A0CA650003AFC4E /* DraftsViewController.swift in Sources */,
 				7488E6AC29FA209000FFA47A /* User.swift in Sources */,
 				74C130DB2A0CE2CD0094DE95 /* SetupProfilePicViewController.swift in Sources */,
+				742FE82F2A32C65300F9AC7A /* LikesViewController.swift in Sources */,
 				74C130D92A0CDF1C0094DE95 /* NotificationViewController.swift in Sources */,
 				74A6E14929F8C2B700F6CBE4 /* SceneDelegate.swift in Sources */,
 				742AFBC32A03533D005958CF /* CreateListingViewController.swift in Sources */,
 				74C130DD2A0D043F0094DE95 /* EditDraftViewController.swift in Sources */,
 				749340692A09C45600D2A9AB /* ListingDraft+CoreDataProperties.swift in Sources */,
-				74C5D44A2A2F28800033169C /* LikesTableViewController.swift in Sources */,
 				7403F3592A2DBE5200CA7E47 /* FoodData.swift in Sources */,
 				7403F35E2A2DE78700CA7E47 /* SearchRecipesTableViewController.swift in Sources */,
 				74C871342A308B6D00A0750D /* DummyViewController.swift in Sources */,

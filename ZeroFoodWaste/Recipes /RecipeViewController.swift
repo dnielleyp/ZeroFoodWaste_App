@@ -63,9 +63,10 @@ class RecipeViewController: UIViewController {
             
             
             if let steps = tempInstructionsList![index]  {
-                if steps.count >= 1{
+                if steps.count > 51{
                     listInstructions.append("\(i+1). \(steps) \r\n \r\n")
                     i += 1
+                    print(steps, "HEREHEREHERHER: \(steps.count)")
                 }
             }
         }

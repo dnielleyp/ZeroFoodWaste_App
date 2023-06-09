@@ -15,8 +15,7 @@ import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    let IDENTIFIER = "TESTING THIS APPP"
+
     
     var databaseController: DatabaseProtocol?
     var persistentContainer: NSPersistentContainer?
@@ -70,7 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let timeInterval = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
                 
-                let request = UNNotificationRequest(identifier: self.IDENTIFIER, content: notificationContent, trigger: timeInterval)
+                let uuidString = UUID().uuidString
+                let request = UNNotificationRequest(identifier: uuidString, content: notificationContent, trigger: timeInterval)
                 
                                 
                 var dateComponents = DateComponents()
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
                 
-                let uuidString = UUID().uuidString
+                
 //                let request = UNNotificationRequest(identifier: uuidString, content: notificationContent, trigger: trigger)
                 
                 UNUserNotificationCenter.current().add(request) { (error) in

@@ -13,6 +13,8 @@ class LoginViewController: UIViewController {
     var authHandle: AuthStateDidChangeListenerHandle?
     
     var currentUser: FirebaseAuth.User?
+    
+    var user: User?
 
     
     @IBOutlet weak var emailField: UITextField!
@@ -65,28 +67,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let indicator = UIActivityIndicatorView()
-//
-//        indicator.style = .large
-//        indicator.color = .white
-//
-//        indicator.startAnimating()
-//
-//
-//        indicator.autoresizingMask = [
-//            .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
-//
-//
-//
-//        let loadingVC = LoadingViewController()
-//        loadingVC.modalPresentationStyle = .overCurrentContext
-//        loadingVC.modalTransitionStyle = .crossDissolve
-        
-        
-        
-        
-
 
         // Do any additional setup after loading the view.
         
@@ -96,17 +76,13 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        
-            authHandle = Auth.auth().addStateDidChangeListener(){
-                (auth, user) in
-                guard user != nil else {return}
-                self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
-                
-//                DispatchQueue.main.async {
-//                    self.indicator.stopAnimating()
-//                }
-            
+    
+    
+        authHandle = Auth.auth().addStateDidChangeListener(){
+            (auth, user) in
+            guard user != nil else {return}
+            self.performSegue(withIdentifier: "showHomeSegue", sender: nil)
+
         }
     }
 
@@ -116,13 +92,17 @@ class LoginViewController: UIViewController {
         Auth.auth().removeStateDidChangeListener(authHandle)
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
-    */
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showHomeSegue" {
+//            let destination = segue.destination as! HomeViewController
+//
+//            destination.currentUser = user
+//        }
+//    }
+    
 
 }

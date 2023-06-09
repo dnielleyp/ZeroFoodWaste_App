@@ -14,24 +14,26 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
     var listeners = MulticastDelegate<DatabaseListener>()
     var listingList: [Listing]
-//    var userList: [User]
-    
     var authController: Auth
     var database: Firestore
     var listingRef: CollectionReference?
     var userRef: CollectionReference?
-    var currentUser: FirebaseAuth.User?
+    var currentUser: User
+    
+    var currentUserAuth: FirebaseAuth.User?
     
     override init(){
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         listingList = [Listing]()
-//        userList = [User]()
-        currentUser = authController.currentUser
-        
+        currentUser = User()
+
+        currentUserAuth = authController.currentUser
+        print(currentUserAuth, "CURRENT USER AUTHHHH")
+                
         super.init()
-        
+
         self.setupListingListener()
         
     }
@@ -42,7 +44,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         if listener.listenerType == .listing || listener.listenerType == .all {
             listener.onListingChange(change: .update, listings: listingList)
         }
-
+        
+        if listener.listenerType == .user || listener.listenerType == .all {
+            listener.onUserChange(change: .update, userLikes: currentUser.likes, userListing: currentUser.listings )
+        }
     }
     
     func removeListener(listener: DatabaseListener) {
@@ -75,6 +80,23 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return listing
     }
     
+    func addUser(name: String?, username: String?, email: String?, pfp: String?) -> User {
+        let user = User()
+        user.name = name
+        user.username = username
+        user.email = email
+        user.pfp = pfp
+        
+        
+        let userID = Auth.auth().currentUser?.uid 
+        user.id = userID
+        
+        
+        let userRef = userRef?.document(user.id!).setData(["name": name!, "username": username!, "email": email!, "pfp": pfp!])
+        
+        return user
+    }
+    
     func deleteListing(listing: Listing) {
         if let listingID = listing.id {
             listingRef?.document(listingID).delete()
@@ -95,6 +117,42 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    //addlistingtolikes we skip for now...
+    func addListingToLikes(listing: Listing, user: User) -> Bool {
+        guard let listingID = listing.id, let userID = user.id else {return false}
+        
+        //no duplicates
+        if user.likes.contains(listing){return false}
+                               
+        if let likedListingRef = listingRef?.document(listingID) {
+            userRef?.document(userID).updateData(["likes": FieldValue.arrayUnion([likedListingRef])])
+        }
+        return true
+    }
+    
+    
+    //removelistingfromlikes we skip for now...
+    func removeListingFromLikes(listing: Listing, user: User) {
+        if user.likes.contains(listing), let userID = user.id, let listingID = listing.id {
+            if let removedLikedRef = listingRef?.document(listingID) {
+                userRef?.document(userID).updateData(["likes": FieldValue.arrayRemove([removedLikedRef])])
+            }
+        }
+        
+    }
+    
+    func addListingToUser(listing: Listing, user: User) -> Bool {
+        guard let listingID = listing.id, let userID = user.id else {return false}
+        
+        if let newListingRef = listingRef?.document(listingID) {
+            userRef?.document(userID).updateData(["listings": FieldValue.arrayUnion([newListingRef])])
+        }
+        return true
+    }
+    
+    
+    
+    
 
     func setupListingListener(){
         listingRef = database.collection("listings")
@@ -105,8 +163,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 return
             }
             self.parseListingSnapshot(snapshot: querySnapshot)
-            if self.listingRef == nil {
-                self.setupListingListener()
+            if self.userRef == nil {
+                self.setupUserListener(user: self.currentUser)
             }
         }
     }
@@ -147,26 +205,27 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func setupUserListener(user: User) {
         userRef = database.collection("user")
-        userRef?.whereField("username", isEqualTo: user.id).addSnapshotListener{
+        //match with email bc firebase will only allow 1 account per email
+        userRef?.whereField("username", isEqualTo: self.currentUserAuth?.displayName).addSnapshotListener{
             (querySnapshot, error) in
             guard let querySnapshot = querySnapshot, let userSnapshot = querySnapshot.documents.first else {
                 print("error fetching user")
                 return
             }
-            
+
             self.parseUserSnapshot(snapshot: userSnapshot)
         }
     }
     
-    func parseUserSnapshot (snapshot: QuerySnapshot) {
-        
+    func parseUserSnapshot (snapshot: QueryDocumentSnapshot) {
+
         currentUser = User()
         currentUser.name = snapshot.data()["name"] as? String
         currentUser.username = snapshot.data()["username"] as? String
         currentUser.email = snapshot.data()["email"] as? String
         currentUser.pfp = snapshot.data()["pfp"] as? String
         currentUser.id = snapshot.documentID
-        
+
         if let listingReferencees = snapshot.data()["likes"] as? [DocumentReference] {
             for reference in listingReferencees {
                 if let list = getListingByID(reference.documentID) {
@@ -174,12 +233,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }
             }
         }
-        
+
         listeners.invoke { (listener) in
             if listener.listenerType == ListenerType.user || listener.listenerType == ListenerType.all {
-                listener.onLikesChange (change: .update, userLikes: currentUser.likes )
+                listener.onUserChange (change: .update, userLikes: currentUser.likes, userListing: currentUser.listings )
             }
         }
     }
-    
+
 }

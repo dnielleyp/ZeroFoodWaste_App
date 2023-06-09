@@ -8,7 +8,18 @@
 import UIKit
 import Firebase
 
-class ListingViewController: UIViewController {
+class ListingViewController: UIViewController, DatabaseListener {
+    
+    
+    func onUserChange(change: DatabaseChange, userLikes: [Listing], userListing: [Listing]) {
+        //nothing
+    }
+    
+    func onListingChange(change: DatabaseChange, listings: [Listing]) {
+        //nothing
+    }
+    
+    
     
     var listing: Listing?
     
@@ -16,7 +27,9 @@ class ListingViewController: UIViewController {
     var listingRef = Firestore.firestore().collection("listings")
     
     var currentUser = Auth.auth().currentUser!.uid
-
+    
+    weak var databaseController: DatabaseProtocol?
+    var listenerType = ListenerType.user
     
     @IBOutlet weak var listingImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,25 +41,29 @@ class ListingViewController: UIViewController {
     @IBOutlet weak var dietPrefLabel: UILabel!
     @IBOutlet weak var allergensLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    
-//    @IBOutlet weak var descFieldHeight: NSLayoutConstraint!
-    
-    
+
+        
     let catArray = ["Produce", "Dairy", "Protein", "Grain", "Others"]
     
+    override func viewWillAppear(_ animated: Bool) {
+        databaseController?.addListener(listener: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        databaseController?.removeListener(listener: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
  
         listingImage.image = loadImage(filename: (listing?.image)!)
         nameLabel.text = listing?.name
     
         descField.text = listing?.desc
-        
-        var likes = listing!.likes!.count ?? 0
-        
-        self.likeButton.setTitle("\(likes) ", for: .normal)
-        
+
         var category = catArray[(listing?.category)!]
         categoryLabel.setTitle((category), for: .normal)
         
@@ -75,112 +92,25 @@ class ListingViewController: UIViewController {
         else {
             allergensLabel.text = ""
         }
-        
-        setLikesButton()
-        
     }
-    
-    func setLikesButton() {
-        let listingID = (listing?.id)!
-        let userID = currentUser
-        
-        self.listingRef.getDocuments { (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error \(String(describing:error))")
-                return
-            }
-            
-            for doc in snapshot.documents {
-                if doc.documentID == listingID {
-                    var currListingLikes = doc.get("likes") as? Array<String> ?? []
-                    
-                    
-                    if currListingLikes.contains(userID) {
-                        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-  
-                    }
-                    else {
-                        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-                    }
-                    
-                    self.likeButton.setTitle(String(currListingLikes.count), for: .normal)
-                    self.likeButton.configuration?.buttonSize = .medium
-                }
-            }
-        }
-    }
+
     
     //adding the userID into the likes array of the listing
     @IBAction func addLikes(_ sender: Any) {
         
-        print("button pressed slayyyyy")
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 20)
         
-        //get the listingid
-        let listingID: String = (listing?.id!)!
+        var liked = databaseController?.addListingToLikes(listing: self.listing!, user: databaseController!.currentUser)
         
-        //get the userid
-        let userID = listing!.ownerID
-        
-        print("listing owner", listing!.ownerID)
-
-        self.userRef.getDocuments { [self](snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error \(String(describing: error))")
-                return
-            }
-            for doc in snapshot.documents {
-                if doc.documentID == userID {
-                    var currUserLikesList = doc.get("likes") as? Array<DocumentReference> ?? []
-
-                    let ref = self.listingRef.document("\(listingID)")
-                    
-                    //check if user has liked this before
-                    if let index = currUserLikesList.firstIndex(of: ref) {
-                        currUserLikesList.remove(at: index)
-                    }
-                    else {
-                        currUserLikesList.append(ref)
-                    }
-                    
-                    
-                    self.userRef.document(currentUser).updateData(["likes":currUserLikesList])
-//
-                }
-            }
+        //user already liked it and they pressed it so they unlike it
+        if liked == false {
+            self.likeButton.setImage(UIImage(systemName: "heart", withConfiguration: buttonConfig), for: .normal)
+            
+            databaseController?.removeListingFromLikes(listing: self.listing!, user: databaseController!.currentUser)
         }
         
-        self.listingRef.getDocuments { (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error \(String(describing:error))")
-                return
-            }
-            
-            for doc in snapshot.documents {
-                if doc.documentID == listingID {
-                    var currListingLikes = doc.get("likes") as? Array<String> ?? []
-                    
-                    let buttonConfig = UIImage.SymbolConfiguration(pointSize: 20)
-
-                    if let index = currListingLikes.firstIndex(of: self.currentUser) {
-                        currListingLikes.remove(at: index)
-                        
-                        
-                        self.likeButton.setImage(UIImage(systemName: "heart", withConfiguration: buttonConfig), for: .normal)
-                        
-                        
-                    }
-                    else {
-                        
-                        currListingLikes.append(self.currentUser)
-                        
-                        self.likeButton.setImage(UIImage(systemName: "heart.fill", withConfiguration: buttonConfig), for: .normal)
-                    }
-                    
-                    self.listingRef.document(listingID).updateData(["likes": currListingLikes])
-                    self.likeButton.setTitle(String(currListingLikes.count), for: .normal)
-                    self.likeButton.configuration?.buttonSize = .medium
-                }
-            }
+        else {
+            self.likeButton.setImage(UIImage(systemName: "heart.fill", withConfiguration: buttonConfig), for: .normal)
         }
     }
     

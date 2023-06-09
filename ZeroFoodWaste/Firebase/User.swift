@@ -11,8 +11,9 @@ import FirebaseFirestoreSwift
 class User: NSObject, Codable {
     @DocumentID var id: String?
     var name: String?
-    var listings: [Listing]? = []
-    var likes: [Listing]? = []
+    var listings: [Listing] = []
+    var likes: [Listing] = []
     var pfp: String?
     var username: String?
+    var email: String?
 }

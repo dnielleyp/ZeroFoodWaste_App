@@ -198,6 +198,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 
                 let listingID: String = (list?.id!)!
 
+                //add image into a nested collection within the listing
                 let imageRef = storageReference.child("\(list?.id)/\(uuid)")
 
                 //upload image to firebasestorage
@@ -214,25 +215,7 @@ class CreateListingViewController: UIViewController, UINavigationControllerDeleg
                 
                 
                 //add a reference to listing in the user
-                self.userRef.getDocuments {(snapshot, error) in
-                    guard let snapshot = snapshot else {
-                        print("Error \(String(describing: error))")
-                        return
-                    }
-                    for doc in snapshot.documents {
-                        let documentID = doc.documentID
-                        if documentID == userID {
-                            var listingsArr = doc.get("listings") as? Array<DocumentReference>
-
-                            let ref = self.listingRef.document("\(listingID)")
-                            listingsArr!.append(ref)
-                            
-                            self.userRef.document(userID).updateData(["listings":listingsArr])
-                            
-                            
-                        }
-                    }
-                }
+                databaseController?.addListingToUser(listing: list!, user: databaseController!.currentUser)
                 
                 
                 
